@@ -30,7 +30,7 @@ const Hero: React.FC = () => {
     {
       id: 'video',
       icon: <ImPlay size={32} color="#DB71AF" />,
-      link: 'https://www.youtube.com/embed/Hv_T8qPqRnA',
+      link: '#',
       modal: true,
       title: labels.hero_video,
     },
