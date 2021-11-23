@@ -282,6 +282,11 @@ const Step7: React.FC = () => {
             onChange={(event, newValue) => {
               handleButtonClick(newValue, 'step6_1', 'Daily Use');
             }}
+            ListboxProps={{
+              style: {
+                maxHeight: '300px',
+              },
+            }}
             renderInput={params => (
               <TextField
                 {...params}
@@ -305,6 +310,11 @@ const Step7: React.FC = () => {
             disabled={step?.isCompleted}
             onChange={(event, newValue) => {
               handleButtonClick(newValue, 'step6_2', 'Occasionally Use');
+            }}
+            ListboxProps={{
+              style: {
+                maxHeight: '300px',
+              },
             }}
             renderInput={params => (
               <TextField

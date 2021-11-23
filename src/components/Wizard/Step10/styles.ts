@@ -1,10 +1,9 @@
 import styled, { css } from 'styled-components';
 import { transparentize } from 'polished';
-import { FiTarget } from 'react-icons/fi';
 
 import { ReactComponent as ChecklistSvg } from 'assets/check_list.svg';
-// import { ReactComponent as OutcomesSvg } from 'assets/jar.svg';
-import { ReactComponent as NutraceuticalsSvg } from 'assets/nutraceuticals.svg';
+import { ReactComponent as OutcomesSvg } from 'assets/jar.svg';
+import { ReactComponent as NutraceuticalsSvg } from 'assets/pharmacy.svg';
 
 interface ButtonProps {
   isDisabled?: boolean;
@@ -32,11 +31,9 @@ const Container = styled.div`
 
 export const ChecklistIcon = styled(ChecklistSvg)``;
 
-export const OutcomesIcon = styled(FiTarget)``;
+export const OutcomesIcon = styled(OutcomesSvg)``;
 
-export const NutraceuticalsIcon = styled(NutraceuticalsSvg)`
-  width: 48px;
-`;
+export const NutraceuticalsIcon = styled(NutraceuticalsSvg)``;
 
 export const Title = styled.h3`
   margin: 20px 0;
