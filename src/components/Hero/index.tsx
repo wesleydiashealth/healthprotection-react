@@ -25,14 +25,14 @@ const Hero: React.FC = () => {
     {
       id: 'video',
       icon: <ImPlay size={32} color="#DB71AF" />,
-      link: 'https://www.youtube.com/embed/Hv_T8qPqRnA',
+      link: '#',
       modal: true,
       title: labels.hero_video,
     },
     {
       id: 'science',
       icon: <GiMicroscope size={32} color="#DB71AF" />,
-      link: 'https://www.healthprotection.com/the-science-behind-us/',
+      link: '#',
       modal: false,
       title: labels.hero_science,
     },
@@ -49,29 +49,33 @@ const Hero: React.FC = () => {
         {steps.map(step => (
           <React.Fragment key={step.id}>
             {step.modal ? (
-              <Popup
-                trigger={
-                  <HeroListItem>
-                    {step.icon}
-                    <HeroListItemText>{step.title}</HeroListItemText>
-                  </HeroListItem>
-                }
-                modal
-                nested
-              >
-                <HeroListItemPopupContent>
-                  <iframe
-                    width="560"
-                    height="315"
-                    src={step.link}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </HeroListItemPopupContent>
-              </Popup>
+              <HeroListItem>
+                {step.icon}
+                <HeroListItemText>{step.title}</HeroListItemText>
+              </HeroListItem>
             ) : (
+              // <Popup
+              //   trigger={
+              //     <HeroListItem>
+              //       {step.icon}
+              //       <HeroListItemText>{step.title}</HeroListItemText>
+              //     </HeroListItem>
+              //   }
+              //   modal
+              //   nested
+              // >
+              //   <HeroListItemPopupContent>
+              //     <iframe
+              //       width="560"
+              //       height="315"
+              //       src={step.link}
+              //       title="YouTube video player"
+              //       frameBorder="0"
+              //       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              //       allowFullScreen
+              //     />
+              //   </HeroListItemPopupContent>
+              // </Popup>
               <HeroListItem>
                 {step.icon}
                 <HeroListItemLink href={step.link}>
