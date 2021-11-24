@@ -2,7 +2,7 @@
 import React from 'react';
 import { GiMicroscope } from 'react-icons/gi';
 import { ImPlay } from 'react-icons/im';
-import Popup from 'reactjs-popup';
+// import Popup from 'reactjs-popup';
 
 import { useApp } from 'contexts/app';
 
@@ -14,7 +14,7 @@ import Container, {
   HeroListItem,
   HeroListItemLink,
   HeroListItemText,
-  HeroListItemPopupContent,
+  // HeroListItemPopupContent,
 } from './styles';
 
 const Hero: React.FC = () => {
