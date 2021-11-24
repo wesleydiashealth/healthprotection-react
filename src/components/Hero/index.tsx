@@ -9,12 +9,7 @@ import { useApp } from 'contexts/app';
 // import heroImg from 'assets/header_hero.svg';
 import Container, {
   HeroIntro,
-  HeroVideo,
-  HeroMainTitle,
-  HeroSubTitle,
-  HeroDescription,
   HeroButton,
-  // HeroImage,
   HeroList,
   HeroListItem,
   HeroListItemLink,
@@ -46,18 +41,10 @@ const Hero: React.FC = () => {
   return (
     <Container id="hero">
       <HeroIntro>
-        <HeroMainTitle>{labels.hero_title}</HeroMainTitle>
-        <HeroSubTitle>{labels.hero_subtitle}</HeroSubTitle>
-        <HeroDescription>{labels.hero_description}</HeroDescription>
         <HeroButton className="button hero__button" href="#step_1">
           {labels.hero_button}
         </HeroButton>
       </HeroIntro>
-      <HeroVideo width="720" autoPlay loop muted>
-        <source src="/videos/hero_video.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </HeroVideo>
-      {/* <HeroImage src={heroImg} alt="" /> */}
       <HeroList>
         {steps.map(step => (
           <React.Fragment key={step.id}>

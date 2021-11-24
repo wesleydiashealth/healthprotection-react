@@ -4,6 +4,10 @@ const Container = styled.section`
   margin: 0 auto;
   padding: 20px;
 
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+
   box-sizing: border-box;
 
   max-width: 1300px;
@@ -13,98 +17,19 @@ const Container = styled.section`
   @media screen and (min-width: 768px) {
     padding: 20px 50px;
 
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+    flex-flow: row nowrap;
   }
 `;
 
 export const HeroIntro = styled.div`
-  margin-bottom: 40px;
+  margin: 0 0 20px 0;
 
   @media screen and (min-width: 768px) {
-    grid-column: 1;
-    grid-row: 1;
-  }
-`;
-
-export const HeroVideo = styled.video`
-  margin-bottom: 20px;
-
-  max-width: 100%;
-
-  @media screen and (min-width: 768px) {
-    margin-bottom: 0;
-    padding-left: 40px;
-  }
-`;
-
-export const HeroMainTitle = styled.h1`
-  margin-bottom: 10px;
-
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 22px;
-  line-height: 30px;
-
-  @media screen and (min-width: 768px) {
-    font-size: 32px;
-    line-height: 40px;
-  }
-
-  @media screen and (min-width: 992px) {
-    font-size: 52px;
-    line-height: 64px;
-  }
-`;
-
-export const HeroSubTitle = styled.h2`
-  margin-bottom: 20px;
-
-  font-family: 'Open Sans';
-  font-size: 12px;
-  line-height: 16px;
-
-  @media screen and (min-width: 768px) {
-    font-size: 18px;
-    line-height: 24px;
-  }
-`;
-
-export const HeroDescription = styled.p`
-  margin-bottom: 10px;
-
-  font-family: 'Montserrat';
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 18px;
-
-  @media screen and (min-width: 768px) {
-    font-size: 18px;
-    line-height: 24px;
+    margin: 0 40px 0 0;
   }
 `;
 
 export const HeroButton = styled.a``;
-
-export const HeroImage = styled.img`
-  margin: 0 auto 30px;
-
-  display: block;
-
-  max-width: 100%;
-  max-height: 200px;
-
-  @media screen and (min-width: 768px) {
-    margin: 0;
-
-    grid-column: 2;
-    grid-row-start: 1;
-    grid-row-end: 3;
-
-    max-height: none;
-  }
-`;
 
 export const HeroList = styled.ul`
   display: flex;
