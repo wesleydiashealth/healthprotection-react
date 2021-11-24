@@ -1,5 +1,6 @@
 import React from 'react';
 import { hotjar } from 'react-hotjar';
+import TagManager from 'react-gtm-module';
 // import { FaTimesCircle } from 'react-icons/fa';
 
 import { useApp } from 'contexts/app';
@@ -81,6 +82,14 @@ const Products: React.FC = () => {
               data-vars-price={product.price}
               onClick={() => {
                 hotjar.event('buy-button');
+                TagManager.initialize({
+                  gtmId: 'GTM-PPMT6FP',
+                  dataLayer: {
+                    nutraceutical: product.nutraceutical,
+                    product: product.name,
+                    price: product.price,
+                  },
+                });
               }}
             >
               Buy from Amazon
