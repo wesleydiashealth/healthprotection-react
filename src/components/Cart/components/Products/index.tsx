@@ -79,23 +79,23 @@ const Products: React.FC = () => {
               className="buy-button"
               onClick={() => {
                 hotjar.event('buy-button');
-                TagManager.dataLayer({
-                  dataLayer: {
-                    event: '4.0 Click - Buy button',
-                    nutraceutical: product.nutraceutical,
-                    product: product.name,
-                    price: product.price,
-                  },
-                });
-                // TagManager.initialize({
-                //   gtmId: 'GTM-PPMT6FP',
-                //   events: {},
+                // TagManager.dataLayer({
                 //   dataLayer: {
+                //     event: '4.0 Click - Buy button',
                 //     nutraceutical: product.nutraceutical,
                 //     product: product.name,
                 //     price: product.price,
                 //   },
                 // });
+                TagManager.initialize({
+                  gtmId: 'GTM-PPMT6FP',
+                  events: {},
+                  dataLayer: {
+                    nutraceutical: product.nutraceutical,
+                    product: product.name,
+                    price: product.price,
+                  },
+                });
               }}
             >
               Buy from Amazon
