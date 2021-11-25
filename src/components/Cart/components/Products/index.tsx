@@ -78,7 +78,7 @@ const Products: React.FC = () => {
               className="buy-button"
               data-nutraceutical={product.nutraceutical}
               data-product={product.name}
-              data-price={product.price}
+              data-price={product.price.toFixed(2).toString().replace('.', ',')}
               onClick={() => {
                 hotjar.event('buy-button');
               }}
