@@ -183,6 +183,12 @@ const Step1: React.FC = () => {
         placeholder={labels.step_1_birth_month}
         onChange={event => {
           handleMonthInput(event?.value);
+          TagManager.dataLayer({
+            dataLayer: {
+              event: 'selectedBirthMonth',
+              birthMonth: event?.value,
+            },
+          });
         }}
       />
       <Select
@@ -195,9 +201,6 @@ const Step1: React.FC = () => {
         isDisabled={!birthMonth}
         onChange={event => {
           handleYearInput(event?.value);
-          TagManager.dataLayer({
-            dataLayer: { event: 'beginStep1', birthYear: event?.value },
-          });
         }}
       />
     </StepContainer>
