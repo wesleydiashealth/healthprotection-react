@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import Xarrow from 'react-xarrows';
 import { transparentize } from 'polished';
+import TagManager from 'react-gtm-module';
 
 import { useApp } from 'contexts/app';
 import { useSankey } from 'contexts/sankey';
@@ -183,6 +184,14 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
           onClick={() => {
             handleFineTuneClick([], id);
             setFineTune({ ...fineTune, [id]: 'off' });
+
+            TagManager.dataLayer({
+              dataLayer: {
+                event: 'fineTuneClick',
+                fineTuneSuboutcome: id,
+                fineTuneOption: 'off',
+              },
+            });
           }}
         >
           {labels.step_2_off}
@@ -198,6 +207,14 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
               if (value.length) {
                 handleFineTuneClick(value, id);
                 setFineTune({ ...fineTune, [id]: key });
+
+                TagManager.dataLayer({
+                  dataLayer: {
+                    event: 'fineTuneClick',
+                    fineTuneSuboutcome: id,
+                    fineTuneOption: key,
+                  },
+                });
               }
             }}
           >

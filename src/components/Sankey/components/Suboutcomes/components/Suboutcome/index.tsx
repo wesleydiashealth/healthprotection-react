@@ -3,6 +3,7 @@ import ReactToolTip from 'react-tooltip';
 import Xarrow from 'react-xarrows';
 import { HiQuestionMarkCircle } from 'react-icons/hi';
 import { transparentize } from 'polished';
+import TagManager from 'react-gtm-module';
 
 import { useApp } from 'contexts/app';
 
@@ -256,6 +257,14 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
           onClick={() => {
             handleFineTuneClick([], id);
             updateFineTune({ ...fineTune, [id]: 'off' });
+
+            TagManager.dataLayer({
+              dataLayer: {
+                event: 'fineTuneClick',
+                fineTuneSuboutcome: id,
+                fineTuneOption: 'off',
+              },
+            });
           }}
         >
           {labels.step_2_off}
@@ -273,6 +282,14 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
                   if (value.length) {
                     handleFineTuneClick(value, id);
                     updateFineTune({ ...fineTune, [id]: key });
+
+                    TagManager.dataLayer({
+                      dataLayer: {
+                        event: 'fineTuneClick',
+                        fineTuneSuboutcome: id,
+                        fineTuneOption: key,
+                      },
+                    });
                   }
                 }}
               >
