@@ -3,6 +3,7 @@ import ReactToolTip from 'react-tooltip';
 import { HiOutlineCheckCircle } from 'react-icons/hi';
 import { CarouselContext } from 'pure-react-carousel';
 import Select from 'react-select';
+import TagManager from 'react-gtm-module';
 
 import { useApp } from 'contexts/app';
 import { useWizard } from 'contexts/wizard';
@@ -194,6 +195,9 @@ const Step1: React.FC = () => {
         isDisabled={!birthMonth}
         onChange={event => {
           handleYearInput(event?.value);
+          TagManager.dataLayer({
+            dataLayer: { event: 'beginStep1', birthYear: event?.value },
+          });
         }}
       />
     </StepContainer>
