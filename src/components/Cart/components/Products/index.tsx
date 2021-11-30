@@ -1,5 +1,5 @@
 import React from 'react';
-import { hotjar } from 'react-hotjar';
+// import { hotjar } from 'react-hotjar';
 // import { FaTimesCircle } from 'react-icons/fa';
 
 import { useApp } from 'contexts/app';
@@ -13,7 +13,7 @@ import Container, {
   ProductContentDosage,
   ProductInfo,
   // ProductPrice,
-  ProductBuy,
+  // ProductBuy,
 } from './styles';
 
 const Products: React.FC = () => {
@@ -26,6 +26,12 @@ const Products: React.FC = () => {
         const productNutraceutical = nutraceuticals.find(
           nutraceutical => nutraceutical.slug === product.nutraceutical,
         );
+
+        // const linkArgs = product.link.match(
+        //   /^http[s]?:\/\/.*?\/product\/(.*)\/[a-zA-Z-_]+.*$/,
+        // );
+
+        // const linkAsin = linkArgs ? linkArgs[1] : '';
 
         return (
           <Product key={product.name}>
@@ -71,7 +77,7 @@ const Products: React.FC = () => {
                 </>
               )}
             </ProductPrice> */}
-            <ProductBuy
+            {/* <ProductBuy
               href={product.link}
               target="_blank"
               rel="norefereer noopener"
@@ -84,7 +90,7 @@ const Products: React.FC = () => {
               }}
             >
               Buy from Amazon
-            </ProductBuy>
+            </ProductBuy> */}
           </Product>
         );
       })}

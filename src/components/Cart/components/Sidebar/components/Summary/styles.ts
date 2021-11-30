@@ -42,7 +42,7 @@ export const Shipping = styled.p`
   line-height: 22px;
 `;
 
-export const CheckoutButton = styled.button`
+export const CheckoutButton = styled.a`
   margin-bottom: 10px;
   border: none;
   border-radius: 32px;
@@ -57,6 +57,7 @@ export const CheckoutButton = styled.button`
   font-weight: 700;
   color: white;
   text-transform: uppercase;
+  text-decoration: none;
 
   background: #ffae30;
 
