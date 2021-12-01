@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 // import { hotjar } from 'react-hotjar';
-// import { FaTimesCircle } from 'react-icons/fa';
 
 import { useApp } from 'contexts/app';
 
@@ -14,11 +13,22 @@ import Container, {
   ProductInfo,
   // ProductPrice,
   // ProductBuy,
+  ProductRemove,
 } from './styles';
 
 const Products: React.FC = () => {
   const context = useApp();
-  const { nutraceuticals, products } = context;
+  const { nutraceuticals, products, updateProducts } = context;
+
+  const handleRemoveButton = useCallback(
+    (productName: string) => {
+      const updatedProducts = products.filter(
+        product => product.name !== productName,
+      );
+      updateProducts(updatedProducts);
+    },
+    [products, updateProducts],
+  );
 
   return (
     <Container>
@@ -67,6 +77,12 @@ const Products: React.FC = () => {
                 </a>
               </ProductInfo>
             )}
+            <ProductRemove
+              size={20}
+              onClick={() => {
+                handleRemoveButton(product.name);
+              }}
+            />
             {/* <ProductPrice>
               {!!product.price && (
                 <>

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { FaTimes } from 'react-icons/fa';
 
 const Container = styled.div``;
 
@@ -116,6 +117,12 @@ export const ProductBuy = styled.a`
 
     font-size: 16px;
   }
+`;
+
+export const ProductRemove = styled(FaTimes)`
+  color: #ffae30;
+
+  cursor: pointer;
 `;
 
 export default Container;
