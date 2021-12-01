@@ -24,7 +24,7 @@ const Summary: React.FC = () => {
 
     const linkAsin = linkArgs ? linkArgs[1] : '';
 
-    return `${acc}&ASIN.${index}=${linkAsin}&Quantity.${index + 1}=1`;
+    return `${acc}&ASIN.${index + 1}=${linkAsin}&Quantity.${index + 1}=1`;
   }, '');
 
   const cartLink = `https://www.amazon.es/gp/aws/cart/add.html?AssociateTag=healthprote04-21&tag=healthprote04-21${cartParams}`;
