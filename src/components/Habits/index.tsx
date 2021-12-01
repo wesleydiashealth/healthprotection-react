@@ -30,7 +30,10 @@ const Habits: React.FC = () => {
   } = context;
   const { step1: initialStep, step2: previousStep, step3: currentStep } = steps;
 
-  const isActive = previousStep.isCompleted && initialStep.isCompleted;
+  const isActive =
+    previousStep.isCompleted &&
+    initialStep.isCompleted &&
+    !!selectedNutraceuticals.length;
 
   const foodsNutraceuticals = foods.reduce(
     (acc: string[], { interactions }) =>

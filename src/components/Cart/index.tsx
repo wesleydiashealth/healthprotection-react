@@ -19,10 +19,11 @@ import Container, {
 
 const Cart: React.FC = () => {
   const context = useApp();
-  const { steps, labels } = context;
+  const { steps, products, labels } = context;
   const { step1: initialStep, step2: previousStep } = steps;
 
-  const isActive = previousStep.isCompleted && initialStep.isCompleted;
+  const isActive =
+    previousStep.isCompleted && initialStep.isCompleted && !!products.length;
 
   return (
     <Container isActive={isActive}>
