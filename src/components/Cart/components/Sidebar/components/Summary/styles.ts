@@ -10,9 +10,19 @@ export const Title = styled.h4`
   font-size: 24px;
   line-height: 32px;
 
+  text-align: center;
+
   span {
     font-weight: 600;
   }
+`;
+
+export const TitlePrice = styled.div``;
+
+export const TitlePriceValue = styled.span``;
+
+export const TitlePriceCurrency = styled.span`
+  margin-left: 5px;
 `;
 
 export const Details = styled.span`

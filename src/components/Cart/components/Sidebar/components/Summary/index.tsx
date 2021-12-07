@@ -5,17 +5,44 @@ import { hotjar } from 'react-hotjar';
 import { useApp } from 'contexts/app';
 
 import Container, {
-  // Title,
-  // Details,
-  // Description,
-  // Shipping,
+  Title,
+  TitlePrice,
+  TitlePriceValue,
+  TitlePriceCurrency,
+  Details,
+  Description,
+  Shipping,
   CheckoutButton,
-  // SaveRecommendation,
+  SaveRecommendation,
 } from './styles';
 
 const Summary: React.FC = () => {
   const context = useApp();
   const { labels, selectedProducts } = context;
+
+  const cartTotalPrice = selectedProducts.reduce((acc, product) => {
+    const productPriceArray = product.price.split(' ');
+    const productPriceValue = parseFloat(
+      productPriceArray[0].replace(/,/g, '.'),
+    );
+
+    const quantity = product.quantity || 1;
+
+    return acc + productPriceValue * quantity;
+  }, 0);
+
+  const cartTotalPriceFormatted = cartTotalPrice.toLocaleString('es-ES', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  });
+
+  const cartDailyPriceFormatted = (cartTotalPrice / 30).toLocaleString(
+    'es-ES',
+    {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+    },
+  );
 
   const cartParams = selectedProducts.reduce((acc, product, index) => {
     // Skip 0 to avoid link issues
@@ -30,12 +57,16 @@ const Summary: React.FC = () => {
 
   return (
     <Container>
-      {/* <Title>
-        <span>{labels.summary_total}</span> $50.68
+      <Title>
+        <span>{labels.summary_total}</span>{' '}
+        <TitlePrice>
+          <TitlePriceValue>{cartTotalPriceFormatted}</TitlePriceValue>
+          <TitlePriceCurrency>€</TitlePriceCurrency>
+        </TitlePrice>
       </Title>
-      <Details>0.54/day</Details>
+      <Details>{`${cartDailyPriceFormatted} €/day`}</Details>
       <Description>{labels.summary_description}</Description>
-      <Shipping>{labels.summary_shipping}</Shipping> */}
+      <Shipping>{labels.summary_shipping}</Shipping>
       <CheckoutButton
         href={cartLink}
         target="_blank"

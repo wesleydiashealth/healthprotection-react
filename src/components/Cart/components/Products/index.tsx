@@ -95,8 +95,6 @@ const Products: React.FC = () => {
             nutraceutical.title === selectedProduct.nutraceutical,
         );
 
-        const productQuantity = selectedProduct.quantity || 1;
-
         const productPriceArray = selectedProduct.price.split(' ');
         const productPriceValue = parseFloat(
           productPriceArray[0].replace(/,/g, '.'),
@@ -154,7 +152,7 @@ const Products: React.FC = () => {
             </ProductQuantity>
             <ProductPrice>
               <ProductPriceValue>
-                {(productPriceValue * productQuantity).toLocaleString('es-ES', {
+                {productPriceValue.toLocaleString('es-ES', {
                   maximumFractionDigits: 2,
                   minimumFractionDigits: 2,
                 })}
@@ -163,12 +161,12 @@ const Products: React.FC = () => {
                 {productPriceCurrency}
               </ProductPriceCurrency>
             </ProductPrice>
-            <ProductReplace
+            {/* <ProductReplace
               size={20}
               onClick={() => {
                 handleReplaceButton(selectedProduct);
               }}
-            />
+            /> */}
             <ProductRemove
               size={20}
               onClick={() => {

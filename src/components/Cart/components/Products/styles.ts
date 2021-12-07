@@ -121,6 +121,8 @@ export const ProductQuantity = styled.div`
 `;
 
 export const ProductPrice = styled.div`
+  min-width: 80px;
+
   @media screen and (min-width: 768px) {
     margin-right: 20px;
   }
