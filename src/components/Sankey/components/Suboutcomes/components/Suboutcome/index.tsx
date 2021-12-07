@@ -132,8 +132,6 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
 
       updateSelectedNutraceuticals(selectedNutraceuticals);
 
-      console.log(selectedNutraceuticals);
-
       const updatedProducts = appNutraceuticals
         .filter(appNutraceutical =>
           selectedNutraceuticals.includes(appNutraceutical.slug),

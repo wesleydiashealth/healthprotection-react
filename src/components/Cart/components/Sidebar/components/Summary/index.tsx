@@ -13,7 +13,7 @@ import Container, {
   Description,
   Shipping,
   CheckoutButton,
-  SaveRecommendation,
+  // SaveRecommendation,
 } from './styles';
 
 const Summary: React.FC = () => {

@@ -4,7 +4,8 @@ import { FaMinus, FaPlus } from 'react-icons/fa';
 
 import { useApp } from 'contexts/app';
 
-import ProductData from 'dtos/ProductData';
+// import ProductData from 'dtos/ProductData';
+
 import Container, {
   Product,
   ProductImageContainer,
@@ -19,14 +20,13 @@ import Container, {
   ProductPriceValue,
   ProductPriceCurrency,
   // ProductBuy,
-  ProductReplace,
+  // ProductReplace,
   ProductRemove,
 } from './styles';
 
 const Products: React.FC = () => {
   const context = useApp();
-  const { nutraceuticals, products, selectedProducts, updateSelectedProducts } =
-    context;
+  const { nutraceuticals, selectedProducts, updateSelectedProducts } = context;
 
   const handleQuantityButton = useCallback(
     (productAsin, value) => {
@@ -63,29 +63,29 @@ const Products: React.FC = () => {
     [selectedProducts, updateSelectedProducts],
   );
 
-  const handleReplaceButton = useCallback(
-    (selectedProduct: ProductData) => {
-      const updatedSelectedProducts = [...selectedProducts];
+  // const handleReplaceButton = useCallback(
+  //   (selectedProduct: ProductData) => {
+  //     const updatedSelectedProducts = [...selectedProducts];
 
-      const selectedProductIndex = selectedProducts.findIndex(
-        product => product.asin === selectedProduct.asin,
-      );
+  //     const selectedProductIndex = selectedProducts.findIndex(
+  //       product => product.asin === selectedProduct.asin,
+  //     );
 
-      const replaceProducts = products.filter(
-        product =>
-          product.nutraceutical === selectedProduct.nutraceutical &&
-          product.asin !== selectedProduct.asin,
-      );
+  //     const replaceProducts = products.filter(
+  //       product =>
+  //         product.nutraceutical === selectedProduct.nutraceutical &&
+  //         product.asin !== selectedProduct.asin,
+  //     );
 
-      if (replaceProducts.length) {
-        updatedSelectedProducts[selectedProductIndex] =
-          replaceProducts[Math.floor(Math.random() * replaceProducts.length)];
+  //     if (replaceProducts.length) {
+  //       updatedSelectedProducts[selectedProductIndex] =
+  //         replaceProducts[Math.floor(Math.random() * replaceProducts.length)];
 
-        updateSelectedProducts(updatedSelectedProducts);
-      }
-    },
-    [products, selectedProducts, updateSelectedProducts],
-  );
+  //       updateSelectedProducts(updatedSelectedProducts);
+  //     }
+  //   },
+  //   [products, selectedProducts, updateSelectedProducts],
+  // );
 
   return (
     <Container>
