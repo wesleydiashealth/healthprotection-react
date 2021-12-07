@@ -54,6 +54,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
     updateError,
     updateSelectedNutraceuticals,
     updateProducts,
+    updateSelectedProducts,
   } = appContext;
 
   const [supConnections, setSupConnections] = useState<string[]>([]);
@@ -131,38 +132,31 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
 
       updateSelectedNutraceuticals(selectedNutraceuticals);
 
-      const selectedProducts = appNutraceuticals
+      const updatedProducts = appNutraceuticals
         .filter(appNutraceutical =>
           selectedNutraceuticals.includes(appNutraceutical.slug),
         )
-        .reduce((acc: ProductData[], nutraceutical) => {
-          const {
-            productName,
-            productImage,
-            productLink,
-            productBrand,
-            productDosageCapsule,
-            productCapsules,
-            productPrice,
-          } = nutraceutical.info.product1;
+        .reduce(
+          (acc: ProductData[], nutraceutical) => [
+            ...acc,
+            ...nutraceutical.info.products.map(product => ({
+              ...product,
+              nutraceutical: nutraceutical.title,
+            })),
+          ],
+          [],
+        );
 
-          if (!productName) return acc;
+      updateProducts(updatedProducts);
 
-          const selectedProduct = {
-            name: productName,
-            nutraceutical: nutraceutical.slug,
-            image: productImage,
-            link: productLink,
-            brand: productBrand,
-            dosageCapsule: productDosageCapsule,
-            capsules: productCapsules,
-            price: productPrice,
-          };
-
-          return [...acc, selectedProduct];
-        }, []);
-
-      updateProducts(selectedProducts);
+      updateSelectedProducts(
+        updatedProducts.filter(
+          (updatedProduct, index, self) =>
+            self.findIndex(
+              v => v.nutraceutical === updatedProduct.nutraceutical,
+            ) === index,
+        ),
+      );
 
       const response = await getFoods({
         uuid: userQuery,
@@ -195,6 +189,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       updateSelectedConnections,
       updateSelectedNutraceuticals,
       updateProducts,
+      updateSelectedProducts,
     ],
   );
 

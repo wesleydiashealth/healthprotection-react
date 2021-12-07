@@ -1,10 +1,21 @@
+/* eslint-disable camelcase */
 export default interface ProductData {
-  name: string;
-  nutraceutical: string;
+  asin: string;
+  title: string;
+  url: string;
   image: string;
-  link: string;
+  rating: string;
+  star_rating: string;
+  reviews: string;
+  price: string;
+  list_price: string | null;
+  amount_saved: number;
+  percentage_saved: number;
+  last_update: string;
+  name: string;
   brand: string;
   dosageCapsule: number;
   capsules: number;
-  price: number;
+  nutraceutical?: string;
+  quantity?: number;
 }

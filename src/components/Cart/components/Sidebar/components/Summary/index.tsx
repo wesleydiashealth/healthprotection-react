@@ -15,19 +15,15 @@ import Container, {
 
 const Summary: React.FC = () => {
   const context = useApp();
-  const { labels, products } = context;
+  const { labels, selectedProducts } = context;
 
-  const cartParams = products.reduce((acc, product, index) => {
+  const cartParams = selectedProducts.reduce((acc, product, index) => {
     // Skip 0 to avoid link issues
     const linkIndex = index + 1;
 
-    const linkArgs = product.link.match(
-      /^http[s]?:\/\/.*?\/product\/(.*)\/[a-zA-Z-_]+.*$/,
-    );
+    const linkAsin = product.asin;
 
-    const linkAsin = linkArgs ? linkArgs[1] : '';
-
-    return `${acc}&ASIN.${linkIndex}=${linkAsin}&Quantity.${linkIndex}=1`;
+    return `${acc}&ASIN.${linkIndex}=${linkAsin}&Quantity.${linkIndex}=${product.quantity}`;
   }, '');
 
   const cartLink = `https://www.amazon.es/gp/aws/cart/add.html?AssociateTag=healthprote04-21&tag=healthprote04-21${cartParams}`;

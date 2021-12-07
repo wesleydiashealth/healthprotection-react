@@ -222,7 +222,7 @@ const ReportDocument: React.FC<ReportDocumentData> = ({
                       </Link>
                     </View>
                   )}
-                  <Link src={product.link} style={styles.productBuy}>
+                  <Link src={product.url} style={styles.productBuy}>
                     Buy from Amazon
                   </Link>
                 </View>

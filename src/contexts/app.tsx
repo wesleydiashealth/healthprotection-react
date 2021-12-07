@@ -50,6 +50,7 @@ interface AppContextData {
   habits: HabitData[];
   error: string;
   products: ProductData[];
+  selectedProducts: ProductData[];
   updateStep(step: string, attrs: StepData): Promise<void>;
   updateAnswers(answers: AnswerData[]): Promise<void>;
   updateExcludes(updatedExcludes: ExcludesData): Promise<void>;
@@ -71,6 +72,7 @@ interface AppContextData {
   updateHabits(updatedHabits: HabitData[]): Promise<void>;
   updateError(updatedError: string): Promise<void>;
   updateProducts(updatedProducts: ProductData[]): Promise<void>;
+  updateSelectedProducts(updatedSelectedProducts: ProductData[]): Promise<void>;
 }
 
 const AppContext = createContext<AppContextData>({} as AppContextData);
@@ -125,6 +127,8 @@ export const AppProvider: React.FC = ({ children }) => {
   const [error, setError] = useState<string>('');
 
   const [products, setProducts] = useState<ProductData[]>([]);
+
+  const [selectedProducts, setSelectedProducts] = useState<ProductData[]>([]);
 
   useEffect(() => {
     wordpressApi
@@ -340,6 +344,12 @@ export const AppProvider: React.FC = ({ children }) => {
     setProducts(updatedProducts);
   }
 
+  async function updateSelectedProducts(
+    updatedSelectedProducts: ProductData[],
+  ) {
+    setSelectedProducts(updatedSelectedProducts);
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -360,6 +370,7 @@ export const AppProvider: React.FC = ({ children }) => {
         habits,
         error,
         products,
+        selectedProducts,
         updateStep,
         updateAnswers,
         updateExcludes,
@@ -375,6 +386,7 @@ export const AppProvider: React.FC = ({ children }) => {
         updateHabits,
         updateError,
         updateProducts,
+        updateSelectedProducts,
         updateCount,
       }}
     >

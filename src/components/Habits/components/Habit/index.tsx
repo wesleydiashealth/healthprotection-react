@@ -42,8 +42,9 @@ const Habit: React.FC<FoodData> = food => {
     nutraceuticals,
     selectedNutraceuticals,
     products,
+    selectedProducts,
     updateHabits,
-    updateProducts,
+    updateSelectedProducts,
   } = context;
 
   const nutraceuticalsInteractions = interactions.filter(interaction => {
@@ -81,13 +82,13 @@ const Habit: React.FC<FoodData> = food => {
         ]);
       }
 
-      const interactionProducts = selectedFood.interactions
+      const filteredProducts = selectedFood.interactions
         .filter(interaction =>
           selectedNutraceuticals.includes(interaction.nutraceuticalSlug),
         )
         .reduce((accProducts: ProductData[], interaction) => {
-          const updatedProducts = products.filter(
-            product => product.nutraceutical !== interaction.nutraceuticalSlug,
+          const interactionProducts = products.filter(
+            product => product.nutraceutical === interaction.nutraceutical,
           );
 
           const interactionDosage =
@@ -99,46 +100,40 @@ const Habit: React.FC<FoodData> = food => {
             nutraceutical => nutraceutical.title === interaction.nutraceutical,
           );
 
-          if (!interactionNutraceutical) return updatedProducts;
+          if (!interactionNutraceutical || interactionProducts.length <= 1)
+            return accProducts;
 
           const nutraceuticalDosage =
             interactionNutraceutical?.info.dosage || 0;
 
           const belowAverage = nutraceuticalDosage / 2 > interactionDosage;
-          const nutraceuticalProduct = belowAverage
-            ? interactionNutraceutical.info.product1
-            : interactionNutraceutical.info.product2;
 
-          const selectedProduct = {
-            name: nutraceuticalProduct.productName,
-            nutraceutical: interaction.nutraceuticalSlug,
-            image: nutraceuticalProduct.productImage,
-            link: nutraceuticalProduct.productLink,
-            brand: nutraceuticalProduct.productBrand,
-            dosageCapsule: nutraceuticalProduct.productDosageCapsule,
-            capsules: nutraceuticalProduct.productCapsules,
-            price: nutraceuticalProduct.productPrice,
-          };
+          const filteredProduct = belowAverage
+            ? interactionProducts[0]
+            : interactionProducts[1];
 
-          const productExists = !!products.filter(
-            product => product.name === selectedProduct.name,
-          ).length;
-
-          return productExists
-            ? updatedProducts
-            : [...updatedProducts, selectedProduct];
+          return [...accProducts, filteredProduct];
         }, []);
 
-      updateProducts(interactionProducts);
+      const updatedSelectedProducts = selectedProducts.map(
+        selectedProduct =>
+          filteredProducts.find(
+            filteredProduct =>
+              filteredProduct.nutraceutical === selectedProduct.nutraceutical,
+          ) || selectedProduct,
+      );
+
+      updateSelectedProducts(updatedSelectedProducts);
     },
     [
       food,
       habits,
       nutraceuticals,
-      products,
       selectedNutraceuticals,
+      products,
+      selectedProducts,
       updateHabits,
-      updateProducts,
+      updateSelectedProducts,
     ],
   );
 

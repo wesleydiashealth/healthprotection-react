@@ -1,4 +1,5 @@
 import RelationData from './RelationData';
+import ProductData from './ProductData';
 
 export default interface NutraceuticalData {
   slug: string;
@@ -13,23 +14,6 @@ export default interface NutraceuticalData {
     description: string;
     relations: RelationData[];
     studies: number;
-    product1: {
-      productName: string;
-      productImage: string;
-      productLink: string;
-      productBrand: string;
-      productDosageCapsule: number;
-      productCapsules: number;
-      productPrice: number;
-    };
-    product2: {
-      productName: string;
-      productImage: string;
-      productLink: string;
-      productBrand: string;
-      productDosageCapsule: number;
-      productCapsules: number;
-      productPrice: number;
-    };
+    products: ProductData[];
   };
 }

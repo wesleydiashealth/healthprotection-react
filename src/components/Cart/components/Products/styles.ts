@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
+import { BiRefresh } from 'react-icons/bi';
 
 const Container = styled.div``;
 
@@ -17,9 +18,15 @@ export const Product = styled.div`
   }
 `;
 
+export const ProductImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 80px;
+`;
+
 export const ProductImage = styled.img`
-  width: 64px;
-  height: auto;
+  width: auto;
+  height: 80px;
 
   @media screen and (min-width: 768px) {
     margin-right: 20px;
@@ -43,9 +50,9 @@ export const ProductContentTitle = styled.h4`
   }
 `;
 
-export const ProductContentTitleLink = styled.a`
-  color: #1bc9bd;
-`;
+// export const ProductContentTitleLink = styled.a`
+//   color: #1bc9bd;
+// `;
 
 export const ProductContentDosage = styled.span`
   font-size: 12px;
@@ -84,38 +91,81 @@ export const ProductInfo = styled.div`
   }
 
   @media screen and (min-width: 768px) {
-    margin: 0;
+    margin: 0 20px 0 0;
   }
 `;
 
-export const ProductPrice = styled.span`
-  min-width: 60px;
-`;
+export const ProductQuantity = styled.div`
+  border: 1px solid #e5e5e5;
+  border-radius: 24px;
+  padding: 6px 12px;
 
-export const ProductBuy = styled.a`
-  margin: 20px 0 0;
-  border: none;
-  border-radius: 32px;
-  padding: 8px 16px;
+  display: flex;
+  align-items: center;
 
-  cursor: pointer;
+  svg {
+    cursor: pointer;
 
-  font-weight: 700;
-  font-size: 14px;
-  color: white;
-  text-transform: uppercase;
-  text-decoration: none;
+    &:hover {
+      fill: #ffae30;
+    }
+  }
 
-  background: #ffae30;
-
-  &:hover {
-    opacity: 0.7;
+  span {
+    margin: 0 14px;
   }
 
   @media screen and (min-width: 768px) {
-    margin: 0 0 0 20px;
+    margin-right: 20px;
+  }
+`;
 
-    font-size: 16px;
+export const ProductPrice = styled.div`
+  @media screen and (min-width: 768px) {
+    margin-right: 20px;
+  }
+`;
+
+export const ProductPriceValue = styled.span``;
+
+export const ProductPriceCurrency = styled.span`
+  margin-left: 5px;
+`;
+
+// export const ProductBuy = styled.a`
+//   margin: 20px 0 0;
+//   border: none;
+//   border-radius: 32px;
+//   padding: 8px 16px;
+
+//   cursor: pointer;
+
+//   font-weight: 700;
+//   font-size: 14px;
+//   color: white;
+//   text-transform: uppercase;
+//   text-decoration: none;
+
+//   background: #ffae30;
+
+//   &:hover {
+//     opacity: 0.7;
+//   }
+
+//   @media screen and (min-width: 768px) {
+//     margin: 0 0 0 20px;
+
+//     font-size: 16px;
+//   }
+// `;
+
+export const ProductReplace = styled(BiRefresh)`
+  color: #ffae30;
+
+  cursor: pointer;
+
+  @media screen and (min-width: 768px) {
+    margin-right: 10px;
   }
 `;
 

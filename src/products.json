@@ -1,232 +1,38 @@
 [
   {
-      "name": "Maca - 1000mg",
-      "nutraceutical": "maca",
-      "image": "https://m.media-amazon.com/images/I/71zz6y3P5TL._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B0812521RT/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B0812521RT&linkCode=as2&tag=healthprote04-21&linkId=33604853383fc5046bac2e50c37d46b8",
-      "brand": "Polaris",
+      "asin": "B0013OXB58",
+      "title": "Now Foods 5-HTP 100mg Standard - 60 Cápsulas",
+      "url": "https://www.amazon.es/dp/B0013OXB58?tag=healthprote04-21&linkCode=ogi&th=1&psc=1",
+      "image": "https://www.healthprotection.com/wp-content/plugins/aawp/public/image.php?url=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvNDFFNUE4M0lLNEwuX1NMMTYwXy5qcGc",
+      "rating": "3.9",
+      "star_rating": "<a  data-aawp-product-id=\"B0013OXB58\" data-aawp-product-title=\"Now Foods 5-HTP 100mg Standard - 60 Cápsulas\" class=\"aawp-star-rating aawp-star-rating--small aawp-star-rating--v1\" href=\"https://www.amazon.es/product-reviews/B0013OXB58?tag=healthprote04-21\" title=\"Reviews on Amazon\" rel=\"nofollow noopener sponsored\" target=\"_blank\"><span style=\"width: 80%;\"></span></a>",
+      "reviews": "56 Reviews",
+      "price": "14,88 EUR",
+      "list_price": null,
+      "amount_saved": 0,
+      "percentage_saved": 0,
+      "last_update": "2021-12-06",
+      "name": "5-HTP - 100mg",
+      "brand": "https://m.media-amazon.com/images/I/614xh5uOv3L._AC_SL1500_.jpg",
       "dosageCapsule": 60,
-      "capsules": 250,
-      "price": 23.69
+      "capsules": 100
   },
   {
-      "name": "Tribulus Terrestris - 1000mg",
-      "nutraceutical": "tribulus-terrestris",
-      "image": "https://m.media-amazon.com/images/I/61zsU7Q1HUS._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B09685CYM2/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B09685CYM2&linkCode=as2&tag=healthprote04-21&linkId=b0d7daacec6db508af5c6dab19ecc08a",
-      "brand": "Vitaminalia",
-      "dosageCapsule": 180,
-      "capsules": 1000,
-      "price": 12.9
-  },
-  {
-      "name": "Pycnogenol - 100mg",
-      "nutraceutical": "pycnogenol",
-      "image": "https://m.media-amazon.com/images/I/61hZN2gaEuL._AC_SL1386_.jpg",
-      "link": "https://www.amazon.es/gp/product/B000WUCD9E/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B000WUCD9E&linkCode=as2&tag=healthprote04-21&linkId=40ac7128e1cc7f59878cb0d6d3f025c8",
-      "brand": "Nature's Way",
-      "dosageCapsule": 30,
-      "capsules": 50,
-      "price": 39.73
-  },
-  {
-      "name": "Creatine - 5000mg",
-      "nutraceutical": "creatine",
-      "image": "https://m.media-amazon.com/images/I/81azFTdAx3L._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B08RRSY5XN/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B08RRSY5XN&linkCode=as2&tag=healthprote04-21&linkId=41f2426a0c967b28f7e954d75db9d28d",
-      "brand": "Gen German",
-      "dosageCapsule": 420,
-      "capsules": 1250,
-      "price": 24.9
-  },
-  {
-      "name": "Vitamin K - 100mcg",
-      "nutraceutical": "vitamin-k",
-      "image": "https://m.media-amazon.com/images/I/61+PdLXFrWL._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B00OA0J48A/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B00OA0J48A&linkCode=as2&tag=healthprote04-21&linkId=bade690cbf48ae0ebb728fd935893daf",
-      "brand": "Warnke Vitalstoffe",
-      "dosageCapsule": 100,
-      "capsules": 100,
-      "price": 13.45
-  },
-  {
-      "name": "Collagen - 40mg",
-      "nutraceutical": "collagen",
-      "image": "https://m.media-amazon.com/images/I/71EYeE2jzyL._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B0028J6NRU/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B0028J6NRU&linkCode=as2&tag=healthprote04-21&linkId=fa5c4ca4b41de19b6d3953b60878aa1c",
-      "brand": "Now Foods",
+      "asin": "B0013OXB58",
+      "title": "Now Foods 5-HTP 100mg Standard - 60 Cápsulas",
+      "url": "https://www.amazon.es/dp/B0013OXB58?tag=healthprote04-21&linkCode=ogi&th=1&psc=1",
+      "image": "https://www.healthprotection.com/wp-content/plugins/aawp/public/image.php?url=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvNDFFNUE4M0lLNEwuX1NMMTYwXy5qcGc",
+      "rating": "3.9",
+      "star_rating": "<a  data-aawp-product-id=\"B0013OXB58\" data-aawp-product-title=\"Now Foods 5-HTP 100mg Standard - 60 Cápsulas\" class=\"aawp-star-rating aawp-star-rating--small aawp-star-rating--v1\" href=\"https://www.amazon.es/product-reviews/B0013OXB58?tag=healthprote04-21\" title=\"Reviews on Amazon\" rel=\"nofollow noopener sponsored\" target=\"_blank\"><span style=\"width: 80%;\"></span></a>",
+      "reviews": "56 Reviews",
+      "price": "14,88 EUR",
+      "list_price": null,
+      "amount_saved": 0,
+      "percentage_saved": 0,
+      "last_update": "2021-12-06",
+      "name": "5-HTP - 100mg",
+      "brand": "https://m.media-amazon.com/images/I/614xh5uOv3L._AC_SL1500_.jpg",
       "dosageCapsule": 60,
-      "capsules": 40,
-      "price": 29.9
-  },
-  {
-      "name": "Glucosamine - 1500mg",
-      "nutraceutical": "glucosamine",
-      "image": "https://m.media-amazon.com/images/I/81Svw2DF9kL._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B00CSUMJLI/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B00CSUMJLI&linkCode=as2&tag=healthprote04-21&linkId=1c436fe6bcf0a3641ebd16a7110b389f",
-      "brand": "Simply Supplements",
-      "dosageCapsule": 120,
-      "capsules": 1500,
-      "price": 20.75
-  },
-  {
-      "name": "Curcumin - 1000mg",
-      "nutraceutical": "curcumin",
-      "image": "https://m.media-amazon.com/images/I/71X-x39uIoL._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B077Q37557/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B077Q37557&linkCode=as2&tag=healthprote04-21&linkId=9ebcff8a97eb9f9ca9deca03f1f851d6",
-      "brand": "Vitafair",
-      "dosageCapsule": 90,
-      "capsules": 1000,
-      "price": 23.9
-  },
-  {
-      "name": "Ginger - 1000mg",
-      "nutraceutical": "ginger",
-      "image": "https://m.media-amazon.com/images/I/71b+BIZaWKL._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B017EOED3E/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B017EOED3E&linkCode=as2&tag=healthprote04-21&linkId=06db93aff7d91c0078f77c62f8a426d5",
-      "brand": "El Granero Integral",
-      "dosageCapsule": 90,
-      "capsules": 500,
-      "price": 9.29
-  },
-  {
-      "name": "Omega 3 - 1000mg",
-      "nutraceutical": "omega-3",
-      "image": "https://m.media-amazon.com/images/I/71jwxQ4ks1L._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B078Y9TRWV/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B078Y9TRWV&linkCode=as2&tag=healthprote04-21&linkId=f9a2fe5bb11e09da731886478a4a2072",
-      "brand": "ZENement",
-      "dosageCapsule": 200,
-      "capsules": 1000,
-      "price": 17.97
-  },
-  {
-      "name": "Alpha-GPC - 600mg",
-      "nutraceutical": "alpha-gpc",
-      "image": "https://images-na.ssl-images-amazon.com/images/I/71fY4kFvNuL.__AC_SX300_SY300_QL70_ML2_.jpg",
-      "link": "https://www.amazon.es/gp/product/B0847P5H98/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B0847P5H98&linkCode=as2&tag=healthprote04-21&linkId=69e27eb9b5a3f0008d6677035b8f2ffa",
-      "brand": "Nutravita",
-      "dosageCapsule": 120,
-      "capsules": 650,
-      "price": 23.95
-  },
-  {
-      "name": "Beta-Alanine - 5000mg",
-      "nutraceutical": "beta-alanine",
-      "image": "https://m.media-amazon.com/images/I/71Fw1Kzm8uL._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B00GSQZOKQ/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B00GSQZOKQ&linkCode=as2&tag=healthprote04-21&linkId=e0ff392acf7824e74a7896322a491c51",
-      "brand": "Victory Endurance",
-      "dosageCapsule": 90,
-      "capsules": 1600,
-      "price": 14.18
-  },
-  {
-      "name": "Rhodiola Rosea - 500mg",
-      "nutraceutical": "rhodiola-rosea",
-      "image": "https://m.media-amazon.com/images/I/71CDNzlKQcL._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B00VFUGEYK/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B00VFUGEYK&linkCode=as2&tag=healthprote04-21&linkId=ee5e933d71ba6833ae8c1d388c6b10a8",
-      "brand": "Store de fairvital",
-      "dosageCapsule": 120,
-      "capsules": 500,
-      "price": 31.95
-  },
-  {
-      "name": "HMB - 1000mg",
-      "nutraceutical": "hmb",
-      "image": "https://m.media-amazon.com/images/I/61qF2iPcFZS._AC_SL1106_.jpg",
-      "link": "https://www.amazon.es/gp/product/B07DVNSPPL/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B07DVNSPPL&linkCode=as2&tag=healthprote04-21&linkId=138d61351faa0dce4d8bcf343218c1c9",
-      "brand": "Scientiffic Nutrition",
-      "dosageCapsule": 100,
-      "capsules": 1000,
-      "price": 19.9
-  },
-  {
-      "name": "Milk Thistle - 250mg",
-      "nutraceutical": "milk-thistle",
-      "image": "https://m.media-amazon.com/images/I/61n+wIuR1WL._AC_SL1200_.jpg",
-      "link": "https://www.amazon.es/gp/product/B00068S5XU/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B00068S5XU&linkCode=as2&tag=healthprote04-21&linkId=aeac9bff416f3e3087cbab4430ca6c50",
-      "brand": "Swanson",
-      "dosageCapsule": 120,
-      "capsules": 250,
-      "price": 20.41
-  },
-  {
-      "name": "NAC - 1000mg",
-      "nutraceutical": "nac",
-      "image": "https://m.media-amazon.com/images/I/61U-w4z6giL._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B078WV4M6V/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B078WV4M6V&linkCode=as2&tag=healthprote04-21&linkId=02d26609d8d392849c15f4a64d64e21b",
-      "brand": "Now Foods",
-      "dosageCapsule": 120,
-      "capsules": 1000,
-      "price": 33.11
-  },
-  {
-      "name": "Spirulina - 500mg",
-      "nutraceutical": "spirulina",
-      "image": "https://m.media-amazon.com/images/I/61JHa61H0rL._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B010TDFPCU/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B010TDFPCU&linkCode=as2&tag=healthprote04-21&linkId=798ddc55499238b4e03da22885ea8ec5",
-      "brand": "Bio Atlantic",
-      "dosageCapsule": 300,
-      "capsules": 500,
-      "price": 12.9
-  },
-  {
-      "name": "Inositol - 1000mg",
-      "nutraceutical": "inositol",
-      "image": "https://m.media-amazon.com/images/I/71bP2PNjzvL._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B0002PU5YO/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B0002PU5YO&linkCode=as2&tag=healthprote04-21&linkId=af5774d852dc466302e5e1345ed47acd",
-      "brand": "Now Foods",
-      "dosageCapsule": 100,
-      "capsules": 500,
-      "price": 12.9
-  },
-  {
-      "name": "Magnesium - 400mg",
-      "nutraceutical": "magnesium",
-      "image": "https://m.media-amazon.com/images/I/71yRAQH2huS._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B07P5K7DQP/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B07P5K7DQP&linkCode=as2&tag=healthprote04-21&linkId=279af5460aec9d375fcd2dc6e2a69d27",
-      "brand": "Pure",
-      "dosageCapsule": 90,
-      "capsules": 120,
-      "price": 24.63
-  },
-  {
-      "name": "Melatonin - 5mg",
-      "nutraceutical": "melatonin",
-      "image": "https://m.media-amazon.com/images/I/51XyikJXw1L._AC_SL1000_.jpg",
-      "link": "https://www.amazon.es/gp/product/B07QB1MD4L/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B07QB1MD4L&linkCode=as2&tag=healthprote04-21&linkId=c56bc786555c34e5559f688a65e93250",
-      "brand": "Sculpt open innovation",
-      "dosageCapsule": 90,
-      "capsules": 1,
-      "price": 6.9
-  },
-  {
-      "name": "Ashwagandha - 500mg",
-      "nutraceutical": "ashwagandha",
-      "image": "https://m.media-amazon.com/images/I/71Zv4zeJRTL._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B07DRHDJRT/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B07DRHDJRT&linkCode=as2&tag=healthprote04-21&linkId=b07ec14126db616a7e11919683d9b4ad",
-      "brand": "Nutravita",
-      "dosageCapsule": 60,
-      "capsules": 500,
-      "price": 26.95
-  },
-  {
-      "name": "Vitamin C - 1000mg",
-      "nutraceutical": "vitamin-c",
-      "image": "https://m.media-amazon.com/images/I/61nh0HYd7dL._AC_SL1500_.jpg",
-      "link": "https://www.amazon.es/gp/product/B00DN9LHUM/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B00DN9LHUM&linkCode=as2&tag=healthprote04-21&linkId=d8b658c6b8420ff36b9f59f9478c5988",
-      "brand": "Solaray",
-      "dosageCapsule": 100,
-      "capsules": 1000,
-      "price": 14.82
-  },
-  {
-      "name": "Vitamin E - 200UI",
-      "nutraceutical": "vitamin-e",
-      "image": "https://m.media-amazon.com/images/I/71GsadwUA8L._AC_SL1200_.jpg",
-      "link": "https://www.amazon.es/gp/product/B000WMWXLU/ref=as_li_tl?ie=UTF8&camp=3638&creative=24630&creativeASIN=B000WMWXLU&linkCode=as2&tag=healthprote04-21&linkId=901c3b386dfe59cf3b379fa1ce85cc4c",
-      "brand": "Solgar",
-      "dosageCapsule": 50,
-      "capsules": 200,
-      "price": 15.07
+      "capsules": 100
   }
 ]

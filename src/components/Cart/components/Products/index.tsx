@@ -1,69 +1,131 @@
 import React, { useCallback } from 'react';
+import { FaMinus, FaPlus } from 'react-icons/fa';
 // import { hotjar } from 'react-hotjar';
 
 import { useApp } from 'contexts/app';
 
+import ProductData from 'dtos/ProductData';
 import Container, {
   Product,
+  ProductImageContainer,
   ProductImage,
   ProductContent,
   ProductContentTitle,
   // ProductContentTitleLink,
   ProductContentDosage,
   ProductInfo,
-  // ProductPrice,
+  ProductQuantity,
+  ProductPrice,
+  ProductPriceValue,
+  ProductPriceCurrency,
   // ProductBuy,
+  ProductReplace,
   ProductRemove,
 } from './styles';
 
 const Products: React.FC = () => {
   const context = useApp();
-  const { nutraceuticals, products, updateProducts } = context;
+  const { nutraceuticals, products, selectedProducts, updateSelectedProducts } =
+    context;
+
+  const handleQuantityButton = useCallback(
+    (productAsin, value) => {
+      const updatedSelectedProducts = [...selectedProducts];
+
+      const selectedProductIndex = selectedProducts.findIndex(
+        selectedProduct => selectedProduct.asin === productAsin,
+      );
+
+      const updatedSelectedProduct = {
+        ...selectedProducts[selectedProductIndex],
+      };
+
+      if (!updatedSelectedProduct.quantity) {
+        updatedSelectedProduct.quantity = 1;
+      }
+
+      updatedSelectedProduct.quantity += value;
+
+      updatedSelectedProducts[selectedProductIndex] = updatedSelectedProduct;
+
+      updateSelectedProducts(updatedSelectedProducts);
+    },
+    [selectedProducts, updateSelectedProducts],
+  );
 
   const handleRemoveButton = useCallback(
     (productName: string) => {
-      const updatedProducts = products.filter(
-        product => product.name !== productName,
+      const updatedProducts = selectedProducts.filter(
+        selectedProduct => selectedProduct.name !== productName,
       );
-      updateProducts(updatedProducts);
+      updateSelectedProducts(updatedProducts);
     },
-    [products, updateProducts],
+    [selectedProducts, updateSelectedProducts],
+  );
+
+  const handleReplaceButton = useCallback(
+    (selectedProduct: ProductData) => {
+      const updatedSelectedProducts = [...selectedProducts];
+
+      const selectedProductIndex = selectedProducts.findIndex(
+        product => product.asin === selectedProduct.asin,
+      );
+
+      const replaceProducts = products.filter(
+        product =>
+          product.nutraceutical === selectedProduct.nutraceutical &&
+          product.asin !== selectedProduct.asin,
+      );
+
+      if (replaceProducts.length) {
+        updatedSelectedProducts[selectedProductIndex] =
+          replaceProducts[Math.floor(Math.random() * replaceProducts.length)];
+
+        updateSelectedProducts(updatedSelectedProducts);
+      }
+    },
+    [products, selectedProducts, updateSelectedProducts],
   );
 
   return (
     <Container>
-      {products.map(product => {
+      {selectedProducts.map(selectedProduct => {
         const productNutraceutical = nutraceuticals.find(
-          nutraceutical => nutraceutical.slug === product.nutraceutical,
+          nutraceutical =>
+            nutraceutical.title === selectedProduct.nutraceutical,
         );
 
-        // const linkArgs = product.link.match(
-        //   /^http[s]?:\/\/.*?\/product\/(.*)\/[a-zA-Z-_]+.*$/,
-        // );
+        const productQuantity = selectedProduct.quantity || 1;
 
-        // const linkAsin = linkArgs ? linkArgs[1] : '';
+        const productPriceArray = selectedProduct.price.split(' ');
+        const productPriceValue = parseFloat(
+          productPriceArray[0].replace(/,/g, '.'),
+        );
+        const productPriceCurrency = productPriceArray[1];
 
         return (
-          <Product key={product.name}>
+          <Product key={selectedProduct.asin}>
             {/* <ProductImage
               src={`${process.env.PUBLIC_URL}/svg/${currentProduct?.slug}.svg`}
               alt={currentProduct?.title}
               title={currentProduct?.title}
             /> */}
-            <ProductImage
-              src={product.image}
-              alt={product.name}
-              title={product.name}
-            />
+            <ProductImageContainer>
+              <ProductImage
+                src={selectedProduct.image}
+                alt={selectedProduct.name}
+                title={selectedProduct.name}
+              />
+            </ProductImageContainer>
             <ProductContent>
-              <ProductContentTitle>{product.name}</ProductContentTitle>
+              <ProductContentTitle>{selectedProduct.name}</ProductContentTitle>
               <ProductContentDosage>
-                {`${product.dosageCapsule}mg (${product.capsules} capsules)`}
+                {`${selectedProduct.dosageCapsule}mg (${selectedProduct.capsules} capsules)`}
               </ProductContentDosage>
             </ProductContent>
             <ProductInfo>
               <span>{`Why this ${productNutraceutical?.info.title}?`}</span>
-              <p>{product.brand}</p>
+              <p>{selectedProduct.brand}</p>
             </ProductInfo>
             {productNutraceutical?.info.link && (
               <ProductInfo>
@@ -77,22 +139,43 @@ const Products: React.FC = () => {
                 </a>
               </ProductInfo>
             )}
+            <ProductQuantity>
+              <FaMinus
+                size={16}
+                color="#565656"
+                onClick={() => handleQuantityButton(selectedProduct.asin, -1)}
+              />
+              <span>{selectedProduct.quantity || 1}</span>
+              <FaPlus
+                size={16}
+                color="#565656"
+                onClick={() => handleQuantityButton(selectedProduct.asin, 1)}
+              />
+            </ProductQuantity>
+            <ProductPrice>
+              <ProductPriceValue>
+                {(productPriceValue * productQuantity).toLocaleString('es-ES', {
+                  maximumFractionDigits: 2,
+                  minimumFractionDigits: 2,
+                })}
+              </ProductPriceValue>
+              <ProductPriceCurrency>
+                {productPriceCurrency}
+              </ProductPriceCurrency>
+            </ProductPrice>
+            <ProductReplace
+              size={20}
+              onClick={() => {
+                handleReplaceButton(selectedProduct);
+              }}
+            />
             <ProductRemove
               size={20}
               onClick={() => {
-                handleRemoveButton(product.name);
+                handleRemoveButton(selectedProduct.name);
               }}
             />
-            {/* <ProductPrice>
-              {!!product.price && (
-                <>
-                  {`${new Intl.NumberFormat('es-ES', {
-                    style: 'currency',
-                    currency: 'EUR',
-                  }).format(product.price)}`}
-                </>
-              )}
-            </ProductPrice> */}
+
             {/* <ProductBuy
               href={product.link}
               target="_blank"
