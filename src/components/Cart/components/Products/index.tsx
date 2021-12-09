@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
+import ReactHtmlParser from 'react-html-parser';
 // import { hotjar } from 'react-hotjar';
 
 import { useApp } from 'contexts/app';
@@ -16,6 +17,8 @@ import Container, {
   ProductContentDosage,
   ProductInfo,
   ProductQuantity,
+  ProductRating,
+  ProductReviews,
   ProductPrice,
   ProductPriceValue,
   ProductPriceCurrency,
@@ -120,6 +123,15 @@ const Products: React.FC = () => {
               <ProductContentDosage>
                 {`${selectedProduct.dosageCapsule}mg (${selectedProduct.capsules} capsules)`}
               </ProductContentDosage>
+              {!!selectedProduct.rating && selectedProduct.star_rating && (
+                <ProductRating>
+                  <span>{selectedProduct.rating}</span>
+                  {ReactHtmlParser(selectedProduct.star_rating)}
+                </ProductRating>
+              )}
+              {selectedProduct.reviews && (
+                <ProductReviews>{selectedProduct.reviews}</ProductReviews>
+              )}
             </ProductContent>
             <ProductInfo>
               <span>{`Why this ${productNutraceutical?.info.title}?`}</span>

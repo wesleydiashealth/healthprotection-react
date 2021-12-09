@@ -76,11 +76,11 @@ export const CheckoutButton = styled.a`
   }
 `;
 
-export const SaveRecommendation = styled.p`
-  color: #1bc9bd;
+export const CheckoutAmazon = styled.img`
+  margin-top: 10px;
 
-  font-size: 14px;
-  line-height: 22px;
+  max-width: 100%;
+  width: 140px;
 `;
 
 export default Container;

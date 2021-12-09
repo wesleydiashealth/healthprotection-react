@@ -13,7 +13,7 @@ import Container, {
   Description,
   Shipping,
   CheckoutButton,
-  // SaveRecommendation,
+  CheckoutAmazon,
 } from './styles';
 
 const Summary: React.FC = () => {
@@ -78,6 +78,11 @@ const Summary: React.FC = () => {
       >
         {labels.summary_button} <BsArrowRight size={18} />
       </CheckoutButton>
+      <CheckoutAmazon
+        src={`${process.env.PUBLIC_URL}/images/available_at_amazon.jpeg`}
+        alt="Available at Amazon"
+        title="Available at Amazon"
+      />
       {/* <SaveRecommendation>
         {labels.summary_save_recommendation}
       </SaveRecommendation> */}

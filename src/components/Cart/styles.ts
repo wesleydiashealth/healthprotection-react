@@ -16,7 +16,7 @@ const Container = styled.div<ContainerProps>`
 
   position: relative;
 
-  max-width: 1300px;
+  /* max-width: 1300px; */
 
   @media screen and (min-width: 768px) {
     padding: 80px 50px 0;
