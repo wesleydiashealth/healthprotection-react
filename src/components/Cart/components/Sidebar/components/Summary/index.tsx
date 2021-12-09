@@ -26,9 +26,11 @@ const Summary: React.FC = () => {
       productPriceArray[0].replace(/,/g, '.'),
     );
 
+    const value = !Number.isNaN(productPriceValue) ? productPriceValue : 0;
+
     const quantity = product.quantity || 1;
 
-    return acc + productPriceValue * quantity;
+    return acc + value * quantity;
   }, 0);
 
   const cartTotalPriceFormatted = cartTotalPrice.toLocaleString('es-ES', {
@@ -79,7 +81,7 @@ const Summary: React.FC = () => {
         {labels.summary_button} <BsArrowRight size={18} />
       </CheckoutButton>
       <CheckoutAmazon
-        src={`${process.env.PUBLIC_URL}/images/available_at_amazon.jpeg`}
+        src={`${process.env.PUBLIC_URL}/images/available_at_amazon.png`}
         alt="Available at Amazon"
         title="Available at Amazon"
       />

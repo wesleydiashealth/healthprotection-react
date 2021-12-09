@@ -168,7 +168,11 @@ export const ProductPrice = styled.div`
   }
 `;
 
-export const ProductPriceValue = styled.span``;
+export const ProductPriceValue = styled.span`
+  display: inline-flex;
+
+  max-width: 80px;
+`;
 
 export const ProductPriceCurrency = styled.span`
   margin-left: 5px;

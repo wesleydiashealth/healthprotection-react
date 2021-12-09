@@ -164,13 +164,15 @@ const Products: React.FC = () => {
             </ProductQuantity>
             <ProductPrice>
               <ProductPriceValue>
-                {productPriceValue.toLocaleString('es-ES', {
-                  maximumFractionDigits: 2,
-                  minimumFractionDigits: 2,
-                })}
+                {!Number.isNaN(productPriceValue)
+                  ? productPriceValue.toLocaleString('es-ES', {
+                      maximumFractionDigits: 2,
+                      minimumFractionDigits: 2,
+                    })
+                  : selectedProduct.price}
               </ProductPriceValue>
               <ProductPriceCurrency>
-                {productPriceCurrency}
+                {!Number.isNaN(productPriceValue) && productPriceCurrency}
               </ProductPriceCurrency>
             </ProductPrice>
             {/* <ProductReplace
