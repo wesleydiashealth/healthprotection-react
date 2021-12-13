@@ -59,6 +59,11 @@ const Summary: React.FC = () => {
 
   return (
     <Container>
+      <CheckoutAmazon
+        src={`${process.env.PUBLIC_URL}/images/available_at_amazon.png`}
+        alt="Available at Amazon"
+        title="Available at Amazon"
+      />
       <Title>
         <span>{labels.summary_total}</span>{' '}
         <TitlePrice>
@@ -80,11 +85,7 @@ const Summary: React.FC = () => {
       >
         {labels.summary_button} <BsArrowRight size={18} />
       </CheckoutButton>
-      <CheckoutAmazon
-        src={`${process.env.PUBLIC_URL}/images/available_at_amazon.png`}
-        alt="Available at Amazon"
-        title="Available at Amazon"
-      />
+
       {/* <SaveRecommendation>
         {labels.summary_save_recommendation}
       </SaveRecommendation> */}

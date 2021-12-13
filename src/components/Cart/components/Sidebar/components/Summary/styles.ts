@@ -77,10 +77,10 @@ export const CheckoutButton = styled.a`
 `;
 
 export const CheckoutAmazon = styled.img`
-  margin-top: 10px;
+  margin: 0 0 20px;
 
   max-width: 100%;
-  width: 140px;
+  width: 240px;
 `;
 
 export default Container;
