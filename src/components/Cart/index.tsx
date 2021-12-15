@@ -68,16 +68,18 @@ const Cart: React.FC = () => {
         )}
       </StepIntro>
       <StepContent>
-        <CheckoutProducts>
-          <h4>{labels?.cart_subtitle}</h4>
-          <Products />
-          <AmazonPolicy>
-            Health Protection Europe S.L is a reader supported, all products
-            displayed earn us commission when purchased through the links.
-            Health Protection is a participant in the Amazon Services LLC
-            Associates Program and its affiliates around the world.
-          </AmazonPolicy>
-        </CheckoutProducts>
+        {isActive && (
+          <CheckoutProducts>
+            <h4>{labels?.cart_subtitle}</h4>
+            <Products />
+            <AmazonPolicy>
+              Health Protection Europe S.L is a reader supported, all products
+              displayed earn us commission when purchased through the links.
+              Health Protection is a participant in the Amazon Services LLC
+              Associates Program and its affiliates around the world.
+            </AmazonPolicy>
+          </CheckoutProducts>
+        )}
         <Sidebar />
       </StepContent>
     </Container>

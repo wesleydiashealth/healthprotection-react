@@ -154,6 +154,7 @@ export const StepContent = styled.div`
 
   display: flex;
   flex-flow: column;
+  justify-content: center;
 
   max-width: 100%;
 
