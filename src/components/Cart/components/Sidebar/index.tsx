@@ -8,8 +8,8 @@ import Container from './styles';
 const Sidebar: React.FC = () => {
   return (
     <Container>
-      <Report />
       <Summary />
+      <Report />
     </Container>
   );
 };
