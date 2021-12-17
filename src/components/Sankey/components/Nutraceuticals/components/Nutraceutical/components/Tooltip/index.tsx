@@ -49,7 +49,9 @@ const Tooltip: React.FC<TooltipProps> = ({ slug, supConnections }) => {
       />
       <ContainerTitle>
         Scientific summary for{' '}
-        <a href={nutraceutical?.info.link}>{nutraceutical?.info.title}</a>
+        <a href={nutraceutical?.info.link} target="_blank" rel="noreferrer">
+          {nutraceutical?.info.title}
+        </a>
       </ContainerTitle>
       <ContainerDescription>
         {nutraceutical?.info.description &&
