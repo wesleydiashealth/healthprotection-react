@@ -2,8 +2,10 @@ import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 
 import { useApp } from 'contexts/app';
+import { useSankey } from 'contexts/sankey';
 
 import Container, {
+  ContainerCloseButton,
   ContainerTitle,
   ContainerDescription,
   ContainerLink,
@@ -32,10 +34,19 @@ const Tooltip: React.FC<TooltipProps> = ({ slug, supConnections }) => {
   const context = useApp();
   const { nutraceuticals } = context;
 
+  const sankeyContext = useSankey();
+  const { updateActiveNutraceutical } = sankeyContext;
+
   const nutraceutical = nutraceuticals.find(item => item.slug === slug);
 
   return (
     <Container>
+      <ContainerCloseButton
+        size={24}
+        onClick={() => {
+          updateActiveNutraceutical('');
+        }}
+      />
       <ContainerTitle>
         Scientific summary for{' '}
         <a href={nutraceutical?.info.link}>{nutraceutical?.info.title}</a>
@@ -51,7 +62,7 @@ const Tooltip: React.FC<TooltipProps> = ({ slug, supConnections }) => {
       >
         {`Access ${nutraceutical?.info.studies} scientific studies`}
       </ContainerLink>
-      <ContainerList>
+      <ContainerList style={{ height: '400px' }}>
         {nutraceutical?.info.relations
           .filter(relation => supConnections.includes(relation.suboutcome.slug))
           .map(relation => (

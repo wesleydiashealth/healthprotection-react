@@ -28,7 +28,6 @@ export const ContainerPopup = styled(Popup)<ContainerPopupProps>`
 const Container = styled.div<ContainerProps>`
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  padding: 10px;
 
   position: relative;
 
@@ -36,7 +35,7 @@ const Container = styled.div<ContainerProps>`
 
   display: flex;
   flex-flow: column wrap;
-  align-items: center;
+  align-items: inherit;
   justify-content: space-between;
 
   box-sizing: border-box;
@@ -91,7 +90,7 @@ export const Anchor = styled.div`
 
 export const ContentContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: inherit;
 
   flex: 1;
 
@@ -101,10 +100,14 @@ export const ContentContainer = styled.div`
 `;
 
 export const Content = styled.div`
+  padding: 10px;
+
   display: flex;
   align-items: center;
 
   flex: 1;
+
+  position: relative;
 `;
 
 export const ContentTitle = styled.h4`

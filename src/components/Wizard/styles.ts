@@ -210,6 +210,13 @@ export const StepContainer = styled.div<StepContainerProps>`
     width: 100%;
   }
 
+  .birth-month,
+  .birty-year {
+    &__menu-list {
+      max-height: 160px;
+    }
+  }
+
   .select-input {
     font-size: 12px;
     line-height: 12px;

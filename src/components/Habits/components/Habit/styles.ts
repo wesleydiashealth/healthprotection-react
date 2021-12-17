@@ -86,6 +86,13 @@ export const Title = styled.h4`
   svg {
     margin-left: 5px;
   }
+
+  .__react_component_tooltip {
+    border-radius: 20px;
+    padding: 20px;
+
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.11);
+  }
 `;
 
 export const Question = styled.span`

@@ -171,7 +171,7 @@ const Wizard: React.FC = () => {
         <Form ref={formRef} onSubmit={handleSubmit}>
           <CarouselProvider
             naturalSlideWidth={400}
-            naturalSlideHeight={460}
+            naturalSlideHeight={480}
             totalSlides={8}
             visibleSlides={1}
             step={1}

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Scrollbar } from 'react-scrollbars-custom';
+import React from 'react';
 
 import { useApp } from 'contexts/app';
+import { useSankey } from 'contexts/sankey';
 
 import NutraceuticalData from 'dtos/NutraceuticalData';
 
@@ -10,8 +10,6 @@ import { ReactComponent as NutritionInfoIcon } from 'assets/nutrition_info.svg';
 import Tooltip from './components/Tooltip';
 
 import Container, {
-  ContainerPopup,
-  ContainerCloseButton,
   Anchors,
   Anchor,
   ContentContainer,
@@ -29,8 +27,10 @@ const Nutraceutical: React.FC<NutraceuticalData> = ({
   const appContext = useApp();
   const { connections } = appContext;
 
-  const [open, setOpen] = useState(false);
-  const closeModal = () => setOpen(false);
+  const sankeyContext = useSankey();
+  const { activeNutraceutical, updateActiveNutraceutical } = sankeyContext;
+
+  const isActive = activeNutraceutical === slug;
 
   const { description } = info;
 
@@ -63,7 +63,23 @@ const Nutraceutical: React.FC<NutraceuticalData> = ({
         ))}
       </Anchors>
       <ContentContainer>
-        <ContainerPopup
+        <Content
+          onClick={() => {
+            updateActiveNutraceutical(!isActive ? slug : '');
+          }}
+        >
+          <NutritionInfoIcon />
+          <ContentTitle>{title}</ContentTitle>
+          <ContentDescription>{`${dosage}`}</ContentDescription>
+        </Content>
+        {isActive && (
+          <Tooltip
+            {...{
+              ...{ slug, title, description, supConnections },
+            }}
+          />
+        )}
+        {/* <ContainerPopup
           open={open}
           closeOnDocumentClick
           onClose={closeModal}
@@ -89,7 +105,7 @@ const Nutraceutical: React.FC<NutraceuticalData> = ({
               }}
             />
           </Scrollbar>
-        </ContainerPopup>
+        </ContainerPopup> */}
       </ContentContainer>
     </Container>
   );

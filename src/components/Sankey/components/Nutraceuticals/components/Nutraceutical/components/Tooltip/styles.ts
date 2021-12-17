@@ -1,4 +1,6 @@
 import styled, { css } from 'styled-components';
+import { Scrollbar } from 'react-scrollbars-custom';
+import { IoMdCloseCircle } from 'react-icons/io';
 
 import { ReactComponent as Strength1Icon } from 'assets/strength_1.svg';
 import { ReactComponent as Strength2Icon } from 'assets/strength_2.svg';
@@ -12,7 +14,32 @@ interface StrengthIconProps {
   isActive: boolean;
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  border-radius: 10px;
+  padding: 20px;
+
+  position: absolute;
+  top: 0;
+  right: 240px;
+  z-index: 9999;
+
+  background: #fff;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+
+  width: 1000px;
+  max-width: calc(100vw - 320px);
+`;
+
+export const ContainerCloseButton = styled(IoMdCloseCircle)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+
+  color: #62a8ea;
+
+  cursor: pointer;
+`;
 
 export const ContainerTitle = styled.h3`
   margin-bottom: 20px;
@@ -55,9 +82,11 @@ export const ContainerLink = styled.a`
   }
 `;
 
-export const ContainerList = styled.div``;
+export const ContainerList = styled(Scrollbar)``;
 
 export const ContainerListItem = styled.div`
+  padding-right: 20px;
+
   & ~ div {
     margin-top: 40px;
   }

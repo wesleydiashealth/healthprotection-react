@@ -56,8 +56,6 @@ export const ContainerInteractionsItemName = styled.span`
 export const ContainerInteractionsItemDosage = styled.span``;
 
 export const ContainerSources = styled.div`
-  padding: 10px;
-
   display: flex;
   flex-flow: row wrap;
   align-items: center;

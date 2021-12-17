@@ -267,6 +267,7 @@ const Step6: React.FC = () => {
           />
           <Autocomplete
             multiple
+            limitTags={2}
             id="drugs_daily"
             className="autocomplete-input"
             options={drugs}
@@ -296,6 +297,7 @@ const Step6: React.FC = () => {
           />
           <Autocomplete
             multiple
+            limitTags={2}
             id="drugs_occasionally"
             className="autocomplete-input"
             options={drugs}
