@@ -211,7 +211,7 @@ export const StepContainer = styled.div<StepContainerProps>`
   }
 
   .birth-month,
-  .birty-year {
+  .birth-year {
     &__menu-list {
       max-height: 160px;
     }
