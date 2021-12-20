@@ -1,4 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { transparentize } from 'polished';
+
+interface CheckoutButtonProps {
+  isActive?: boolean;
+}
 
 const Container = styled.div`
   display: flex;
@@ -52,7 +57,7 @@ export const Shipping = styled.p`
   line-height: 22px;
 `;
 
-export const CheckoutButton = styled.a`
+export const CheckoutButton = styled.a<CheckoutButtonProps>`
   margin-bottom: 10px;
   border: none;
   border-radius: 32px;
@@ -74,6 +79,13 @@ export const CheckoutButton = styled.a`
   svg {
     margin-left: 10px;
   }
+
+  ${props =>
+    !props.isActive &&
+    css`
+      pointer-events: none;
+      background: ${transparentize(0.4, '#ffae30')};
+    `}
 `;
 
 export const CheckoutAmazon = styled.img`

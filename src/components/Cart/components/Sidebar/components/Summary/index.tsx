@@ -18,7 +18,13 @@ import Container, {
 
 const Summary: React.FC = () => {
   const context = useApp();
-  const { labels, selectedProducts } = context;
+  const { steps, labels, selectedProducts } = context;
+  const { step1: initialStep, step2: previousStep } = steps;
+
+  const isActive =
+    previousStep.isCompleted &&
+    initialStep.isCompleted &&
+    !!selectedProducts.length;
 
   const cartTotalPrice = selectedProducts.reduce((acc, product) => {
     const productPriceArray = product.price.split(' ');
@@ -82,6 +88,7 @@ const Summary: React.FC = () => {
         onClick={() => {
           hotjar.event('buy-button');
         }}
+        isActive={isActive}
       >
         {labels.summary_button} <BsArrowRight size={18} />
       </CheckoutButton>
