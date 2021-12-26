@@ -34,7 +34,7 @@ import Step5 from './Step5';
 // import Step6 from './Step6';
 import Step7 from './Step7';
 // import Step8 from './Step8';
-import Step9 from './Step9';
+// import Step9 from './Step9';
 import Step10 from './Step10';
 
 interface RequestData {
@@ -63,7 +63,7 @@ const Wizard: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: HTMLFormElement) => {
-      const { age, gender, diet, allergies, med, decease } = data;
+      const { age, gender, diet, allergies, med } = data;
 
       updateStep('step2', { ...nextStep, isLoaded: false });
 
@@ -73,7 +73,7 @@ const Wizard: React.FC = () => {
         { question: 'diet', answer: diet },
         { question: 'allergies', answer: allergies },
         { question: 'med', answer: med },
-        { question: 'decease', answer: decease },
+        { question: 'decease', answer: 'none' },
       ];
 
       const isCompleted = requestData.reduce(
@@ -172,7 +172,7 @@ const Wizard: React.FC = () => {
           <CarouselProvider
             naturalSlideWidth={400}
             naturalSlideHeight={480}
-            totalSlides={8}
+            totalSlides={7}
             visibleSlides={1}
             step={1}
             dragEnabled={false}
@@ -205,9 +205,9 @@ const Wizard: React.FC = () => {
                   {/* <Slide index={8}>
                     <Step8 />
                   </Slide> */}
-                  <Slide index={7}>
+                  {/* <Slide index={7}>
                     <Step9 />
-                  </Slide>
+                  </Slide> */}
                   <Slide index={8}>
                     <Step10 />
                   </Slide>
