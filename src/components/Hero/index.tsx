@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
-import { GiMicroscope } from 'react-icons/gi';
-import { ImPlay } from 'react-icons/im';
+// import { GiMicroscope } from 'react-icons/gi';
+// import { ImPlay } from 'react-icons/im';
 // import Popup from 'reactjs-popup';
 
 import { useApp } from 'contexts/app';
@@ -10,10 +10,10 @@ import { useApp } from 'contexts/app';
 import Container, {
   HeroIntro,
   HeroButton,
-  HeroList,
-  HeroListItem,
-  HeroListItemLink,
-  HeroListItemText,
+  // HeroList,
+  // HeroListItem,
+  // HeroListItemLink,
+  // HeroListItemText,
   // HeroListItemPopupContent,
 } from './styles';
 
@@ -21,22 +21,22 @@ const Hero: React.FC = () => {
   const context = useApp();
   const { labels } = context;
 
-  const steps = [
-    {
-      id: 'video',
-      icon: <ImPlay size={32} color="#DB71AF" />,
-      link: '#',
-      modal: true,
-      title: labels.hero_video,
-    },
-    {
-      id: 'science',
-      icon: <GiMicroscope size={32} color="#DB71AF" />,
-      link: '#',
-      modal: false,
-      title: labels.hero_science,
-    },
-  ];
+  // const steps = [
+  //   {
+  //     id: 'video',
+  //     icon: <ImPlay size={32} color="#DB71AF" />,
+  //     link: '#',
+  //     modal: true,
+  //     title: labels.hero_video,
+  //   },
+  //   {
+  //     id: 'science',
+  //     icon: <GiMicroscope size={32} color="#DB71AF" />,
+  //     link: '#',
+  //     modal: false,
+  //     title: labels.hero_science,
+  //   },
+  // ];
 
   return (
     <Container id="hero">
