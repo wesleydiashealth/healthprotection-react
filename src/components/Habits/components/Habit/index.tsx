@@ -61,6 +61,28 @@ const Habit: React.FC<FoodData> = food => {
 
       const habitIndex = habits.findIndex(habit => habit.food === food.title);
 
+      // const nutraceuticalsDiscounts = foods
+      //   .find(discountFood => discountFood.slug === selectedFood.slug)
+      //   ?.interactions.filter(interaction =>
+      //     selectedNutraceuticals.includes(interaction.nutraceuticalSlug),
+      //   )
+      //   .reduce((acc, interaction) => {
+      //     const dosageValue = interaction.dosagesGroup.find(
+      //       group => group.dosageFrequency === frequency.value,
+      //     )?.dosageAmount;
+
+      //     if (!dosageValue) return acc;
+
+      //     return {
+      //       ...acc,
+      //       [interaction.nutraceuticalSlug]: [parseInt(dosageValue, 10)],
+      //     };
+      //   }, {});
+
+      // if (nutraceuticalsDiscounts) {
+      //   updateDiscounts(nutraceuticalsDiscounts);
+      // }
+
       if (habitIndex > -1) {
         updatedHabits[habitIndex] = {
           food: selectedFood.title,

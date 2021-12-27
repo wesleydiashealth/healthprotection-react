@@ -16,6 +16,7 @@ import HabitData from 'dtos/HabitData';
 import FineTuneData from 'dtos/FineTuneData';
 import ProductData from 'dtos/ProductData';
 import CountData from 'dtos/CountData';
+import DiscountsData from 'dtos/DiscountsData';
 
 interface LabelsData {
   [key: string]: string;
@@ -51,6 +52,7 @@ interface AppContextData {
   error: string;
   products: ProductData[];
   selectedProducts: ProductData[];
+  discounts: DiscountsData;
   updateStep(step: string, attrs: StepData): Promise<void>;
   updateAnswers(answers: AnswerData[]): Promise<void>;
   updateExcludes(updatedExcludes: ExcludesData): Promise<void>;
@@ -73,6 +75,7 @@ interface AppContextData {
   updateError(updatedError: string): Promise<void>;
   updateProducts(updatedProducts: ProductData[]): Promise<void>;
   updateSelectedProducts(updatedSelectedProducts: ProductData[]): Promise<void>;
+  updateDiscounts(updatedDiscounts: DiscountsData): Promise<void>;
 }
 
 const AppContext = createContext<AppContextData>({} as AppContextData);
@@ -129,6 +132,8 @@ export const AppProvider: React.FC = ({ children }) => {
   const [products, setProducts] = useState<ProductData[]>([]);
 
   const [selectedProducts, setSelectedProducts] = useState<ProductData[]>([]);
+
+  const [discounts, setDiscounts] = useState<DiscountsData>({});
 
   useEffect(() => {
     wordpressApi
@@ -350,6 +355,10 @@ export const AppProvider: React.FC = ({ children }) => {
     setSelectedProducts(updatedSelectedProducts);
   }
 
+  async function updateDiscounts(updatedDiscount: DiscountsData) {
+    setDiscounts({ ...discounts, ...updatedDiscount });
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -371,6 +380,7 @@ export const AppProvider: React.FC = ({ children }) => {
         error,
         products,
         selectedProducts,
+        discounts,
         updateStep,
         updateAnswers,
         updateExcludes,
@@ -388,6 +398,7 @@ export const AppProvider: React.FC = ({ children }) => {
         updateProducts,
         updateSelectedProducts,
         updateCount,
+        updateDiscounts,
       }}
     >
       {children}
