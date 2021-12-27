@@ -4,7 +4,7 @@ import { useMediaQuery } from 'react-responsive';
 import Sankey from 'components/Sankey';
 import SankeyMobile from 'components/SankeyMobile';
 
-import Hero from 'components/Hero';
+// import Hero from 'components/Hero';
 import Wizard from 'components/Wizard';
 import Cart from 'components/Cart';
 import Habits from 'components/Habits';
@@ -25,7 +25,7 @@ const Home: React.FC = () => {
   return (
     <Container>
       <AppProvider>
-        <Hero />
+        {/* <Hero /> */}
         <Wizard />
         {isDesktopOrLaptop ? <Sankey /> : <SankeyMobile />}
         <Habits />
