@@ -176,7 +176,7 @@ export const AppProvider: React.FC = ({ children }) => {
       })
       .catch(err => {
         if (err.response) {
-          setError(err.request.data.message);
+          setError(err.request.data?.message);
         } else if (err.request) {
           const errorMessage = err.request.response
             ? JSON.parse(err.request.response).message
