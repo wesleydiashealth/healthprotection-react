@@ -45,7 +45,7 @@ const Hero: React.FC = () => {
           {labels.hero_button}
         </HeroButton>
       </HeroIntro>
-      <HeroList>
+      {/* <HeroList>
         {steps.map(step => (
           <React.Fragment key={step.id}>
             {step.modal ? (
@@ -85,7 +85,7 @@ const Hero: React.FC = () => {
             )}
           </React.Fragment>
         ))}
-      </HeroList>
+      </HeroList> */}
     </Container>
   );
 };
