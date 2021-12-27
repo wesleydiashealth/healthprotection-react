@@ -161,7 +161,7 @@ export const Button = styled.a<ButtonProps>`
   }
 
   @media screen and (min-width: 768px) {
-    padding: 16px 18px;
+    padding: 16px 24px;
   }
 
   ${props =>
@@ -177,12 +177,6 @@ export const Button = styled.a<ButtonProps>`
       opacity: 0.4;
       pointer-events: none;
     `}
-
-  @media screen and (min-width: 768px) {
-    padding: 16px 24px;
-
-    font-size: 18px;
-  }
 `;
 
 export default Container;
