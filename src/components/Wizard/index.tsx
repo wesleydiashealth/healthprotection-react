@@ -63,7 +63,7 @@ const Wizard: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: HTMLFormElement) => {
-      const { age, gender, diet, allergies, med } = data;
+      const { age, gender, diet, allergies, med, nutra } = data;
 
       updateStep('step2', { ...nextStep, isLoaded: false });
 
@@ -73,7 +73,7 @@ const Wizard: React.FC = () => {
         { question: 'diet', answer: diet },
         { question: 'allergies', answer: allergies },
         { question: 'med', answer: med },
-        { question: 'decease', answer: 'none' },
+        { question: 'nutra', answer: nutra },
       ];
 
       const isCompleted = requestData.reduce(

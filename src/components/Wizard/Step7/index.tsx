@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useContext, useCallback, useEffect } from 'react';
 import ReactToolTip from 'react-tooltip';
 import { HiOutlineCheckCircle } from 'react-icons/hi';
 import { FaUndoAlt } from 'react-icons/fa';
@@ -9,9 +9,10 @@ import TextField from '@material-ui/core/TextField';
 import { useApp } from 'contexts/app';
 import { useWizard } from 'contexts/wizard';
 
+import AnswerData from 'dtos/AnswerData';
+
 import Button from 'components/Button';
 import Input from 'components/Input';
-import AnswerData from 'dtos/AnswerData';
 import {
   StepContainer,
   QuestionPrefix,
@@ -28,8 +29,8 @@ const Step7: React.FC = () => {
   const appContext = useApp();
   const { labels, answers, nutraceuticals, updateAnswers } = appContext;
 
-  const context = useWizard();
-  const { steps, questions, updateStep } = context;
+  const wizardContext = useWizard();
+  const { steps, questions, updateStep } = wizardContext;
   const { step6: step, step5: previousStep } = steps;
   const currentQuestion = questions.find(
     question => Number(question.id) === 17,
@@ -51,6 +52,19 @@ const Step7: React.FC = () => {
   const wizardSteps = Object.keys(steps).filter(
     item => !item.includes('_'),
   ).length;
+
+  const [nutras, setNutras] = useState<string[]>([]);
+
+  useEffect(() => {
+    let mergedNutras: string[] = [];
+
+    mergedNutras = mergedNutras.concat(steps.step6_1.answers);
+    mergedNutras = mergedNutras.concat(steps.step6_2.answers);
+
+    const updatedNutras = Array.from(new Set(mergedNutras));
+
+    setNutras(updatedNutras);
+  }, [steps.step6_1.answers, steps.step6_2.answers]);
 
   const handleQuestionInput = useCallback(
     async answer => {
@@ -196,13 +210,13 @@ const Step7: React.FC = () => {
         />
       )}
       <QuestionPrefix>
-        Question {stepNumber}/{wizardSteps}
+        {`${labels.step_1_question} ${stepNumber}/${wizardSteps}`}
         {(step.isCompleted || !!step.answers.length) && (
           <FaUndoAlt
             size={16}
             color="#7664c8"
             onClick={() => {
-              setStoreState({ currentSlide: 6 });
+              setStoreState({ currentSlide: 5 });
               setStepNumber('6');
               setStepTitle(currentQuestion?.label);
               updateStep('step6', {
@@ -229,7 +243,7 @@ const Step7: React.FC = () => {
         data-tip={`<span>${currentQuestion?.description}</span>`}
         data-for="step_6_tooltip"
       >
-        Why are we asking?
+        {labels.step_1_question_tooltip}
       </QuestionSuffix>
       {/* <HiQuestionMarkCircle
         className="tooltip-icon"
@@ -250,26 +264,28 @@ const Step7: React.FC = () => {
         html
         backgroundColor="#fff"
       />
+      <Input type="hidden" name="nutra" value={nutras} />
       {step?.answers !== 'yes' ? (
-        Object.values(currentQuestion?.answers).map(answer => (
+        Object.values(currentQuestion?.answers).map(option => (
           <Button
-            key={answer.id}
+            key={option.api}
             type="submit"
             onClick={() => {
-              handleQuestionInput(answer);
+              handleQuestionInput(option);
+              setNutras([option.api]);
             }}
-            isActive={step?.answers === answer.api}
+            isActive={step?.answers === option.api}
             name={currentQuestion.table}
             value={step?.answers}
           >
-            {answer.label}
+            {option.label}
           </Button>
         ))
       ) : (
         <>
           <Input
             type="hidden"
-            name="nutraceuticalsDaily"
+            name="nutraDaily"
             value={steps?.step6_1.answers}
           />
           <Autocomplete
@@ -299,7 +315,7 @@ const Step7: React.FC = () => {
           />
           <Input
             type="hidden"
-            name="nutraceuticalsOccasionally"
+            name="nutraOccasionally"
             value={steps?.step6_2.answers}
           />
           <Autocomplete
