@@ -19,7 +19,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      <style>
+        noscript {
+          padding: 10px;
+
+          display: flex;
+          flex-flow: column wrap;
+          align-items: center;
+
+          font-family: 'Open Sans', sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 22px;
+        }
+
+        img {
+          margin-bottom: 20px;
+        }
+
+        p {
+          margin: 0;
+
+          text-align: center;
+          color: #333;
+        }
+
+        a {
+          color: #f89c1c;
+        }
+      </style>
+      <img src="%PUBLIC_URL%/images/settings.png" width="64" height="64" alt="Please enable JavaScript for full funcionality" />
+      <p>
+        For full functionality of this site it is necessary to enable JavaScript.<br>Here are the <a href="https://www.enable-javascript.com/" target="_blank" rel="noopener noreferrer">instructions how to enable JavaScript in your web browser</a>.
+      </p>
+    </noscript>
     <div id="root"></div>
     <script>
 			var level = document.location.search.replace(/\?/,'') || 0;
