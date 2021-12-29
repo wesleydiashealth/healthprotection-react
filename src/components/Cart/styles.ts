@@ -187,7 +187,9 @@ export const CheckoutProducts = styled.div`
 `;
 
 export const AmazonPolicy = styled.span`
-  margin-top: 20px;
+  margin-top: 40px;
+  border-top: 1px solid #c6c6c6;
+  padding-top: 10px;
 
   display: block;
   text-align: justify;
