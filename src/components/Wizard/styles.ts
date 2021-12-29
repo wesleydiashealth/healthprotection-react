@@ -45,7 +45,7 @@ const Container = styled.div<ContainerProps>`
   }
 
   @media screen and (min-width: 768px) {
-    padding: 0 50px;
+    padding: 80px 50px 0;
 
     /* gives us the illusion of a "centered" slide */
     .carousel__slider {
