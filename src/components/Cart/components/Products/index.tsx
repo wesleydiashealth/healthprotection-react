@@ -9,8 +9,8 @@ import { useApp } from 'contexts/app';
 
 import Container, {
   Product,
-  ProductImageContainer,
-  ProductImage,
+  // ProductImageContainer,
+  // ProductImage,
   ProductContent,
   ProductContentTitle,
   // ProductContentTitleLink,
@@ -111,13 +111,13 @@ const Products: React.FC = () => {
               alt={currentProduct?.title}
               title={currentProduct?.title}
             /> */}
-            <ProductImageContainer>
+            {/* <ProductImageContainer>
               <ProductImage
                 src={selectedProduct.image}
                 alt={selectedProduct.name}
                 title={selectedProduct.name}
               />
-            </ProductImageContainer>
+            </ProductImageContainer> */}
             <ProductContent>
               <ProductContentTitle>{selectedProduct.name}</ProductContentTitle>
               <ProductContentDosage>
