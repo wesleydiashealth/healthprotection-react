@@ -9,8 +9,8 @@ import { useApp } from 'contexts/app';
 
 import Container, {
   Product,
-  // ProductImageContainer,
-  // ProductImage,
+  ProductImageContainer,
+  ProductImage,
   ProductContent,
   ProductContentTitle,
   // ProductContentTitleLink,
@@ -43,7 +43,7 @@ const Products: React.FC = () => {
         ...selectedProducts[selectedProductIndex],
       };
 
-      if (!updatedSelectedProduct.quantity) {
+      if (!updatedSelectedProduct?.quantity) {
         updatedSelectedProduct.quantity = 1;
       }
 
@@ -57,9 +57,9 @@ const Products: React.FC = () => {
   );
 
   const handleRemoveButton = useCallback(
-    (productName: string) => {
+    (productAsin: string) => {
       const updatedProducts = selectedProducts.filter(
-        selectedProduct => selectedProduct.name !== productName,
+        selectedProduct => selectedProduct.asin !== productAsin,
       );
       updateSelectedProducts(updatedProducts);
     },
@@ -95,7 +95,7 @@ const Products: React.FC = () => {
       {selectedProducts.map(selectedProduct => {
         const productNutraceutical = nutraceuticals.find(
           nutraceutical =>
-            nutraceutical.title === selectedProduct.nutraceutical,
+            nutraceutical.info.title === selectedProduct.nutraceutical,
         );
 
         const productPriceArray = selectedProduct.price.split(' ');
@@ -111,30 +111,32 @@ const Products: React.FC = () => {
               alt={currentProduct?.title}
               title={currentProduct?.title}
             /> */}
-            {/* <ProductImageContainer>
+            <ProductImageContainer>
               <ProductImage
                 src={selectedProduct.image}
-                alt={selectedProduct.name}
-                title={selectedProduct.name}
+                alt={selectedProduct.nutraceutical}
+                title={selectedProduct.nutraceutical}
               />
-            </ProductImageContainer> */}
+            </ProductImageContainer>
             <ProductContent>
-              <ProductContentTitle>{selectedProduct.name}</ProductContentTitle>
+              <ProductContentTitle>
+                {selectedProduct.nutraceutical}
+              </ProductContentTitle>
               <ProductContentDosage>
-                {`${selectedProduct.dosageCapsule}mg (${selectedProduct.capsules} capsules)`}
+                {`${selectedProduct.capsuleDosage}${selectedProduct.capsuleDosageUnit} (${selectedProduct.capsules} capsules)`}
               </ProductContentDosage>
-              {!!selectedProduct.rating && selectedProduct.star_rating && (
+              {!!selectedProduct.rating && !!selectedProduct.starRating && (
                 <ProductRating>
                   <span>{selectedProduct.rating}</span>
-                  {ReactHtmlParser(selectedProduct.star_rating)}
+                  {ReactHtmlParser(selectedProduct.starRating)}
                 </ProductRating>
               )}
-              {selectedProduct.reviews && (
+              {!!selectedProduct.reviews && (
                 <ProductReviews>{selectedProduct.reviews}</ProductReviews>
               )}
             </ProductContent>
             <ProductInfo>
-              <span>{`Why this ${productNutraceutical?.info.title}?`}</span>
+              <span>{`Why this ${selectedProduct.nutraceutical}?`}</span>
               <p>{selectedProduct.brand}</p>
             </ProductInfo>
             {productNutraceutical?.info.link && (
@@ -184,7 +186,7 @@ const Products: React.FC = () => {
             <ProductRemove
               size={20}
               onClick={() => {
-                handleRemoveButton(selectedProduct.name);
+                handleRemoveButton(selectedProduct.asin);
               }}
             />
 
