@@ -95,7 +95,7 @@ const Products: React.FC = () => {
       {selectedProducts.map(selectedProduct => {
         const productNutraceutical = nutraceuticals.find(
           nutraceutical =>
-            nutraceutical.info.title === selectedProduct.nutraceutical,
+            nutraceutical.title === selectedProduct.nutraceutical,
         );
 
         const productPriceArray = selectedProduct.price.split(' ');
