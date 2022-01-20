@@ -72,9 +72,10 @@ const Step10: React.FC = () => {
                     <OutcomesIcon size={48} color="#565656" />
                     <InfoTitle>Health Goals</InfoTitle>
                     <InfoDescription>
-                      {labels.step_1_info_text
-                        .replace('%1', count.outcomes.total.toString())
-                        .replace('%2', count.outcomes.filtered.toString())}
+                      {labels.step_1_info_text &&
+                        labels.step_1_info_text
+                          .replace('%1', count.outcomes.total.toString())
+                          .replace('%2', count.outcomes.filtered.toString())}
                     </InfoDescription>
                   </Info>
                 )}

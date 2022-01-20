@@ -1,4 +1,5 @@
 import React, { useCallback, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { HiQuestionMarkCircle, HiLockClosed } from 'react-icons/hi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -42,8 +43,14 @@ interface RequestData {
   answer: string;
 }
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 const Wizard: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+
+  const query = useQuery();
 
   const context = useApp();
   const {
@@ -96,7 +103,10 @@ const Wizard: React.FC = () => {
           abortEarly: false,
         });
 
-        const response = await createUserQuery(requestData);
+        const response = await createUserQuery(
+          requestData,
+          query.get('lang') || '',
+        );
         const { uuid, outcomes, suboutcomes, excludes, count } =
           response.content;
 
@@ -126,6 +136,7 @@ const Wizard: React.FC = () => {
       updateSuboutcomes,
       updateConnections,
       updateCount,
+      query,
     ],
   );
 
