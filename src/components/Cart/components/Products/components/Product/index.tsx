@@ -14,6 +14,7 @@ import Container, {
   // ContentTitleLink,
   ContentDosage,
   ContentSuboutcomes,
+  ContentSuboutcomesItem,
   Info,
   InfoTags,
   InfoCategories,
@@ -48,6 +49,7 @@ const Product: React.FC<ProductData> = ({
   const context = useApp();
   const {
     nutraceuticals,
+    outcomes,
     suboutcomes,
     selectedProducts,
     updateSelectedProducts,
@@ -160,9 +162,26 @@ const Product: React.FC<ProductData> = ({
         )}
         {reviews && <Reviews>{reviews}</Reviews>}
         <ContentSuboutcomes>
-          {productSuboutcomes.map(productSuboutcome => (
-            <span key={productSuboutcome}>{productSuboutcome}</span>
-          ))}
+          {productSuboutcomes.map(productSuboutcome => {
+            const selectedSuboutcome = suboutcomes.find(
+              suboutcome => suboutcome.title === productSuboutcome,
+            );
+
+            const selectedOutcome =
+              selectedSuboutcome &&
+              outcomes.find(outcome =>
+                outcome.suboutcomes.includes(selectedSuboutcome.id),
+              );
+
+            return (
+              <ContentSuboutcomesItem
+                key={productSuboutcome}
+                color={selectedOutcome?.color}
+              >
+                {productSuboutcome}
+              </ContentSuboutcomesItem>
+            );
+          })}
         </ContentSuboutcomes>
       </Content>
       <Info>

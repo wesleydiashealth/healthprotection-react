@@ -1,6 +1,11 @@
 import styled, { css } from 'styled-components';
+import { transparentize } from 'polished';
 import { FaTimes } from 'react-icons/fa';
 import { BiRefresh } from 'react-icons/bi';
+
+interface ContentSuboutcomesProps {
+  color?: string;
+}
 
 interface InfoTagsProps {
   hasSibling?: boolean;
@@ -59,24 +64,31 @@ export const ContentDosage = styled.span`
   line-height: 20px;
 `;
 
-export const ContentSuboutcomes = styled.div`
+export const ContentSuboutcomes = styled.div<ContentSuboutcomesProps>`
   margin-top: 10px;
 
   display: flex;
   flex-flow: row wrap;
+`;
 
-  span {
-    margin: 5px;
-    border-radius: 20px;
-    padding: 4px 12px;
+export const ContentSuboutcomesItem = styled.div`
+  margin: 5px;
+  border-radius: 20px;
+  padding: 4px 12px;
 
-    background: #f5f5f5;
-    color: #565656;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 22px;
-  }
+  background: #f5f5f5;
+  color: #565656;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 22px;
+
+  ${props =>
+    props.color &&
+    css`
+      background-color: ${transparentize(0.5, props.color)};
+      color: #000;
+    `}
 `;
 
 export const Info = styled.div`

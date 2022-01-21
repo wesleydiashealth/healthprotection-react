@@ -1,7 +1,8 @@
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
 import 'react-tabs/style/react-tabs.css';
+
+import { useApp } from 'contexts/app';
 
 import ProductData from 'dtos/ProductData';
 
@@ -19,6 +20,9 @@ interface ProductsData {
 
 const Products: React.FC<ProductsData> = props => {
   const { selectedProducts } = props;
+
+  const context = useApp();
+  const { labels } = context;
 
   // Temporary
   const tempProducts: TempProductsData = selectedProducts.reduce(
@@ -53,10 +57,10 @@ const Products: React.FC<ProductsData> = props => {
           products && (
             <Tabs key={nutraceutical}>
               <TabList>
-                <Tab>We recommended</Tab>
-                <Tab>Cheapest</Tab>
-                <Tab>Best rating</Tab>
-                <Tab>See all</Tab>
+                <Tab>{labels.cart_product_recommended}</Tab>
+                <Tab>{labels.cart_product_cheapest}</Tab>
+                <Tab>{labels.cart_product_best_rating}</Tab>
+                <Tab>{labels.cart_product_see_all}</Tab>
               </TabList>
               <TabPanel>
                 <Product {...bestRatingProduct} />
