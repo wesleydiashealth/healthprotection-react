@@ -114,21 +114,34 @@ const Wizard: React.FC = () => {
         const queryOutcome = query.get('outcome');
 
         const filteredOutcomes = queryOutcome
-          ? outcomes.filter(
-              outcome =>
-                outcome.id === queryOutcome ||
-                outcome.suboutcomes.includes(queryOutcome),
-            )
+          ? outcomes
+              .filter(
+                outcome =>
+                  outcome.id === queryOutcome ||
+                  outcome.suboutcomes.includes(queryOutcome),
+              )
+              .map(outcome => {
+                return {
+                  ...outcome,
+                  suboutcomes: outcome.suboutcomes.filter(
+                    suboutcome => suboutcome === queryOutcome,
+                  ),
+                };
+              })
           : outcomes;
+
+        const filteredSuboutcomes = queryOutcome
+          ? suboutcomes.filter(suboutcome => suboutcome.id === queryOutcome)
+          : suboutcomes;
 
         updateStep('step2', { ...nextStep, isLoaded: true });
 
         updateUserQuery(uuid);
         updateExcludes(excludes);
         updateOutcomes(filteredOutcomes);
-        updateSuboutcomes(suboutcomes);
+        updateSuboutcomes(filteredSuboutcomes);
         updateCount(count);
-        updateConnections(filteredOutcomes, suboutcomes);
+        updateConnections(filteredOutcomes, filteredSuboutcomes);
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
