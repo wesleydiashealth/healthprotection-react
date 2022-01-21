@@ -200,10 +200,12 @@ const ReportDocument: React.FC<ReportDocumentData> = ({
                     <Image style={styles.productImage} src={product.image} />
                   </View>
                   <View style={styles.productContent}>
-                    <Text style={styles.productTitle}>{product.name}</Text>
+                    <Text style={styles.productTitle}>
+                      {product.nutraceutical}
+                    </Text>
                     <Text
                       style={styles.productDosage}
-                    >{`${product.dosageCapsule}mg (${product.capsules} capsules)`}</Text>
+                    >{`${product.capsuleDosage}${product.capsuleDosageUnit} (${product.capsules} capsules)`}</Text>
                   </View>
                   <View style={styles.productInfo}>
                     <Text style={styles.productInfoLabel}>

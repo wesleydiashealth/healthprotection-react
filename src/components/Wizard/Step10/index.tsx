@@ -70,11 +70,12 @@ const Step10: React.FC = () => {
                 {count?.outcomes?.total && count?.outcomes?.filtered && (
                   <Info>
                     <OutcomesIcon size={48} color="#565656" />
-                    <InfoTitle>Outcomes</InfoTitle>
+                    <InfoTitle>Health Goals</InfoTitle>
                     <InfoDescription>
-                      {labels.step_1_info_text
-                        .replace('%1', count.outcomes.total.toString())
-                        .replace('%2', count.outcomes.filtered.toString())}
+                      {labels.step_1_info_text &&
+                        labels.step_1_info_text
+                          .replace('%1', count.outcomes.total.toString())
+                          .replace('%2', count.outcomes.filtered.toString())}
                     </InfoDescription>
                   </Info>
                 )}
@@ -82,7 +83,7 @@ const Step10: React.FC = () => {
                   count?.nutraceuticals?.filtered && (
                     <Info>
                       <NutraceuticalsIcon />
-                      <InfoTitle>Nutraceuticals</InfoTitle>
+                      <InfoTitle>Dietary Supplements</InfoTitle>
                       <InfoDescription>
                         {labels.step_1_info_text
                           .replace('%1', count.nutraceuticals.total.toString())

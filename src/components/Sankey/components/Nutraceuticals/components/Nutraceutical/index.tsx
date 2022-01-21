@@ -69,7 +69,7 @@ const Nutraceutical: React.FC<NutraceuticalData> = ({
           }}
         >
           <NutritionInfoIcon />
-          <ContentTitle>{title}</ContentTitle>
+          <ContentTitle>{info.title}</ContentTitle>
           <ContentDescription>{`${dosage}`}</ContentDescription>
         </Content>
         {isActive && (

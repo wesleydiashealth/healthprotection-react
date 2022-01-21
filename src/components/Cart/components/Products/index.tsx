@@ -67,8 +67,8 @@ const Products: React.FC = () => {
                 <Product {...bestRatingProduct} />
               </TabPanel>
               <TabPanel>
-                {products.map(product => (
-                  <Product key={product.title} {...product} />
+                {products.map((product: ProductData) => (
+                  <Product key={product.nutraceutical} {...product} />
                 ))}
               </TabPanel>
             </Tabs>

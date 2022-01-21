@@ -8,8 +8,10 @@ import TagManager from 'react-gtm-module';
 import { useApp } from 'contexts/app';
 
 import getFoods from 'services/getFoods';
+import getProducts from 'services/getProducts';
 
-import ProductData from 'dtos/ProductData';
+// import ProductData from 'dtos/ProductData';
+
 import Container, {
   Anchors,
   Anchor,
@@ -31,6 +33,10 @@ interface SuboutcomeProps {
   };
 }
 
+// interface ProductsGroupsProps {
+//   [key: string]: ProductData[];
+// }
+
 const Suboutcome: React.FC<SuboutcomeProps> = ({
   id,
   title,
@@ -44,7 +50,6 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
     userQuery,
     steps,
     fineTune,
-    nutraceuticals: appNutraceuticals,
     connections,
     updateStep,
     updateConnection,
@@ -56,6 +61,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
     updateHabits,
     updateProducts,
     updateSelectedProducts,
+    // updateProductsGroups,
   } = appContext;
 
   const [supConnections, setSupConnections] = useState<string[]>([]);
@@ -135,22 +141,26 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
 
       updateSelectedNutraceuticals(selectedNutraceuticals);
 
-      const updatedProducts = appNutraceuticals
-        .filter(appNutraceutical =>
-          selectedNutraceuticals.includes(appNutraceutical.slug),
-        )
-        .reduce(
-          (acc: ProductData[], nutraceutical) => [
-            ...acc,
-            ...nutraceutical.info.products.map(product => ({
-              ...product,
-              nutraceutical: nutraceutical.title,
-            })),
-          ],
-          [],
-        );
+      const updatedProducts = await getProducts(selectedNutraceuticals);
 
-      updateProducts(updatedProducts);
+      // Temporary fix to return only one product of each nutraceutical
+      const filteredUpdatedProducts = updatedProducts.filter(
+        (value, index, self) =>
+          index ===
+          self.findIndex(item => item.nutraceutical === value.nutraceutical),
+      );
+
+      updateProducts(filteredUpdatedProducts);
+
+      // const productsGroups = updatedProducts.reduce(
+      //   (acc: ProductsGroupsProps, curr) => ({
+      //     ...acc,
+      //     [curr.nutraceutical]: [...(acc[curr.nutraceutical] || []), curr],
+      //   }),
+      //   {},
+      // );
+
+      // updateProductsGroups(productsGroups);
 
       updateSelectedProducts(
         updatedProducts.filter(
@@ -183,7 +193,6 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       nextStep,
       connections,
       userQuery,
-      appNutraceuticals,
       currentStep,
       updateFoods,
       updateError,

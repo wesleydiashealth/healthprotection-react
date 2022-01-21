@@ -1,21 +1,24 @@
 /* eslint-disable camelcase */
 export default interface ProductData {
   asin: string;
-  title: string;
+  brand: string;
+  order: number;
+  dosageValue: number;
+  dosageUnit: string;
+  capsuleDosage: number;
+  capsuleDosageUnit: string;
+  capsules: number;
+  nutraceutical: string;
+  diets: string[];
+  allergies: string[];
+  additives: string[];
+  proprietaries: string[];
   url: string;
   image: string;
   rating: string;
-  star_rating: string;
+  starRating: string;
   reviews: string;
   price: string;
-  list_price: string | null;
-  amount_saved: number;
-  percentage_saved: number;
-  last_update: string;
-  name: string;
-  brand: string;
-  dosageCapsule: number;
-  capsules: number;
-  nutraceutical?: string;
+  lastUpdate: string;
   quantity?: number;
 }

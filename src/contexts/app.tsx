@@ -52,6 +52,7 @@ interface AppContextData {
   error: string;
   products: ProductData[];
   selectedProducts: ProductData[];
+  productsGroups: { [key: string]: ProductData[] };
   discounts: DiscountsData;
   updateStep(step: string, attrs: StepData): Promise<void>;
   updateAnswers(answers: AnswerData[]): Promise<void>;
@@ -75,6 +76,9 @@ interface AppContextData {
   updateError(updatedError: string): Promise<void>;
   updateProducts(updatedProducts: ProductData[]): Promise<void>;
   updateSelectedProducts(updatedSelectedProducts: ProductData[]): Promise<void>;
+  updateProductsGroups(updatedProductsGroups: {
+    [key: string]: ProductData[];
+  }): Promise<void>;
   updateDiscounts(updatedDiscounts: DiscountsData): Promise<void>;
 }
 
@@ -132,6 +136,10 @@ export const AppProvider: React.FC = ({ children }) => {
   const [products, setProducts] = useState<ProductData[]>([]);
 
   const [selectedProducts, setSelectedProducts] = useState<ProductData[]>([]);
+
+  const [productsGroups, setproductsGroups] = useState<{
+    [key: string]: ProductData[];
+  }>({});
 
   const [discounts, setDiscounts] = useState<DiscountsData>({});
 
@@ -355,6 +363,12 @@ export const AppProvider: React.FC = ({ children }) => {
     setSelectedProducts(updatedSelectedProducts);
   }
 
+  async function updateProductsGroups(updatedProductsGroups: {
+    [key: string]: ProductData[];
+  }) {
+    setproductsGroups(updatedProductsGroups);
+  }
+
   async function updateDiscounts(updatedDiscount: DiscountsData) {
     setDiscounts({ ...discounts, ...updatedDiscount });
   }
@@ -380,6 +394,7 @@ export const AppProvider: React.FC = ({ children }) => {
         error,
         products,
         selectedProducts,
+        productsGroups,
         discounts,
         updateStep,
         updateAnswers,
@@ -397,6 +412,7 @@ export const AppProvider: React.FC = ({ children }) => {
         updateError,
         updateProducts,
         updateSelectedProducts,
+        updateProductsGroups,
         updateCount,
         updateDiscounts,
       }}

@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
 import { BiRefresh } from 'react-icons/bi';
+
+interface InfoTagsProps {
+  hasSibling?: boolean;
+}
 
 const Container = styled.div`
   display: flex;
@@ -78,12 +82,15 @@ export const ContentSuboutcomes = styled.div`
 export const Info = styled.div`
   margin: 10px 0 0;
 
+  position: relative;
+
   display: flex;
   align-items: center;
   text-align: center;
   flex: 1;
 
   span {
+    margin-bottom: 10px;
     border-radius: 20px;
     padding: 4px 12px;
 
@@ -106,14 +113,21 @@ export const Info = styled.div`
   }
 `;
 
-export const InfoTags = styled.div``;
+export const InfoTags = styled.div<InfoTagsProps>`
+  ${props =>
+    props.hasSibling &&
+    css`
+      & ~ div {
+        margin-left: 10px;
+        border-left: 1px solid #c6c6c6;
+        padding-left: 10px;
+      }
+    `}
+`;
 
 export const InfoCategories = styled.div`
-  margin-left: 10px;
-  border-left: 1px solid #c6c6c6;
-  padding-left: 10px;
-
   display: flex;
+  flex-flow: row wrap;
 `;
 
 export const Quantity = styled.div`

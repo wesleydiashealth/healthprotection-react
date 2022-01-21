@@ -30,15 +30,18 @@ import Container, {
 } from './styles';
 
 const Product: React.FC<ProductData> = ({
-  name,
   asin,
   image,
   rating,
   nutraceutical,
-  star_rating: starRating,
+  diets,
+  allergies,
+  additives,
+  proprietaries,
+  starRating,
   reviews,
   price,
-  dosageCapsule,
+  capsuleDosage,
   capsules,
   quantity,
 }) => {
@@ -75,6 +78,10 @@ const Product: React.FC<ProductData> = ({
       }, []),
     ),
   );
+
+  const productTags = [...additives, ...proprietaries];
+
+  const productCategories = [...diets, ...allergies];
 
   const handleQuantityButton = useCallback(
     (productAsin, value) => {
@@ -126,9 +133,9 @@ const Product: React.FC<ProductData> = ({
   // );
 
   const handleRemoveButton = useCallback(
-    (productName: string) => {
+    (productAsin: string) => {
       const updatedProducts = selectedProducts.filter(
-        selectedProduct => selectedProduct.name !== productName,
+        selectedProduct => selectedProduct.asin !== productAsin,
       );
       updateSelectedProducts(updatedProducts);
     },
@@ -138,12 +145,12 @@ const Product: React.FC<ProductData> = ({
   return (
     <Container>
       <ImageContainer>
-        <Image src={image} alt={name} title={name} />
+        <Image src={image} alt={nutraceutical} title={nutraceutical} />
       </ImageContainer>
       <Content>
-        <ContentTitle>{name}</ContentTitle>
+        <ContentTitle>{nutraceutical}</ContentTitle>
         <ContentDosage>
-          {`${dosageCapsule}mg (${capsules} capsules)`}
+          {`${capsuleDosage}mg (${capsules} capsules)`}
         </ContentDosage>
         {!!rating && starRating && (
           <Rating>
@@ -159,13 +166,22 @@ const Product: React.FC<ProductData> = ({
         </ContentSuboutcomes>
       </Content>
       <Info>
-        <InfoTags>
-          <span>Bioperine</span>
-          <span>Sensoril</span>
-        </InfoTags>
-        <InfoCategories>
-          <span>Vegan</span>
-        </InfoCategories>
+        {productTags && (
+          <InfoTags
+            hasSibling={!!productTags.length && !!productCategories.length}
+          >
+            {productTags.map(productTag => (
+              <span>{productTag}</span>
+            ))}
+          </InfoTags>
+        )}
+        {productCategories && (
+          <InfoCategories>
+            {productCategories.map(productCategory => (
+              <span>{productCategory}</span>
+            ))}
+          </InfoCategories>
+        )}
       </Info>
       <Quantity>
         <FaMinus
@@ -202,7 +218,7 @@ const Product: React.FC<ProductData> = ({
       <Remove
         size={20}
         onClick={() => {
-          handleRemoveButton(name);
+          handleRemoveButton(asin);
         }}
       />
     </Container>
