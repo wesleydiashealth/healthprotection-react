@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HiQuestionMarkCircle, HiLockClosed } from 'react-icons/hi';
 import { TiShoppingCart } from 'react-icons/ti';
 
 import { useApp } from 'contexts/app';
 
+import ProductData from 'dtos/ProductData';
+
+import Loading from 'components/Loading';
 import Products from './components/Products';
 import Sidebar from './components/Sidebar';
 
@@ -17,13 +20,32 @@ import Container, {
   AmazonPolicy,
 } from './styles';
 
-const Cart: React.FC = () => {
+interface CartProps {
+  queryProducts?: ProductData[] | null;
+}
+
+const Cart: React.FC<CartProps> = ({ queryProducts }) => {
   const context = useApp();
-  const { steps, products, labels } = context;
+  const { steps, products, labels, selectedProducts, updateSelectedProducts } =
+    context;
   const { step1: initialStep, step2: previousStep } = steps;
 
   const isActive =
-    previousStep.isCompleted && initialStep.isCompleted && !!products.length;
+    (previousStep.isCompleted &&
+      initialStep.isCompleted &&
+      !!products.length) ||
+    !!queryProducts?.length;
+
+  useEffect(() => {
+    if (queryProducts) {
+      updateSelectedProducts(queryProducts);
+    }
+  }, [queryProducts, updateSelectedProducts]);
+
+  // Show loading while fetching products
+  if (queryProducts && !queryProducts.length) {
+    return <Loading color="#ec903f" />;
+  }
 
   return (
     <Container isActive={isActive}>
@@ -71,7 +93,7 @@ const Cart: React.FC = () => {
         {isActive && (
           <CheckoutProducts>
             <h4>{labels?.cart_subtitle}</h4>
-            <Products />
+            <Products selectedProducts={selectedProducts} />
             <AmazonPolicy>
               Health Protection Europe S.L is a reader supported, all products
               displayed earn us commission when purchased through the links.
@@ -80,10 +102,14 @@ const Cart: React.FC = () => {
             </AmazonPolicy>
           </CheckoutProducts>
         )}
-        <Sidebar />
+        <Sidebar isCustom={!!queryProducts} />
       </StepContent>
     </Container>
   );
+};
+
+Cart.defaultProps = {
+  queryProducts: null,
 };
 
 export default Cart;

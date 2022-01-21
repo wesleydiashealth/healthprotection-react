@@ -3,8 +3,6 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import 'react-tabs/style/react-tabs.css';
 
-import { useApp } from 'contexts/app';
-
 import ProductData from 'dtos/ProductData';
 
 import Product from './components/Product';
@@ -15,9 +13,12 @@ interface TempProductsData {
   [key: string]: ProductData[];
 }
 
-const Products: React.FC = () => {
-  const context = useApp();
-  const { selectedProducts } = context;
+interface ProductsData {
+  selectedProducts: ProductData[];
+}
+
+const Products: React.FC<ProductsData> = props => {
+  const { selectedProducts } = props;
 
   // Temporary
   const tempProducts: TempProductsData = selectedProducts.reduce(

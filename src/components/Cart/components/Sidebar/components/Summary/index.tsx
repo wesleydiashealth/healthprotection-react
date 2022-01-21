@@ -16,15 +16,20 @@ import Container, {
   CheckoutAmazon,
 } from './styles';
 
-const Summary: React.FC = () => {
+interface SummaryProps {
+  isCustom?: boolean;
+}
+
+const Summary: React.FC<SummaryProps> = ({ isCustom }) => {
   const context = useApp();
   const { steps, labels, selectedProducts } = context;
   const { step1: initialStep, step2: previousStep } = steps;
 
   const isActive =
-    previousStep.isCompleted &&
-    initialStep.isCompleted &&
-    !!selectedProducts.length;
+    (previousStep.isCompleted &&
+      initialStep.isCompleted &&
+      !!selectedProducts.length) ||
+    isCustom;
 
   const cartTotalPrice = selectedProducts.reduce((acc, product) => {
     const productPriceArray = product.price.split(' ');
@@ -98,6 +103,10 @@ const Summary: React.FC = () => {
       </SaveRecommendation> */}
     </Container>
   );
+};
+
+Summary.defaultProps = {
+  isCustom: false,
 };
 
 export default Summary;
