@@ -11,17 +11,25 @@ import Container, {
   Image,
   Content,
   ContentTitle,
+  ContentBrand,
   // ContentTitleLink,
   ContentDosage,
-  ContentSuboutcomes,
-  ContentSuboutcomesItem,
+  InfoSuboutcomes,
+  InfoSuboutcomesLabel,
+  InfoSuboutcomesList,
+  InfoSuboutcomesItem,
   Info,
   InfoTags,
+  InfoTagsLabel,
+  InfoTagsList,
   InfoCategories,
+  InfoCategoriesLabel,
+  InfoCategoriesList,
   Quantity,
   QuantityValue,
   Rating,
   Reviews,
+  PriceGroup,
   Price,
   PriceValue,
   PriceCurrency,
@@ -32,6 +40,7 @@ import Container, {
 
 const Product: React.FC<ProductData> = ({
   asin,
+  brand,
   image,
   rating,
   nutraceutical,
@@ -151,6 +160,7 @@ const Product: React.FC<ProductData> = ({
       </ImageContainer>
       <Content>
         <ContentTitle>{nutraceutical}</ContentTitle>
+        <ContentBrand>{brand}</ContentBrand>
         <ContentDosage>
           {`${capsuleDosage}mg (${capsules} capsules)`}
         </ContentDosage>
@@ -161,73 +171,80 @@ const Product: React.FC<ProductData> = ({
           </Rating>
         )}
         {reviews && <Reviews>{reviews}</Reviews>}
-        <ContentSuboutcomes>
-          {productSuboutcomes.map(productSuboutcome => {
-            const selectedSuboutcome = suboutcomes.find(
-              suboutcome => suboutcome.title === productSuboutcome,
-            );
-
-            const selectedOutcome =
-              selectedSuboutcome &&
-              outcomes.find(outcome =>
-                outcome.suboutcomes.includes(selectedSuboutcome.id),
-              );
-
-            return (
-              <ContentSuboutcomesItem
-                key={productSuboutcome}
-                color={selectedOutcome?.color}
-              >
-                {productSuboutcome}
-              </ContentSuboutcomesItem>
-            );
-          })}
-        </ContentSuboutcomes>
       </Content>
       <Info>
-        {productTags && (
-          <InfoTags
+        <InfoCategories>
+          <InfoCategoriesLabel>Characteristics:</InfoCategoriesLabel>
+          <InfoCategoriesList>
+            {productCategories.map(productCategory => (
+              <span>{productCategory}</span>
+            ))}
+          </InfoCategoriesList>
+        </InfoCategories>
+        <InfoTags>
+          <InfoTagsLabel>Boosters:</InfoTagsLabel>
+          <InfoTagsList
             hasSibling={!!productTags.length && !!productCategories.length}
           >
             {productTags.map(productTag => (
               <span>{productTag}</span>
             ))}
-          </InfoTags>
-        )}
-        {productCategories && (
-          <InfoCategories>
-            {productCategories.map(productCategory => (
-              <span>{productCategory}</span>
-            ))}
-          </InfoCategories>
-        )}
+          </InfoTagsList>
+        </InfoTags>
+        <InfoSuboutcomes>
+          <InfoSuboutcomesLabel>Address:</InfoSuboutcomesLabel>
+          <InfoSuboutcomesList>
+            {productSuboutcomes.map(productSuboutcome => {
+              const selectedSuboutcome = suboutcomes.find(
+                suboutcome => suboutcome.title === productSuboutcome,
+              );
+
+              const selectedOutcome =
+                selectedSuboutcome &&
+                outcomes.find(outcome =>
+                  outcome.suboutcomes.includes(selectedSuboutcome.id),
+                );
+
+              return (
+                <InfoSuboutcomesItem
+                  key={productSuboutcome}
+                  color={selectedOutcome?.color}
+                >
+                  {productSuboutcome}
+                </InfoSuboutcomesItem>
+              );
+            })}
+          </InfoSuboutcomesList>
+        </InfoSuboutcomes>
       </Info>
-      <Quantity>
-        <FaMinus
-          size={16}
-          color="#565656"
-          onClick={() => handleQuantityButton(asin, -1)}
-        />
-        <QuantityValue>{quantity || 1}</QuantityValue>
-        <FaPlus
-          size={16}
-          color="#565656"
-          onClick={() => handleQuantityButton(asin, 1)}
-        />
-      </Quantity>
-      <Price>
-        <PriceValue>
-          {!Number.isNaN(productPriceValue)
-            ? productPriceValue.toLocaleString('es-ES', {
-                maximumFractionDigits: 2,
-                minimumFractionDigits: 2,
-              })
-            : price}
-        </PriceValue>
-        <PriceCurrency>
-          {!Number.isNaN(productPriceValue) && productPriceCurrency}
-        </PriceCurrency>
-      </Price>
+      <PriceGroup>
+        <Price>
+          <PriceValue>
+            {!Number.isNaN(productPriceValue)
+              ? productPriceValue.toLocaleString('es-ES', {
+                  maximumFractionDigits: 2,
+                  minimumFractionDigits: 2,
+                })
+              : price}
+          </PriceValue>
+          <PriceCurrency>
+            {!Number.isNaN(productPriceValue) && productPriceCurrency}
+          </PriceCurrency>
+        </Price>
+        <Quantity>
+          <FaMinus
+            size={16}
+            color="#565656"
+            onClick={() => handleQuantityButton(asin, -1)}
+          />
+          <QuantityValue>{quantity || 1}</QuantityValue>
+          <FaPlus
+            size={16}
+            color="#565656"
+            onClick={() => handleQuantityButton(asin, 1)}
+          />
+        </Quantity>
+      </PriceGroup>
       {/* <Replace
         size={20}
         onClick={() => {

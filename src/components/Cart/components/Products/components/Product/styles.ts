@@ -3,11 +3,11 @@ import { transparentize } from 'polished';
 import { FaTimes } from 'react-icons/fa';
 import { BiRefresh } from 'react-icons/bi';
 
-interface ContentSuboutcomesProps {
+interface InfoSuboutcomesItemProps {
   color?: string;
 }
 
-interface InfoTagsProps {
+interface InfoTagsListProps {
   hasSibling?: boolean;
 }
 
@@ -35,18 +35,18 @@ export const ImageContainer = styled.div`
 
 export const Image = styled.img`
   width: auto;
-  height: 80px;
-
-  @media screen and (min-width: 768px) {
-    margin-right: 20px;
-  }
+  height: 120px;
 `;
 
 export const Content = styled.div`
   text-align: center;
-  flex: 1;
+
+  width: 200px;
 
   @media screen and (min-width: 768px) {
+    margin-left: 20px;
+    margin-right: 20px;
+
     text-align: left;
   }
 `;
@@ -54,41 +54,20 @@ export const Content = styled.div`
 export const ContentTitle = styled.h4`
   margin: 20px 0 0;
 
+  font-size: 22px;
+  line-height: 32px;
+  font-weight: 600;
+
   @media screen and (min-width: 768px) {
     margin: 0;
   }
 `;
 
+export const ContentBrand = styled.h5``;
+
 export const ContentDosage = styled.span`
   font-size: 12px;
   line-height: 20px;
-`;
-
-export const ContentSuboutcomes = styled.div<ContentSuboutcomesProps>`
-  margin-top: 10px;
-
-  display: flex;
-  flex-flow: row wrap;
-`;
-
-export const ContentSuboutcomesItem = styled.div`
-  margin: 5px;
-  border-radius: 20px;
-  padding: 4px 12px;
-
-  background: #f5f5f5;
-  color: #565656;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 22px;
-
-  ${props =>
-    props.color &&
-    css`
-      background-color: ${transparentize(0.5, props.color)};
-      color: #000;
-    `}
 `;
 
 export const Info = styled.div`
@@ -97,25 +76,42 @@ export const Info = styled.div`
   position: relative;
 
   display: flex;
-  align-items: center;
+  align-items: initial;
   text-align: center;
   flex: 1;
 
+  div {
+    margin: 0 10px;
+
+    flex-basis: 33.33%;
+
+    & ~ div {
+      border-left: 2px solid #ffae30;
+    }
+  }
+
+  p {
+    margin-bottom: 20px;
+
+    font-size: 14px;
+    font-weight: 600;
+    color: #565656;
+  }
+
   span {
+    margin: 0 5px 10px;
     margin-bottom: 10px;
     border-radius: 20px;
-    padding: 4px 12px;
+    padding: 2px 10px;
+
+    white-space: nowrap;
 
     background: #f5f5f5;
     color: #565656;
     text-decoration: none;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 22px;
-
-    & ~ span {
-      margin-left: 10px;
-    }
   }
 
   @media screen and (min-width: 768px) {
@@ -125,46 +121,57 @@ export const Info = styled.div`
   }
 `;
 
-export const InfoTags = styled.div<InfoTagsProps>`
+export const InfoSuboutcomesLabel = styled.p``;
+
+export const InfoTags = styled.div``;
+
+export const InfoTagsLabel = styled.p``;
+
+export const InfoTagsList = styled.div<InfoTagsListProps>`
+  display: flex;
+  justify-content: center;
+
   ${props =>
     props.hasSibling &&
     css`
       & ~ div {
-        margin-left: 10px;
-        border-left: 1px solid #c6c6c6;
-        padding-left: 10px;
+        margin-right: 10px;
+        border-right: 1px solid #c6c6c6;
+        padding-right: 10px;
       }
     `}
 `;
 
-export const InfoCategories = styled.div`
+export const InfoCategories = styled.div``;
+
+export const InfoCategoriesLabel = styled.p``;
+
+export const InfoCategoriesList = styled.div`
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
 `;
 
-export const Quantity = styled.div`
-  border: 1px solid #c6c6c6;
-  border-radius: 24px;
-  padding: 6px 12px;
+export const InfoSuboutcomes = styled.div`
+  margin-top: 10px;
+`;
 
+export const InfoSuboutcomesList = styled.div`
   display: flex;
-  align-items: center;
-
-  svg {
-    cursor: pointer;
-
-    &:hover {
-      fill: #ffae30;
-    }
-  }
-
-  @media screen and (min-width: 768px) {
-    margin-right: 20px;
-  }
+  flex-flow: row wrap;
+  justify-content: center;
 `;
 
-export const QuantityValue = styled.span`
-  margin: 0 14px;
+export const InfoSuboutcomesItem = styled.span<InfoSuboutcomesItemProps>`
+  background-color: transparent !important;
+
+  ${props =>
+    props.color &&
+    css`
+      border-width: 3px;
+      border-style: solid;
+      border-color: ${transparentize(0.5, props.color)};
+    `}
 `;
 
 export const Rating = styled.div`
@@ -205,7 +212,13 @@ export const Reviews = styled.span`
   line-height: 1;
 `;
 
+export const PriceGroup = styled.div`
+  text-align: center;
+`;
+
 export const Price = styled.div`
+  margin-bottom: 10px;
+
   min-width: 80px;
 
   @media screen and (min-width: 768px) {
@@ -217,10 +230,38 @@ export const PriceValue = styled.span`
   display: inline-flex;
 
   max-width: 80px;
+
+  font-size: 22px;
+  line-height: 32px;
 `;
 
 export const PriceCurrency = styled.span`
   margin-left: 5px;
+`;
+
+export const Quantity = styled.div`
+  border: 1px solid #c6c6c6;
+  border-radius: 24px;
+  padding: 6px 12px;
+
+  display: flex;
+  align-items: center;
+
+  svg {
+    cursor: pointer;
+
+    &:hover {
+      fill: #ffae30;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    margin-right: 20px;
+  }
+`;
+
+export const QuantityValue = styled.span`
+  margin: 0 14px;
 `;
 
 // export const Buy = styled.a`
