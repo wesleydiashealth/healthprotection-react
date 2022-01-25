@@ -98,7 +98,7 @@ const Cart: React.FC<CartProps> = ({ queryProducts }) => {
               Health Protection Europe S.L is a reader supported, all products
               displayed earn us commission when purchased through the links.
               Health Protection is a participant in the Amazon Services LLC
-              Associates Program and its affiliates around the world..
+              Associates Program and its affiliates around the world.
             </AmazonPolicy>
           </CheckoutProducts>
         )}
