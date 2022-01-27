@@ -80,16 +80,6 @@ export const Info = styled.div`
   text-align: center;
   flex: 1;
 
-  div {
-    margin: 0 10px;
-
-    flex-basis: 33.33%;
-
-    & ~ div {
-      border-left: 2px solid #ffae30;
-    }
-  }
-
   p {
     margin-bottom: 20px;
 
@@ -118,6 +108,21 @@ export const Info = styled.div`
     margin: 0 20px 0 0;
 
     display: flex;
+    flex-flow: column wrap;
+  }
+
+  @media screen and (min-width: 1600px) {
+    flex-flow: row nowrap;
+
+    div {
+      margin: 0 10px;
+
+      flex-basis: 33.33%;
+
+      & ~ div {
+        border-left: 2px solid #ffae30;
+      }
+    }
   }
 `;
 

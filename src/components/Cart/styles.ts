@@ -150,16 +150,20 @@ export const StepDescription = styled.h3`
 `;
 
 export const StepContent = styled.div`
-  padding: 0 20px;
-
   display: flex;
   flex-flow: column;
   justify-content: center;
+  align-items: center;
 
   max-width: 100%;
 
   @media screen and (min-width: 768px) {
+    padding: 0 20px;
+  }
+
+  @media screen and (min-width: 1400px) {
     flex-flow: row nowrap;
+    align-items: flex-start;
   }
 `;
 
@@ -181,7 +185,7 @@ export const CheckoutProducts = styled.div`
     color: #ec903f;
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1400px) {
     margin-right: 40px;
   }
 `;
