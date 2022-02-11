@@ -63,6 +63,7 @@ const Wizard: React.FC = () => {
     updateConnections,
     updateStep,
     updateCount,
+    updateError,
   } = context;
 
   const previousStep = { isCompleted: true };
@@ -148,6 +149,10 @@ const Wizard: React.FC = () => {
 
           formRef.current?.setErrors(errors);
         }
+
+        if (err instanceof Error) {
+          updateError(err.message);
+        }
       }
     },
     [
@@ -160,6 +165,7 @@ const Wizard: React.FC = () => {
       updateSuboutcomes,
       updateConnections,
       updateCount,
+      updateError,
       query,
     ],
   );

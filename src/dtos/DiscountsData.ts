@@ -1,3 +1,6 @@
 export default interface DiscountsData {
-  [key: string]: number[];
+  [key: string]: {
+    food: string;
+    dosage: number;
+  }[];
 }

@@ -169,6 +169,37 @@ export const AppProvider: React.FC = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // const xpto = useCallback(() => {
+  //   const updatedDiscounts = habits.reduce((acc: DiscountsData, habit) => {
+  //     const habitDiscounts: DiscountsData = habit.interactions.reduce(
+  //       (subAcc, interaction) => {
+  //         const nutraceutical = nutraceuticals.find(
+  //           item => item.slug === interaction,
+  //         );
+
+  //         const selectedDosage =
+  //           nutraceutical?.info.dosages[habit.frequencyIndex].dosage;
+
+  //         return {
+  //           ...subAcc,
+  //           [interaction]: [
+  //             ...(discounts[interaction] || []),
+  //             {
+  //               food: habit.food,
+  //               dosage: parseInt(selectedDosage || '', 10),
+  //             },
+  //           ],
+  //         };
+  //       },
+  //       {},
+  //     );
+
+  //     return { ...acc, ...habitDiscounts };
+  //   }, {});
+
+  //   setDiscounts({ ...discounts, ...updatedDiscounts });
+  // }, [nutraceuticals, habits, discounts, setDiscounts]);
+
   useEffect(() => {
     wordpressApi
       .get(`/wp-json/hp/v1/nutraceuticals/${query.get('lang')}`)

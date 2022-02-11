@@ -5,9 +5,18 @@ export default interface FoodData {
   title: string;
   content: string;
   icon: string;
-  diet: string[];
-  allergy: string[];
-  unit: string;
+  diet: {
+    value: string;
+    title: string;
+  }[];
+  allergy: {
+    value: string;
+    title: string;
+  }[];
+  unit: {
+    value: string;
+    label: string;
+  };
   dosages: string;
   interactions: InteractionData[];
   dataSource: string[];

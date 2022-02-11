@@ -8,7 +8,9 @@ import { useApp } from 'contexts/app';
 
 import HabitData from 'dtos/HabitData';
 import FoodData from 'dtos/FoodData';
-import ProductData from 'dtos/ProductData';
+import DiscountsData from 'dtos/DiscountsData';
+
+// import getProducts from 'services/getProducts';
 
 import Tooltip from '../Tooltip';
 
@@ -41,10 +43,9 @@ const Habit: React.FC<FoodData> = food => {
     habits,
     nutraceuticals,
     selectedNutraceuticals,
-    products,
-    selectedProducts,
+    discounts,
     updateHabits,
-    updateSelectedProducts,
+    updateDiscounts,
   } = context;
 
   const nutraceuticalsInteractions = interactions.filter(interaction => {
@@ -61,27 +62,43 @@ const Habit: React.FC<FoodData> = food => {
 
       const habitIndex = habits.findIndex(habit => habit.food === food.title);
 
-      // const nutraceuticalsDiscounts = foods
-      //   .find(discountFood => discountFood.slug === selectedFood.slug)
-      //   ?.interactions.filter(interaction =>
-      //     selectedNutraceuticals.includes(interaction.nutraceuticalSlug),
-      //   )
-      //   .reduce((acc, interaction) => {
-      //     const dosageValue = interaction.dosagesGroup.find(
-      //       group => group.dosageFrequency === frequency.value,
-      //     )?.dosageAmount;
+      const frequencyIndex = selectedFood.intakeFrequency.findIndex(
+        item => item.value === frequency.value,
+      );
 
-      //     if (!dosageValue) return acc;
+      const habitDiscounts = selectedFood.interactions
+        .filter(interaction =>
+          selectedNutraceuticals.find(
+            selectedNutraceutical =>
+              selectedNutraceutical === interaction.nutraceuticalSlug,
+          ),
+        )
+        .reduce((acc: DiscountsData, interaction) => {
+          const nutraceutical = nutraceuticals.find(
+            item => item.slug === interaction.nutraceuticalSlug,
+          );
 
-      //     return {
-      //       ...acc,
-      //       [interaction.nutraceuticalSlug]: [parseInt(dosageValue, 10)],
-      //     };
-      //   }, {});
+          const selectedDosage =
+            nutraceutical?.info.dosages[frequencyIndex].dosage;
 
-      // if (nutraceuticalsDiscounts) {
-      //   updateDiscounts(nutraceuticalsDiscounts);
-      // }
+          const existentValue =
+            discounts[interaction.nutraceuticalSlug]?.filter(
+              discount => discount.food !== selectedFood.slug,
+            ) || [];
+
+          return {
+            ...acc,
+            [interaction.nutraceuticalSlug]: [
+              ...existentValue,
+              {
+                food: selectedFood.slug,
+                dosage: parseInt(selectedDosage || '', 10),
+              },
+            ],
+          };
+        }, {});
+
+      updateDiscounts({ ...discounts, ...habitDiscounts });
 
       if (habitIndex > -1) {
         updatedHabits[habitIndex] = {
@@ -89,6 +106,7 @@ const Habit: React.FC<FoodData> = food => {
           unit: selectedFood.unit,
           icon: selectedFood.icon,
           frequency,
+          frequencyIndex,
         };
 
         updateHabits(updatedHabits);
@@ -100,62 +118,51 @@ const Habit: React.FC<FoodData> = food => {
             unit: selectedFood.unit,
             icon: selectedFood.icon,
             frequency,
+            frequencyIndex,
           },
         ]);
       }
 
-      const filteredProducts = selectedFood.interactions
-        .filter(interaction =>
-          selectedNutraceuticals.includes(interaction.nutraceuticalSlug),
-        )
-        .reduce((accProducts: ProductData[], interaction) => {
-          const interactionProducts = products.filter(
-            product => product.nutraceutical === interaction.nutraceutical,
-          );
+      // const nutraceuticalsWithDosages = selectedNutraceuticals
+      //   .map(selectedNutraceutical => {
+      //     const nutraceutical = nutraceuticals.find(
+      //       item => item.slug === selectedNutraceutical,
+      //     );
+      //     const maxDosage = parseInt(
+      //       nutraceutical?.info.dosages[nutraceutical?.info.dosages.length - 1]
+      //         ?.dosage || '',
+      //       10,
+      //     );
 
-          const interactionDosage =
-            interaction.dosagesGroup.find(
-              dosageGroup => dosageGroup.dosageFrequency === frequency.value,
-            )?.dosageAmount || 0;
+      //     const discounted = Object.entries(discounts)
+      //       .filter(({ 0: key }) => key === selectedNutraceutical)
+      //       .reduce(
+      //         (acc, { 1: discount }) =>
+      //           acc +
+      //           discount.reduce(
+      //             (subAcc, interaction) => subAcc + interaction.dosage,
+      //             0,
+      //           ),
+      //         0,
+      //       );
 
-          const interactionNutraceutical = nutraceuticals.find(
-            nutraceutical => nutraceutical.title === interaction.nutraceutical,
-          );
+      //     const resultDosage =
+      //       maxDosage - discounted < 0 ? 0 : maxDosage - discounted;
 
-          if (!interactionNutraceutical || interactionProducts.length <= 1)
-            return accProducts;
+      //     return { nutraceutical: selectedNutraceutical, dosage: resultDosage };
+      //   })
+      //   .filter(selectedNutraceutical => !!selectedNutraceutical.dosage);
 
-          const nutraceuticalDosage =
-            interactionNutraceutical?.info.dosage || 0;
-
-          const belowAverage = nutraceuticalDosage / 2 > interactionDosage;
-
-          const filteredProduct = belowAverage
-            ? interactionProducts[0]
-            : interactionProducts[1];
-
-          return [...accProducts, filteredProduct];
-        }, []);
-
-      const updatedSelectedProducts = selectedProducts.map(
-        selectedProduct =>
-          filteredProducts.find(
-            filteredProduct =>
-              filteredProduct.nutraceutical === selectedProduct.nutraceutical,
-          ) || selectedProduct,
-      );
-
-      updateSelectedProducts(updatedSelectedProducts);
+      // const updatedProducts = await getProducts(nutraceuticalsWithDosages);
     },
     [
+      nutraceuticals,
       food,
       habits,
-      nutraceuticals,
       selectedNutraceuticals,
-      products,
-      selectedProducts,
+      discounts,
       updateHabits,
-      updateSelectedProducts,
+      updateDiscounts,
     ],
   );
 
@@ -195,18 +202,57 @@ const Habit: React.FC<FoodData> = food => {
           />
         </Title>
 
-        <Question>{labels.step_3_question.replace('%s', unit)}</Question>
+        <Question>{labels.step_3_question.replace('%s', unit.label)}</Question>
         <Dosages>{dosages}</Dosages>
         <Nutraceuticals>
           <NutraceuticalsLabel>
             {labels.step_3_interactions}
           </NutraceuticalsLabel>
 
-          {nutraceuticalsInteractions.map(nutraceuticalsInteraction => (
-            <Nutraceutical key={nutraceuticalsInteraction.nutraceuticalSlug}>
-              {nutraceuticalsInteraction.nutraceutical}
-            </Nutraceutical>
-          ))}
+          {nutraceuticalsInteractions.map(nutraceuticalsInteraction => {
+            const interactionNutraceutical = nutraceuticals.find(
+              nutraceutical =>
+                nutraceutical.slug ===
+                nutraceuticalsInteraction.nutraceuticalSlug,
+            );
+
+            const maxDosage = parseInt(
+              interactionNutraceutical?.info.dosages[
+                interactionNutraceutical?.info.dosages.length - 1
+              ].dosage || '',
+              10,
+            );
+
+            const interactionDiscount = Object.entries(discounts)
+              .filter(
+                ({ 0: nutraceutical }) =>
+                  nutraceutical === nutraceuticalsInteraction.nutraceuticalSlug,
+              )
+              .reduce(
+                (acc, { 1: discount }) =>
+                  acc +
+                  discount.reduce(
+                    (subAcc, interaction) => subAcc + interaction.dosage,
+                    0,
+                  ),
+                0,
+              );
+
+            const isReduced =
+              interactionDiscount >= maxDosage * 0.25 &&
+              interactionDiscount <= maxDosage * 0.74;
+            const isRemoved = interactionDiscount >= maxDosage * 0.75;
+
+            return (
+              <Nutraceutical
+                isReduced={isReduced}
+                isRemoved={isRemoved}
+                key={nutraceuticalsInteraction.nutraceuticalSlug}
+              >
+                {nutraceuticalsInteraction.nutraceutical}
+              </Nutraceutical>
+            );
+          })}
         </Nutraceuticals>
         <Dropdown
           options={intakeFrequency}

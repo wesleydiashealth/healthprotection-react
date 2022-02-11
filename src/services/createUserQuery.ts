@@ -28,6 +28,13 @@ export default function createUserQuery(
     wordpressApi
       .post(`/wp-json/hp/v1/sankey/${lang}`, data)
       .then(async response => {
+        const { content } = response.data;
+        const { outcomes, suboutcomes } = content;
+
+        if (!outcomes || !suboutcomes) {
+          reject(new Error('No health goals found'));
+        }
+
         resolve(response.data);
       })
       .catch(error => {

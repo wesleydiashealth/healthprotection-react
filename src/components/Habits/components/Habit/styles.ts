@@ -1,4 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+interface NutraceuticalProps {
+  isReduced?: boolean;
+  isRemoved?: boolean;
+}
 
 const Container = styled.div`
   margin-bottom: 40px;
@@ -136,12 +141,13 @@ export const NutraceuticalsLabel = styled.span`
   }
 `;
 
-export const Nutraceutical = styled.div`
+export const Nutraceutical = styled.div<NutraceuticalProps>`
   margin: 5px 0;
   border-radius: 10px;
   padding: 5px 10px;
 
-  background-color: #e5e5e5;
+  border: 3px solid #e5e5e5;
+  border-radius: 20px;
 
   display: inline-block;
 
@@ -157,6 +163,21 @@ export const Nutraceutical = styled.div`
     font-size: 14px;
     line-height: 20px;
   }
+
+  ${props =>
+    props.isReduced &&
+    css`
+      border-color: orange;
+      color: orange;
+    `}
+
+  ${props =>
+    props.isRemoved &&
+    css`
+      border-color: red;
+      color: red;
+      text-decoration: line-through;
+    `}
 `;
 
 export default Container;

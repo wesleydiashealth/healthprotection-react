@@ -8,7 +8,9 @@ export default interface NutraceuticalData {
   info: {
     slug: string;
     title: string;
-    dosage: number;
+    dosages: {
+      dosage: string;
+    }[];
     dosageUnit: string;
     link: string;
     description: string;

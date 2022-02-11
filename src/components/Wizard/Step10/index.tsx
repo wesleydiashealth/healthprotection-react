@@ -1,6 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
 import { HiLockClosed } from 'react-icons/hi';
+import { BiErrorCircle } from 'react-icons/bi';
 import { CarouselContext } from 'pure-react-carousel';
 import { FormHandles } from '@unform/core';
 import ReactHtmlParser from 'react-html-parser';
@@ -28,7 +29,7 @@ const Step10: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const appContext = useApp();
-  const { labels, steps: appSteps, count, updateStep } = appContext;
+  const { labels, steps: appSteps, count, error, updateStep } = appContext;
 
   const { step1: currentStep, step2: nextStep } = appSteps;
 
@@ -105,12 +106,21 @@ const Step10: React.FC = () => {
             </>
           ) : (
             <>
-              {currentStep.isCompleted ? (
+              {currentStep.isCompleted && !error ? (
                 <Loading color="#db71af" />
               ) : (
                 <>
-                  <HiLockClosed size={52} color="#db71af" />
-                  <Title>Answer all questions to proceed</Title>
+                  {error ? (
+                    <>
+                      <BiErrorCircle size={52} color="#db71af" />
+                      <Title>{error}</Title>
+                    </>
+                  ) : (
+                    <>
+                      <HiLockClosed size={52} color="#db71af" />
+                      <Title>Answer all questions to proceed</Title>
+                    </>
+                  )}
                 </>
               )}
             </>
