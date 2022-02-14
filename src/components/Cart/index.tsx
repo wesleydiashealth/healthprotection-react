@@ -26,8 +26,7 @@ interface CartProps {
 
 const Cart: React.FC<CartProps> = ({ queryProducts }) => {
   const context = useApp();
-  const { steps, products, labels, selectedProducts, updateSelectedProducts } =
-    context;
+  const { steps, products, labels, updateSelectedProducts } = context;
   const { step1: initialStep, step2: previousStep } = steps;
 
   const isActive =
@@ -93,7 +92,7 @@ const Cart: React.FC<CartProps> = ({ queryProducts }) => {
         {isActive && (
           <CheckoutProducts>
             <h4>{labels?.cart_subtitle}</h4>
-            <Products selectedProducts={selectedProducts} />
+            <Products selectedProducts={products} />
             <AmazonPolicy>
               Health Protection Europe S.L is a reader supported, all products
               displayed earn us commission when purchased through the links.

@@ -15,6 +15,7 @@ import FoodData from 'dtos/FoodData';
 import HabitData from 'dtos/HabitData';
 import FineTuneData from 'dtos/FineTuneData';
 import ProductData from 'dtos/ProductData';
+import ProductsGroupData from 'dtos/ProductsGroupsData';
 import CountData from 'dtos/CountData';
 import DiscountsData from 'dtos/DiscountsData';
 
@@ -135,11 +136,9 @@ export const AppProvider: React.FC = ({ children }) => {
 
   const [products, setProducts] = useState<ProductData[]>([]);
 
-  const [selectedProducts, setSelectedProducts] = useState<ProductData[]>([]);
+  const [productsGroups, setproductsGroups] = useState<ProductsGroupData>({});
 
-  const [productsGroups, setproductsGroups] = useState<{
-    [key: string]: ProductData[];
-  }>({});
+  const [selectedProducts, setSelectedProducts] = useState<ProductData[]>([]);
 
   const [discounts, setDiscounts] = useState<DiscountsData>({});
 
@@ -250,7 +249,11 @@ export const AppProvider: React.FC = ({ children }) => {
   async function updateSelectedNutraceuticals(
     updatedSelectedNutraceuticals: string[],
   ) {
-    setSelectedNutraceuticals(updatedSelectedNutraceuticals);
+    setSelectedNutraceuticals(
+      Array.from(
+        new Set([...selectedNutraceuticals, ...updatedSelectedNutraceuticals]),
+      ),
+    );
   }
 
   async function updateOutcomes(updatedOutcomes: OutcomeData[]) {
@@ -385,7 +388,7 @@ export const AppProvider: React.FC = ({ children }) => {
   }
 
   async function updateProducts(updatedProducts: ProductData[]) {
-    setProducts(updatedProducts);
+    setProducts([...products, ...updatedProducts]);
   }
 
   async function updateSelectedProducts(

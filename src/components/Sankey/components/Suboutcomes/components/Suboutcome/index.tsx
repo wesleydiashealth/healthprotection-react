@@ -42,7 +42,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
   title,
   color,
   description,
-  nutraceuticals,
+  nutraceuticals: suboutcomeNutraceuticals,
 }) => {
   const appContext = useApp();
   const {
@@ -50,6 +50,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
     userQuery,
     steps,
     fineTune,
+    nutraceuticals,
     connections,
     updateStep,
     updateConnection,
@@ -60,8 +61,6 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
     updateSelectedNutraceuticals,
     updateHabits,
     updateProducts,
-    updateSelectedProducts,
-    // updateProductsGroups,
   } = appContext;
 
   const [supConnections, setSupConnections] = useState<string[]>([]);
@@ -117,7 +116,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
   }, [id, connections]);
 
   const handleFineTuneClick = useCallback(
-    async (fineTuneGroup, suboutcome) => {
+    async (fineTuneGroup: string[], suboutcome: string) => {
       updateConnection(suboutcome, fineTuneGroup);
       updateSelectedConnections(connections);
 
@@ -126,71 +125,85 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
 
       updateHabits([]);
 
-      const selectedNutraceuticals = Array.from(
-        new Set(
-          Object.values(connections).reduce((acc: string[], curr) => {
-            const connection = Object.values(curr).reduce(
-              (acc2, curr2) => [...acc2, ...curr2],
-              [],
-            );
+      // const selectedNutraceuticals = Array.from(
+      //   new Set(
+      //     Object.values(connections).reduce((acc: string[], curr) => {
+      //       const connection = Object.values(curr).reduce(
+      //         (acc2, curr2) => [...acc2, ...curr2],
+      //         [],
+      //       );
 
-            return [...acc, ...connection];
-          }, []),
-        ),
-      );
-
-      updateSelectedNutraceuticals(selectedNutraceuticals);
-
-      const updatedProducts = await getProducts(selectedNutraceuticals);
-
-      // Temporary fix to return only one product of each nutraceutical
-      const filteredUpdatedProducts = updatedProducts.filter(
-        (value, index, self) =>
-          index ===
-          self.findIndex(item => item.nutraceutical === value.nutraceutical),
-      );
-
-      updateProducts(filteredUpdatedProducts);
-
-      // const productsGroups = updatedProducts.reduce(
-      //   (acc: ProductsGroupsProps, curr) => ({
-      //     ...acc,
-      //     [curr.nutraceutical]: [...(acc[curr.nutraceutical] || []), curr],
-      //   }),
-      //   {},
+      //       return [...acc, ...connection];
+      //     }, []),
+      //   ),
       // );
 
-      // updateProductsGroups(productsGroups);
+      // const selectedNutraceuticalsDosages = selectedNutraceuticals.map(
+      //   selectedNutraceutical => {
+      //     const selectedNutraceuticalObject = appNutraceuticals.find(
+      //       appNutraceutical => appNutraceutical.slug === selectedNutraceutical,
+      //     );
 
-      updateSelectedProducts(
-        updatedProducts.filter(
-          (updatedProduct, index, self) =>
-            self.findIndex(
-              v => v.nutraceutical === updatedProduct.nutraceutical,
-            ) === index,
-        ),
-      );
+      //     const dosages = selectedNutraceuticalObject?.info.dosages;
+      //     const maxDosageAmount = dosages
+      //       ? dosages[dosages?.length - 1].dosage
+      //       : 0;
 
-      const response = await getFoods({
+      //     return `${selectedNutraceutical};${maxDosageAmount}`;
+      //   },
+      // );
+
+      updateSelectedNutraceuticals(fineTuneGroup);
+
+      // Get and update Foods from Wordpress
+      const { content: foods } = await getFoods({
         uuid: userQuery,
-        nutraceuticals: selectedNutraceuticals,
+        nutraceuticals: fineTuneGroup,
       });
 
-      updateFoods(response.content);
+      updateFoods(foods);
+
+      const nutraceuticalsDosages = fineTuneGroup.map(item => {
+        const itemNutraceutical = nutraceuticals.find(
+          nutraceutical => nutraceutical.slug === item,
+        );
+
+        const dosages = itemNutraceutical?.info.dosages;
+        const maxDosageAmount = dosages
+          ? dosages[dosages?.length - 1].dosage
+          : 0;
+
+        return `${item};${maxDosageAmount}`;
+      });
+
+      // Get and update products from Wordpress
+      const updatedProducts = await getProducts(nutraceuticalsDosages);
+
+      updateProducts(updatedProducts);
+
+      // updateSelectedProducts(
+      //   updatedProducts.filter(
+      //     (updatedProduct, index, self) =>
+      //       self.findIndex(
+      //         v => v.nutraceutical === updatedProduct.nutraceutical,
+      //       ) === index,
+      //   ),
+      // );
 
       updateStep('step3', { ...nextStep, isLoaded: true });
 
-      if (!response.content.length) {
+      if (!foods.length) {
         updateError(
           'With your choices there are no adjustments to be made. See below for your list of nutraceuticals.',
         );
       } else {
         updateError('');
-        updateFoods(response.content);
+        updateFoods(foods);
       }
     },
     [
       nextStep,
+      nutraceuticals,
       connections,
       userQuery,
       currentStep,
@@ -202,7 +215,6 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       updateSelectedNutraceuticals,
       updateProducts,
       updateHabits,
-      updateSelectedProducts,
     ],
   );
 
@@ -279,35 +291,37 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
         >
           {labels.step_2_off}
         </FineTune>
-        {Object.entries(nutraceuticals).map(({ 0: key, 1: value }) => {
-          return (
-            !!value.length && (
-              <FineTune
-                key={key}
-                isActive={fineTune[id] === key}
-                isEmpty={!value.length}
-                color={color}
-                className="step-2-completed"
-                onClick={() => {
-                  if (value.length) {
-                    handleFineTuneClick(value, id);
-                    updateFineTune({ ...fineTune, [id]: key });
+        {Object.entries(suboutcomeNutraceuticals).map(
+          ({ 0: key, 1: value }) => {
+            return (
+              !!value.length && (
+                <FineTune
+                  key={key}
+                  isActive={fineTune[id] === key}
+                  isEmpty={!value.length}
+                  color={color}
+                  className="step-2-completed"
+                  onClick={() => {
+                    if (value.length) {
+                      handleFineTuneClick(value, id);
+                      updateFineTune({ ...fineTune, [id]: key });
 
-                    TagManager.dataLayer({
-                      dataLayer: {
-                        event: 'fineTuneClick',
-                        fineTuneSuboutcome: id,
-                        fineTuneOption: key,
-                      },
-                    });
-                  }
-                }}
-              >
-                {labels[`step_2_${key}`]}
-              </FineTune>
-            )
-          );
-        })}
+                      TagManager.dataLayer({
+                        dataLayer: {
+                          event: 'fineTuneClick',
+                          fineTuneSuboutcome: id,
+                          fineTuneOption: key,
+                        },
+                      });
+                    }
+                  }}
+                >
+                  {labels[`step_2_${key}`]}
+                </FineTune>
+              )
+            );
+          },
+        )}
       </FineTuneGroup>
     </Container>
   );

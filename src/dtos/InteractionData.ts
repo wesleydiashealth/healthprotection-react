@@ -1,10 +1,7 @@
 export default interface InteractionData {
-  nutraceutical: string;
-  nutraceuticalSlug: string;
+  dietarySupplement: string;
+  order: string;
   dosage: string;
-  dosagesGroup: {
-    dosageFrequency: string;
-    dosageAmount: string;
-  }[];
-  dosageUnit: string;
+  capsuleDosage: string;
+  capsuleDosageUnit: string;
 }

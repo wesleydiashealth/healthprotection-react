@@ -41,18 +41,18 @@ import Container, {
 const Product: React.FC<ProductData> = ({
   asin,
   brand,
-  image,
-  rating,
-  nutraceutical,
+  capsules,
+  interactions,
   diets,
   allergies,
   additives,
   proprietaries,
+  price,
+  image,
+  rating,
   starRating,
   reviews,
-  price,
-  capsuleDosage,
-  capsules,
+  dietarySupplement,
   quantity,
 }) => {
   const context = useApp();
@@ -64,6 +64,10 @@ const Product: React.FC<ProductData> = ({
     updateSelectedProducts,
   } = context;
 
+  const productDietarySupplement = nutraceuticals.find(
+    nutraceutical => nutraceutical.slug === dietarySupplement,
+  );
+
   const productPriceArray = price.split(' ');
   const productPriceValue = parseFloat(productPriceArray[0].replace(/,/g, '.'));
   const productPriceCurrency = productPriceArray[1];
@@ -72,7 +76,7 @@ const Product: React.FC<ProductData> = ({
     new Set(
       suboutcomes.reduce((acc: string[], curr) => {
         const nutraceuticalSlug = nutraceuticals.find(item => {
-          return item.title === nutraceutical;
+          return item.title === asin;
         })?.slug;
 
         const currNutraceuticals = Object.values(curr.nutraceuticals).reduce(
@@ -156,14 +160,17 @@ const Product: React.FC<ProductData> = ({
   return (
     <Container>
       <ImageContainer>
-        <Image src={image} alt={nutraceutical} title={nutraceutical} />
+        {image && <Image src={image} alt={asin} title={asin} />}
       </ImageContainer>
       <Content>
-        <ContentTitle>{nutraceutical}</ContentTitle>
+        <ContentTitle>{productDietarySupplement?.title}</ContentTitle>
         <ContentBrand>{brand}</ContentBrand>
-        <ContentDosage>
-          {`${capsuleDosage}mg (${capsules} capsules)`}
-        </ContentDosage>
+        {!!interactions.length &&
+          interactions.map(interaction => (
+            <ContentDosage
+              key={interaction.dietarySupplement}
+            >{`${interaction.capsuleDosage} ${interaction.capsuleDosageUnit} (${capsules} capsules)`}</ContentDosage>
+          ))}
         {!!rating && starRating && (
           <Rating>
             <span>{rating}</span>

@@ -45,13 +45,13 @@ const Tooltip: React.FC<TooltipProps> = ({
             : `The follow table considers 100 grams of ${title.toLowerCase()}:`}
         </ContainerInteractionsLabel>
         {interactions?.map(interaction => (
-          <ContainerInteractionsItem key={interaction.nutraceuticalSlug}>
+          <ContainerInteractionsItem key={interaction.dietarySupplement}>
             <ContainerInteractionsItemName>
-              {interaction.nutraceutical}
+              {interaction.dietarySupplement}
             </ContainerInteractionsItemName>
             <ContainerInteractionsItemDosage>
               {interaction.dosage}
-              {interaction.dosageUnit}
+              {interaction.capsuleDosage}
             </ContainerInteractionsItemDosage>
           </ContainerInteractionsItem>
         ))}

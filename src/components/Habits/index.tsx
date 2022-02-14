@@ -43,7 +43,7 @@ const Habits: React.FC = () => {
           ...interactions.reduce(
             (interaction: string[], nutraceutical) => [
               ...interaction,
-              nutraceutical.nutraceuticalSlug,
+              nutraceutical.dietarySupplement,
             ],
             [],
           ),

@@ -29,9 +29,7 @@ const CustomCart: React.FC = () => {
       setQueryProducts(
         products.filter(
           (updatedProduct, index, self) =>
-            self.findIndex(
-              v => v.nutraceutical === updatedProduct.nutraceutical,
-            ) === index,
+            self.findIndex(v => v.asin === updatedProduct.asin) === index,
         ),
       );
     }

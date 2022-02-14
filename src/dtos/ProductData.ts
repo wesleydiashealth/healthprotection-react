@@ -1,24 +1,22 @@
 /* eslint-disable camelcase */
+import InteractionData from './InteractionData';
+
 export default interface ProductData {
   asin: string;
   brand: string;
-  order: number;
-  dosageValue: number;
-  dosageUnit: string;
-  capsuleDosage: number;
-  capsuleDosageUnit: string;
   capsules: number;
-  nutraceutical: string;
+  interactions: InteractionData[];
   diets: string[];
   allergies: string[];
   additives: string[];
   proprietaries: string[];
   url: string;
+  price: string;
   image: string;
+  lastUpdate: string;
   rating: string;
   starRating: string;
   reviews: string;
-  price: string;
-  lastUpdate: string;
+  dietarySupplement?: string;
   quantity?: number;
 }

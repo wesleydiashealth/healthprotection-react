@@ -187,25 +187,19 @@ const ReportDocument: React.FC<ReportDocumentData> = ({
 
             {products.map(product => {
               const productNutraceutical = nutraceuticals.find(
-                nutraceutical => nutraceutical.slug === product.nutraceutical,
+                nutraceutical => nutraceutical.slug === product.asin,
               );
 
               return (
-                <View
-                  key={product.nutraceutical}
-                  style={styles.product}
-                  wrap={false}
-                >
+                <View key={product.asin} style={styles.product} wrap={false}>
                   <View style={styles.productImageContainer}>
                     <Image style={styles.productImage} src={product.image} />
                   </View>
                   <View style={styles.productContent}>
-                    <Text style={styles.productTitle}>
-                      {product.nutraceutical}
-                    </Text>
+                    <Text style={styles.productTitle}>{product.asin}</Text>
                     <Text
                       style={styles.productDosage}
-                    >{`${product.capsuleDosage}${product.capsuleDosageUnit} (${product.capsules} capsules)`}</Text>
+                    >{`${product.capsules}${product.capsules} (${product.capsules} capsules)`}</Text>
                   </View>
                   <View style={styles.productInfo}>
                     <Text style={styles.productInfoLabel}>
@@ -417,7 +411,7 @@ const ReportDocument: React.FC<ReportDocumentData> = ({
                       {habit.frequency.label}
                     </Text>
                     <View style={styles.habitNutraceuticals}>
-                      {habitFood?.interactions.map(interaction => {
+                      {/* {habitFood?.interactions.map(interaction => {
                         const interactionDosageGroup =
                           interaction.dosagesGroup.find(
                             dosageGroup =>
@@ -430,7 +424,7 @@ const ReportDocument: React.FC<ReportDocumentData> = ({
                             {`${interaction.nutraceutical}: ${interactionDosageGroup?.dosageAmount}mg`}
                           </Text>
                         );
-                      })}
+                      })} */}
                     </View>
                   </View>
                 </View>

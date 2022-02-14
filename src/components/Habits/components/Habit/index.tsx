@@ -49,7 +49,7 @@ const Habit: React.FC<FoodData> = food => {
   } = context;
 
   const nutraceuticalsInteractions = interactions.filter(interaction => {
-    return selectedNutraceuticals.includes(interaction.nutraceuticalSlug);
+    return selectedNutraceuticals.includes(interaction.dietarySupplement);
   });
 
   useEffect(() => {
@@ -70,25 +70,25 @@ const Habit: React.FC<FoodData> = food => {
         .filter(interaction =>
           selectedNutraceuticals.find(
             selectedNutraceutical =>
-              selectedNutraceutical === interaction.nutraceuticalSlug,
+              selectedNutraceutical === interaction.dietarySupplement,
           ),
         )
         .reduce((acc: DiscountsData, interaction) => {
           const nutraceutical = nutraceuticals.find(
-            item => item.slug === interaction.nutraceuticalSlug,
+            item => item.slug === interaction.dietarySupplement,
           );
 
           const selectedDosage =
             nutraceutical?.info.dosages[frequencyIndex].dosage;
 
           const existentValue =
-            discounts[interaction.nutraceuticalSlug]?.filter(
+            discounts[interaction.dietarySupplement]?.filter(
               discount => discount.food !== selectedFood.slug,
             ) || [];
 
           return {
             ...acc,
-            [interaction.nutraceuticalSlug]: [
+            [interaction.dietarySupplement]: [
               ...existentValue,
               {
                 food: selectedFood.slug,
@@ -122,6 +122,44 @@ const Habit: React.FC<FoodData> = food => {
           },
         ]);
       }
+
+      // const selectedNutraceuticalsDosages = selectedNutraceuticals.map(
+      //   selectedNutraceutical => {
+      //     const selectedNutraceuticalObject = nutraceuticals.find(
+      //       nutraceutical => nutraceutical.slug === selectedNutraceutical,
+      //     );
+
+      //     const selectedNutraceuticalDosages =
+      //       selectedNutraceuticalObject?.info.dosages;
+      //     const maxDosageAmount = selectedNutraceuticalDosages
+      //       ? parseInt(
+      //           selectedNutraceuticalDosages[
+      //             selectedNutraceuticalDosages?.length - 1
+      //           ].dosage,
+      //           10,
+      //         )
+      //       : 0;
+
+      //     const selectedNutraceuticalDiscounts = Object.entries(discounts)
+      //       .filter(({ 0: key }) => key === selectedNutraceutical)
+      //       ?.reduce(
+      //         (acc, { 1: discount }) =>
+      //           acc +
+      //           discount.reduce(
+      //             (subAcc, interaction) => subAcc + interaction.dosage,
+      //             0,
+      //           ),
+      //         0,
+      //       );
+
+      //     return `${selectedNutraceutical};${
+      //       maxDosageAmount - selectedNutraceuticalDiscounts
+      //     }`;
+      //   },
+      // );
+
+      // console.log(discounts);
+      // console.log(selectedNutraceuticals);
 
       // const nutraceuticalsWithDosages = selectedNutraceuticals
       //   .map(selectedNutraceutical => {
@@ -213,7 +251,7 @@ const Habit: React.FC<FoodData> = food => {
             const interactionNutraceutical = nutraceuticals.find(
               nutraceutical =>
                 nutraceutical.slug ===
-                nutraceuticalsInteraction.nutraceuticalSlug,
+                nutraceuticalsInteraction.dietarySupplement,
             );
 
             const maxDosage = parseInt(
@@ -226,7 +264,7 @@ const Habit: React.FC<FoodData> = food => {
             const interactionDiscount = Object.entries(discounts)
               .filter(
                 ({ 0: nutraceutical }) =>
-                  nutraceutical === nutraceuticalsInteraction.nutraceuticalSlug,
+                  nutraceutical === nutraceuticalsInteraction.dietarySupplement,
               )
               .reduce(
                 (acc, { 1: discount }) =>
@@ -247,9 +285,9 @@ const Habit: React.FC<FoodData> = food => {
               <Nutraceutical
                 isReduced={isReduced}
                 isRemoved={isRemoved}
-                key={nutraceuticalsInteraction.nutraceuticalSlug}
+                key={nutraceuticalsInteraction.dietarySupplement}
               >
-                {nutraceuticalsInteraction.nutraceutical}
+                {nutraceuticalsInteraction.dietarySupplement}
               </Nutraceutical>
             );
           })}
