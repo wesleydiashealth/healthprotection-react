@@ -76,15 +76,21 @@ const Summary: React.FC<SummaryProps> = ({ isCustom }) => {
         title="Available at Amazon"
       />
       <Title>
-        <span>{labels.summary_total}</span>{' '}
+        <span>{labels.summary_total || 'Total'}</span>{' '}
         <TitlePrice>
           <TitlePriceValue>{cartTotalPriceFormatted}</TitlePriceValue>
           <TitlePriceCurrency>€</TitlePriceCurrency>
         </TitlePrice>
       </Title>
       <Details>{`${cartDailyPriceFormatted} €/day`}</Details>
-      <Description>{labels.summary_description}</Description>
-      <Shipping>{labels.summary_shipping}</Shipping>
+      <Description>
+        {labels.summary_description ||
+          'Your purchase serves for at least 30 days.'}
+      </Description>
+      <Shipping>
+        {labels.summary_shipping ||
+          'Shipping duties and taxes will be calculated at checkout'}
+      </Shipping>
       <CheckoutButton
         href={cartLink}
         target="_blank"
@@ -95,7 +101,7 @@ const Summary: React.FC<SummaryProps> = ({ isCustom }) => {
         }}
         isActive={isActive}
       >
-        {labels.summary_button} <BsArrowRight size={18} />
+        {labels.summary_button || 'Go to checkout'} <BsArrowRight size={18} />
       </CheckoutButton>
 
       {/* <SaveRecommendation>

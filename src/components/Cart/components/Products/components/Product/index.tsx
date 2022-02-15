@@ -168,7 +168,7 @@ const Product: React.FC<ProductData> = ({
         {!!interactions.length &&
           interactions.map(interaction => (
             <ContentDosage
-              key={interaction.dietarySupplement}
+              key={interaction.dietarySupplementSlug}
             >{`${interaction.capsuleDosage} ${interaction.capsuleDosageUnit} (${capsules} capsules)`}</ContentDosage>
           ))}
         {!!rating && starRating && (

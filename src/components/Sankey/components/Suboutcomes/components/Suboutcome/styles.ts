@@ -161,6 +161,7 @@ export const FineTune = styled.a<FineTuneProps>`
   display: inline-block;
 
   text-decoration: none;
+  text-transform: capitalize;
   font-size: 10px;
 
   & ~ a {

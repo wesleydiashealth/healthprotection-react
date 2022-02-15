@@ -13,7 +13,6 @@ import Container, {
   ContainerListItem,
   ContainerListItemTitle,
   ContainerListItemDetails,
-  ContainerListItemDescription,
   ContainerListItemLink,
   ContainerListIcons,
   ContainerListIcon,
@@ -66,7 +65,13 @@ const Tooltip: React.FC<TooltipProps> = ({ slug, supConnections }) => {
       </ContainerLink>
       <ContainerList style={{ height: '400px' }}>
         {nutraceutical?.info.relations
-          .filter(relation => supConnections.includes(relation.suboutcome.slug))
+          .sort(relation =>
+            supConnections.find(
+              supConnection => supConnection === relation.suboutcome.slug,
+            )
+              ? -1
+              : 1,
+          )
           .map(relation => (
             <ContainerListItem key={relation.slug}>
               <ContainerListItemTitle>
@@ -92,34 +97,31 @@ const Tooltip: React.FC<TooltipProps> = ({ slug, supConnections }) => {
               <ContainerListIcons>
                 <ContainerListIcon>
                   <ContainerListIconTitle>
-                    Consistent Effects
+                    Level of Evidence
                   </ContainerListIconTitle>
                   <ContainerListIconContent>
-                    <EffectsMeter width={relation.levelOfEvidence}>
+                    <EffectsMeter width={relation.evidenceLevel}>
                       <div />
                     </EffectsMeter>
                   </ContainerListIconContent>
                 </ContainerListIcon>
                 <ContainerListIcon>
                   <ContainerListIconTitle>
-                    Strength of Effects
+                    Magnitude of Effect
                   </ContainerListIconTitle>
                   <ContainerListIconContent>
                     <NeutralIcon
-                      isActive={Math.abs(relation.magnitudeOfEffect) === 1}
+                      isActive={Math.abs(relation.magnitudeLevel) === 1}
                     />
                     <HappyIcon
-                      isActive={Math.abs(relation.magnitudeOfEffect) === 2}
+                      isActive={Math.abs(relation.magnitudeLevel) === 2}
                     />
                     <HappierIcon
-                      isActive={Math.abs(relation.magnitudeOfEffect) === 3}
+                      isActive={Math.abs(relation.magnitudeLevel) === 3}
                     />
                   </ContainerListIconContent>
                 </ContainerListIcon>
               </ContainerListIcons>
-              <ContainerListItemDescription>
-                {relation?.description}
-              </ContainerListItemDescription>
               <ContainerListItemLink href={relation.link} target="_blank">
                 Read each of the scientific studies
               </ContainerListItemLink>

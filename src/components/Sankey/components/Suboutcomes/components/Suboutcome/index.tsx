@@ -289,7 +289,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
             });
           }}
         >
-          {labels.step_2_off}
+          {labels.step_2_off || 'off'}
         </FineTune>
         {Object.entries(suboutcomeNutraceuticals).map(
           ({ 0: key, 1: value }) => {
@@ -316,7 +316,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
                     }
                   }}
                 >
-                  {labels[`step_2_${key}`]}
+                  {labels[`step_2_${key}`] || key}
                 </FineTune>
               )
             );

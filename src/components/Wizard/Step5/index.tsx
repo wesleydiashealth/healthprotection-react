@@ -247,7 +247,7 @@ const Step5: React.FC = () => {
         />
       )}
       <QuestionPrefix>
-        {`${labels.step_1_question} ${stepNumber}/${wizardSteps}`}
+        {`${labels.step_1_question || 'Question'} ${stepNumber}/${wizardSteps}`}
         {(step.isCompleted || !!step.answers.length) && (
           <FaUndoAlt
             size={16}
@@ -421,7 +421,7 @@ const Step5: React.FC = () => {
                 carouselContext.setStoreState({ currentSlide: 5 });
               }}
             >
-              {labels.step_1_next_question}
+              {labels.step_1_next_question || 'Next Question'}
             </button>
           )}
         </>

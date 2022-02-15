@@ -8,9 +8,9 @@ import { useApp } from 'contexts/app';
 import { useWizard } from 'contexts/wizard';
 
 import Button from 'components/Button';
-import Input from 'components/Input';
 
 import AnswerData from 'dtos/AnswerData';
+import QuestionAnswersData from 'dtos/QuestionAnswersData';
 
 import {
   StepContainer,
@@ -94,15 +94,25 @@ const Step2: React.FC = () => {
   );
 
   const handleSubquestionInput = useCallback(
-    (subAnswer, updatedStep: string, subQuestion: string) => {
+    (
+      subAnswer: QuestionAnswersData,
+      updatedStep: string,
+      subQuestion: { slug: string; label: string },
+    ) => {
       const updatedAnswers: AnswerData[] = answers.map(item =>
         item.question.slug === currentQuestion?.slug
           ? {
               ...item,
               subAnswer: [
                 {
-                  question: { slug: subQuestion, label: subQuestion },
-                  answer: { slug: subAnswer.slug, label: subAnswer.label },
+                  question: {
+                    slug: subQuestion.slug,
+                    label: subQuestion.label,
+                  },
+                  answer: {
+                    slug: subAnswer.api || '',
+                    label: subAnswer.label || '',
+                  },
                 },
               ],
             }
@@ -114,7 +124,7 @@ const Step2: React.FC = () => {
       updateStep('step2', {
         index: 2,
         isCompleted: step.isCompleted,
-        isExcluded: !!subAnswer?.exclude,
+        isExcluded: subAnswer.api === 'exclude',
         excludeMessage: subAnswer?.exclude,
         answers: step.answers,
         subAnswers: step.subAnswers,
@@ -123,7 +133,7 @@ const Step2: React.FC = () => {
       updateStep(updatedStep, {
         index: 2,
         isCompleted: true,
-        answers: subAnswer.slug || '',
+        answers: subAnswer.api || '',
       });
       carouselContext.setStoreState({ currentSlide: 2 });
     },
@@ -153,7 +163,7 @@ const Step2: React.FC = () => {
         />
       )}
       <QuestionPrefix>
-        {`${labels.step_1_question} ${stepNumber}/${wizardSteps}`}
+        {`${labels.step_1_question || 'Question'} ${stepNumber}/${wizardSteps}`}
         {(step.isCompleted || !!step.answers.length) && (
           <FaUndoAlt
             size={16}
@@ -219,25 +229,19 @@ const Step2: React.FC = () => {
         ))
       ) : (
         <>
-          <Input
-            type="hidden"
-            name={currentQuestion.table}
-            value={step?.answers}
-          />
           {step.subAnswers.map(subAnswer => (
             <Button
               key={subAnswer.slug}
               type="submit"
               onClick={() => {
-                handleSubquestionInput(
-                  subAnswer,
-                  'step2_1',
-                  subAnswer.label || '',
-                );
+                handleSubquestionInput(subAnswer, 'step2_1', {
+                  slug: subAnswer.slug || '',
+                  label: subAnswer.slug || '',
+                });
               }}
-              isActive={subStep?.answers === subAnswer.slug}
-              name="female_condition"
-              value={subAnswer.api}
+              isActive={subStep?.answers === subAnswer.api}
+              name="femaleCondition"
+              value={subStep.answers}
             >
               {subAnswer.label}
             </Button>

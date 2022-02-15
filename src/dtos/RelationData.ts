@@ -1,6 +1,7 @@
 export default interface RelationData {
   slug: string;
   title: string;
+  link: string;
   outcome: {
     slug: string;
     title: string;
@@ -11,9 +12,9 @@ export default interface RelationData {
     title: string;
     link: string;
   };
-  description: string;
   studies: number;
-  levelOfEvidence: number;
-  magnitudeOfEffect: number;
-  link: string;
+  evidenceLevel: number;
+  magnitudeLevel: number;
+  dosages: string;
+  dosagesUnit: string;
 }

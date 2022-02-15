@@ -1,5 +1,6 @@
 export default interface InteractionData {
-  dietarySupplement: string;
+  dietarySupplementSlug: string;
+  dietarySupplementTitle: string;
   order: string;
   dosage: string;
   capsuleDosage: string;

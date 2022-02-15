@@ -29,6 +29,10 @@ const Cart: React.FC<CartProps> = ({ queryProducts }) => {
   const { steps, products, labels, updateSelectedProducts } = context;
   const { step1: initialStep, step2: previousStep } = steps;
 
+  const stepDescriptionLabel =
+    labels.cart_description ||
+    'Click on the dietary supplements you want to be redirect to Amazon';
+
   const isActive =
     (previousStep.isCompleted &&
       initialStep.isCompleted &&
@@ -52,12 +56,17 @@ const Cart: React.FC<CartProps> = ({ queryProducts }) => {
         <TiShoppingCart size={52} color={isActive ? '#ec903f' : '#565656'} />
         <StepTitle>
           {!isActive && <HiLockClosed size={20} className="locked-icon" />}
-          {labels.cart_title}
+          {labels.cart_title || 'Buy your products'}
           <HiQuestionMarkCircle
             className="tooltip-icon"
             size={20}
             color={isActive ? '#ec903f' : '#565656'}
-            data-tip={`<strong>${labels.cart_title}</strong><span>${labels.cart_tooltip}</span>`}
+            data-tip={`<strong>${
+              labels.cart_title || 'Buy your products'
+            }</strong><span>${
+              labels.cart_tooltip ||
+              'Now that you have completed the 3 steps, we present the products suitable for the areas you want. Choose which ones you want to buy and click the "buy at Amazon" button to be redirected to Amazon\'s sales site. You can also read more about each dietary supplement and check out brand information.'
+            }</span>`}
             data-for="cart-title-tooltip"
           />
           <StepTooltip
@@ -79,12 +88,10 @@ const Cart: React.FC<CartProps> = ({ queryProducts }) => {
             )}
           </div>
         )}
-        {labels.cart_description && (
+        {stepDescriptionLabel && (
           <StepDescription>
-            <strong>{labels.cart_description.split(' ')[0]}</strong>{' '}
-            {labels.cart_description.substr(
-              labels.cart_description.indexOf(' ') + 1,
-            )}
+            <strong>{stepDescriptionLabel.split(' ')[0]}</strong>{' '}
+            {stepDescriptionLabel.substr(stepDescriptionLabel.indexOf(' ') + 1)}
           </StepDescription>
         )}
       </StepIntro>
@@ -92,7 +99,7 @@ const Cart: React.FC<CartProps> = ({ queryProducts }) => {
         {isActive && (
           <CheckoutProducts>
             <h4>{labels?.cart_subtitle}</h4>
-            <Products selectedProducts={products} />
+            <Products {...{ products }} />
             <AmazonPolicy>
               Health Protection Europe S.L is a reader supported, all products
               displayed earn us commission when purchased through the links.

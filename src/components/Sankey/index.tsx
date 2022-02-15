@@ -37,6 +37,9 @@ const Sankey: React.FC<SankeyProps> = ({
   const { labels, steps, outcomes } = context;
   const { step1: previousStep, step2: currentStep } = steps;
 
+  const stepDisabledLabel =
+    labels.step_2_disabled || 'Step Blocked. Finish Step 1 to proceed.';
+
   return (
     <Container id="step_2" isActive={previousStep.isCompleted}>
       <StepIntro>
@@ -50,12 +53,17 @@ const Sankey: React.FC<SankeyProps> = ({
               <HiLockClosed size={20} className="locked-icon" />
             </>
           )}
-          {labels.step_2_title}
+          {labels.step_2_title || 'Step 2'}
           <HiQuestionMarkCircle
             className="tooltip-icon"
             size={20}
             color={previousStep.isCompleted ? '#DB71AF' : '#565656'}
-            data-tip={`<strong>${labels.step_2_title}</strong><span>${labels.step_2_tooltip}</span>`}
+            data-tip={`<strong>${
+              labels.step_2_title || 'Step 2'
+            }</strong><span>${
+              labels.step_2_tooltip ||
+              'We have already preselected the results that are available for you to choose from. Adjust the areas of health in which you want to improve by setting the desired intensity.'
+            }</span>`}
             data-for="sankey-title-tooltip"
           />
           <StepTooltip
@@ -71,10 +79,8 @@ const Sankey: React.FC<SankeyProps> = ({
         </StepTitle>
         {!previousStep.isCompleted && (
           <div className="step-disabled">
-            <strong>{labels.step_2_disabled.split('.')[0]}</strong>.
-            {labels.step_2_disabled.substr(
-              labels.step_2_disabled.indexOf('.') + 1,
-            )}
+            <strong>{stepDisabledLabel.split('.')[0]}</strong>.
+            {stepDisabledLabel.substr(stepDisabledLabel.indexOf('.') + 1)}
           </div>
         )}
         <StepDescription>

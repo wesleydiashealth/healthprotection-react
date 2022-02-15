@@ -43,7 +43,7 @@ const Habits: React.FC = () => {
           ...interactions.reduce(
             (interaction: string[], nutraceutical) => [
               ...interaction,
-              nutraceutical.dietarySupplement,
+              nutraceutical.dietarySupplementSlug,
             ],
             [],
           ),
@@ -76,6 +76,14 @@ const Habits: React.FC = () => {
     invalidNutraceuticalsString
       .slice(lastComma)
       .replace(invalidNutraceuticalsSeparator, ' and');
+
+  const InvalidSingularLabel =
+    labels.step_3_invalid_nutraceuticals_singular ||
+    'For %s there is no adjustments to be made. See below for your list of dietary supplements.';
+
+  const InvalidPluralLabel =
+    labels.step_3_invalid_nutraceuticals_plural ||
+    'For %s there are no adjustments to be made. See below for your list of dietary supplements.';
 
   return (
     <Container id="step_3" isActive={isActive}>
@@ -144,16 +152,20 @@ const Habits: React.FC = () => {
                 <HabitInvalidNutraceuticals id="invalid_habits_container">
                   {invalidNutraceuticals.length > 1
                     ? ReactHtmlParser(
-                        labels.step_3_invalid_nutraceuticals_plural.replace(
-                          '%s',
-                          `<strong>${invalidNutraceuticalsText}</strong>`,
-                        ),
+                        InvalidPluralLabel &&
+                          invalidNutraceuticalsText &&
+                          InvalidPluralLabel.replace(
+                            '%s',
+                            `<strong>${invalidNutraceuticalsText}</strong>`,
+                          ),
                       )
                     : ReactHtmlParser(
-                        labels.step_3_invalid_nutraceuticals_singular.replace(
-                          '%s',
-                          `<strong>${invalidNutraceuticalsText}</strong>`,
-                        ),
+                        InvalidSingularLabel &&
+                          invalidNutraceuticalsText &&
+                          InvalidSingularLabel.replace(
+                            '%s',
+                            `<strong>${invalidNutraceuticalsText}</strong>`,
+                          ),
                       )}
                 </HabitInvalidNutraceuticals>
               )}

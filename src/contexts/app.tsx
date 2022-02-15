@@ -144,7 +144,7 @@ export const AppProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     wordpressApi
-      .get(`/wp-json/hp/v1/labels/${query.get('lang')}`)
+      .get(`/wp-json/hp/v1/labels/${query.get('lang') || ''}`)
       .then(response => {
         const { content, success } = response.data;
 
@@ -153,15 +153,7 @@ export const AppProvider: React.FC = ({ children }) => {
         }
       })
       .catch(err => {
-        if (err.response) {
-          setError(err.request.data.message);
-        } else if (err.request) {
-          const errorMessage = err.request.response
-            ? JSON.parse(err.request.response).message
-            : 'Unknown Error';
-
-          setError(errorMessage);
-        } else {
+        if (err instanceof Error) {
           setError(err.message);
         }
       });
@@ -376,11 +368,21 @@ export const AppProvider: React.FC = ({ children }) => {
   }
 
   async function updateFoods(updatedFoods: FoodData[]) {
-    setFoods(updatedFoods);
+    const newFoods = updatedFoods.filter(
+      updatedFood =>
+        foods.findIndex(food => food.slug === updatedFood.slug) === -1,
+    );
+
+    setFoods([...foods, ...newFoods]);
   }
 
   async function updateHabits(updatedHabits: HabitData[]) {
-    setHabits(updatedHabits);
+    const newHabits = updatedHabits.filter(
+      updatedHabit =>
+        habits.findIndex(habit => habit.food === updatedHabit.food) === -1,
+    );
+
+    setHabits([...habits, ...newHabits]);
   }
 
   async function updateError(updatedError: string) {
@@ -388,13 +390,27 @@ export const AppProvider: React.FC = ({ children }) => {
   }
 
   async function updateProducts(updatedProducts: ProductData[]) {
-    setProducts([...products, ...updatedProducts]);
+    const newProducts = updatedProducts.filter(
+      updatedProduct =>
+        products.findIndex(product => product.asin === updatedProduct.asin) ===
+        -1,
+    );
+
+    setProducts([...products, ...newProducts]);
   }
 
   async function updateSelectedProducts(
     updatedSelectedProducts: ProductData[],
   ) {
-    setSelectedProducts(updatedSelectedProducts);
+    const newSelectedProducts = updatedSelectedProducts.filter(
+      updatedSelectedProduct =>
+        selectedProducts.findIndex(
+          selectedProduct =>
+            selectedProduct.asin === updatedSelectedProduct.asin,
+        ) === -1,
+    );
+
+    setSelectedProducts([...selectedProducts, ...newSelectedProducts]);
   }
 
   async function updateProductsGroups(updatedProductsGroups: {

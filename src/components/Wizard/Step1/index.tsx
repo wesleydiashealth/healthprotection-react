@@ -147,7 +147,7 @@ const Step1: React.FC = () => {
         />
       )}
       <QuestionPrefix>
-        {`${labels.step_1_question} 1/${wizardSteps}`}
+        {`${labels.step_1_question || 'Question'} 1/${wizardSteps}`}
       </QuestionPrefix>
       <QuestionTitle>{currentQuestion?.label}</QuestionTitle>
       <QuestionSuffix

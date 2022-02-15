@@ -142,7 +142,9 @@ const Step4: React.FC = () => {
           color="#1BC9BD"
         />
       )}
-      <QuestionPrefix>{`${labels.step_1_question} 4/${wizardSteps}`}</QuestionPrefix>
+      <QuestionPrefix>{`${
+        labels.step_1_question || 'Question'
+      } 4/${wizardSteps}`}</QuestionPrefix>
       <QuestionTitle>{currentQuestion?.label}</QuestionTitle>
       <QuestionSuffix
         data-tip={`<span>${currentQuestion?.description}</span>`}
@@ -201,7 +203,7 @@ const Step4: React.FC = () => {
             setStoreState({ currentSlide: 4 });
           }}
         >
-          {labels.step_1_next_question}
+          {labels.step_1_next_question || 'Next Question'}
         </button>
       )}
     </StepContainer>

@@ -16,7 +16,9 @@ const Outcomes: React.FC<OutcomesData> = ({ selectedOutcomes }) => {
 
   return (
     <Container>
-      <ContainerLabel>{labels.step_2_outcomes}</ContainerLabel>
+      <ContainerLabel>
+        {labels.step_2_outcomes || 'Filtered Health Goals'}
+      </ContainerLabel>
       {Object.entries(connections)
         .filter(({ 0: connection }) =>
           selectedOutcomes?.length

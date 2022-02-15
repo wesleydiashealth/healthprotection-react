@@ -19,11 +19,16 @@ const Suboutcomes: React.FC<SuboutcomesData> = ({ selectedSuboutcomes }) => {
   return (
     <Container>
       <ContainerLabel>
-        <strong>{labels.step_2_suboutcomes_title}</strong>
+        <strong>
+          {labels.step_2_suboutcomes_title ||
+            'Fine-tune your chosen sub-health goals'}
+        </strong>
 
         <span>
           <FaToggleOn />{' '}
-          {ReactHtmlParser(labels.step_2_suboutcomes_description)}
+          {labels.step_2_suboutcomes_description
+            ? ReactHtmlParser(labels.step_2_suboutcomes_description)
+            : 'The range on the min-med-max selector reflects the efficiency of the dietary supplement on the condition.'}
         </span>
       </ContainerLabel>
       {Object.values(connections).map(subConnections =>

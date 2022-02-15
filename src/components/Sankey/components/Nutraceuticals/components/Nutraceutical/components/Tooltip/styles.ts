@@ -193,7 +193,7 @@ export const EffectsMeter = styled.div<EffectsMeterProps>`
     ${props =>
       props.width &&
       css`
-        width: ${`${100 - 100 / props.width}%`};
+        width: ${`${25 * props.width}%`};
       `}
   }
 `;

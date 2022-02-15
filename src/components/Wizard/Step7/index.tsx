@@ -210,7 +210,7 @@ const Step7: React.FC = () => {
         />
       )}
       <QuestionPrefix>
-        {`${labels.step_1_question} ${stepNumber}/${wizardSteps}`}
+        {`${labels.step_1_question || 'Question'} ${stepNumber}/${wizardSteps}`}
         {(step.isCompleted || !!step.answers.length) && (
           <FaUndoAlt
             size={16}
@@ -356,7 +356,7 @@ const Step7: React.FC = () => {
                 setStoreState({ currentSlide: 6 });
               }}
             >
-              {labels.step_1_next_question}
+              {labels.step_1_next_question || 'Next Question'}
             </button>
           )}
         </>

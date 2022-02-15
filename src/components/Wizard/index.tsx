@@ -71,13 +71,14 @@ const Wizard: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: HTMLFormElement) => {
-      const { age, gender, diet, allergies, med, nutra } = data;
+      const { age, gender, femaleCondition, diet, allergies, med, nutra } =
+        data;
 
       updateStep('step2', { ...nextStep, isLoaded: false });
 
       const requestData: RequestData[] = [
         { question: 'age', answer: age },
-        { question: 'gender', answer: gender },
+        { question: 'gender', answer: femaleCondition || gender },
         { question: 'diet', answer: diet },
         { question: 'allergies', answer: allergies },
         { question: 'med', answer: med },
@@ -179,16 +180,11 @@ const Wizard: React.FC = () => {
         />
         <StepTitle>
           {!previousStep.isCompleted && <HiLockClosed size={20} />}
-          {labels?.step_1_title || 'Step 1'}
+          {labels?.step_1_title}
           <HiQuestionMarkCircle
             size={20}
             color={previousStep.isCompleted ? '#7664C8' : '#565656'}
-            data-tip={`<strong>${
-              labels?.step_1_title || 'Step 1'
-            }</strong><span>${
-              labels?.step_1_tooltip ||
-              'We have made a pre-selection of questions that will help filter the nutraceuticals that your body needs. Answer truthfully for a safe indication.'
-            }</span>`}
+            data-tip={`<strong>${labels?.step_1_title}</strong><span>${labels?.step_1_tooltip}</span>`}
             data-for="wizard-title-tooltip"
           />
           <StepTooltip

@@ -62,10 +62,14 @@ const Step10: React.FC = () => {
           {nextStep.isLoaded ? (
             <>
               <ChecklistIcon />
-              <Title>{labels.step_1_complete_title}</Title>
+              <Title>
+                {labels.step_1_complete_title ||
+                  'Well done, now it´s time to fine-tune your health goals'}
+              </Title>
               <Description>
-                {labels.step_1_complete_text &&
-                  ReactHtmlParser(labels.step_1_complete_text)}
+                {labels.step_1_complete_text
+                  ? ReactHtmlParser(labels.step_1_complete_text)
+                  : 'Based on your answers we’ve filtered'}
               </Description>
               <Infos>
                 {count?.outcomes?.total && count?.outcomes?.filtered && (
@@ -75,8 +79,14 @@ const Step10: React.FC = () => {
                     <InfoDescription>
                       {labels.step_1_info_text &&
                         labels.step_1_info_text
-                          .replace('%1', count.outcomes.total.toString())
-                          .replace('%2', count.outcomes.filtered.toString())}
+                          .replace(
+                            '%1',
+                            count?.outcomes?.total.toString() || '',
+                          )
+                          .replace(
+                            '%2',
+                            count?.outcomes?.filtered.toString() || '',
+                          )}
                     </InfoDescription>
                   </Info>
                 )}
@@ -86,19 +96,24 @@ const Step10: React.FC = () => {
                       <NutraceuticalsIcon />
                       <InfoTitle>Dietary Supplements</InfoTitle>
                       <InfoDescription>
-                        {labels.step_1_info_text
-                          .replace('%1', count.nutraceuticals.total.toString())
-                          .replace(
-                            '%2',
-                            count.nutraceuticals.filtered.toString(),
-                          )}
+                        {labels.step_1_info_text &&
+                          labels.step_1_info_text
+                            .replace(
+                              '%1',
+                              count.nutraceuticals.total.toString() || '',
+                            )
+                            .replace(
+                              '%2',
+                              count.nutraceuticals.filtered.toString() || '',
+                            )}
                       </InfoDescription>
                     </Info>
                   )}
               </Infos>
               <Instruction>
-                {labels.step_1_advance_text &&
-                  ReactHtmlParser(labels.step_1_advance_text)}
+                {labels.step_1_advance_text
+                  ? ReactHtmlParser(labels.step_1_advance_text)
+                  : 'Go safety to the Step 2 100% risk free'}
               </Instruction>
               {/* <Instruction>
             Go safely to the Step 2 100% risks free based on your answers.
@@ -137,7 +152,7 @@ const Step10: React.FC = () => {
               setStoreState({ currentSlide: 0 });
             }}
           >
-            {labels.step_1_reset}
+            {labels.step_1_reset || 'Reset'}
           </Button>
           <Button
             href="#step_2"
@@ -147,7 +162,7 @@ const Step10: React.FC = () => {
             }}
             isDisabled={!!excludeStep?.length}
           >
-            {labels.step_1_advance}
+            {labels.step_1_advance || 'Go to Step 2'}
           </Button>
         </Buttons>
       )}
