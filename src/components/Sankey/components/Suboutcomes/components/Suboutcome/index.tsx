@@ -10,7 +10,8 @@ import { useApp } from 'contexts/app';
 import getFoods from 'services/getFoods';
 import getProducts from 'services/getProducts';
 
-// import ProductData from 'dtos/ProductData';
+import ProductData from 'dtos/ProductData';
+import ProductsGroupData from 'dtos/ProductsGroupsData';
 
 import Container, {
   Anchors,
@@ -32,10 +33,6 @@ interface SuboutcomeProps {
     max: string[];
   };
 }
-
-// interface ProductsGroupsProps {
-//   [key: string]: ProductData[];
-// }
 
 const Suboutcome: React.FC<SuboutcomeProps> = ({
   id,
@@ -61,6 +58,8 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
     updateSelectedNutraceuticals,
     updateHabits,
     updateProducts,
+    updateProductsGroups,
+    updateSelectedProducts,
   } = appContext;
 
   const [supConnections, setSupConnections] = useState<string[]>([]);
@@ -125,18 +124,18 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
 
       updateHabits([]);
 
-      // const selectedNutraceuticals = Array.from(
-      //   new Set(
-      //     Object.values(connections).reduce((acc: string[], curr) => {
-      //       const connection = Object.values(curr).reduce(
-      //         (acc2, curr2) => [...acc2, ...curr2],
-      //         [],
-      //       );
+      const selectedNutraceuticals = Array.from(
+        new Set(
+          Object.values(connections).reduce((acc: string[], curr) => {
+            const connection = Object.values(curr).reduce(
+              (acc2, curr2) => [...acc2, ...curr2],
+              [],
+            );
 
-      //       return [...acc, ...connection];
-      //     }, []),
-      //   ),
-      // );
+            return [...acc, ...connection];
+          }, []),
+        ),
+      );
 
       // const selectedNutraceuticalsDosages = selectedNutraceuticals.map(
       //   selectedNutraceutical => {
@@ -153,17 +152,17 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       //   },
       // );
 
-      updateSelectedNutraceuticals(fineTuneGroup);
+      updateSelectedNutraceuticals(selectedNutraceuticals);
 
       // Get and update Foods from Wordpress
       const { content: foods } = await getFoods({
         uuid: userQuery,
-        nutraceuticals: fineTuneGroup,
+        nutraceuticals: selectedNutraceuticals,
       });
 
       updateFoods(foods);
 
-      const nutraceuticalsDosages = fineTuneGroup.map(item => {
+      const nutraceuticalsDosages = selectedNutraceuticals.map(item => {
         const itemNutraceutical = nutraceuticals.find(
           nutraceutical => nutraceutical.slug === item,
         );
@@ -180,6 +179,67 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       const updatedProducts = await getProducts(nutraceuticalsDosages);
 
       updateProducts(updatedProducts);
+
+      const updatedProductsGroups = updatedProducts.reduce(
+        (acc: ProductsGroupData, product) => {
+          const { interactions } = product;
+
+          const updatedInteractions = interactions.reduce(
+            (subAcc: ProductsGroupData, interaction) => {
+              const existentValues =
+                Object.entries(acc)
+                  .filter(
+                    ({ 0: key }) => key === interaction.dietarySupplementSlug,
+                  )
+                  ?.reduce((subAcc2: ProductData[], { 1: values }) => {
+                    return [...subAcc2, ...values];
+                  }, []) || [];
+
+              return {
+                ...subAcc,
+                ...{
+                  [interaction.dietarySupplementSlug]: [
+                    ...existentValues,
+                    product,
+                  ],
+                },
+              };
+            },
+            {},
+          );
+
+          return {
+            ...acc,
+            ...updatedInteractions,
+          };
+        },
+        {},
+      );
+
+      updateProductsGroups(updatedProductsGroups);
+
+      const updatedSelectedProducts = Object.entries(updatedProductsGroups).map(
+        ({ 1: productsGroup }) =>
+          productsGroup.reduce((acc: ProductData, curr) => {
+            const { interactions } = curr;
+
+            const previousOrder = acc.interactions.reduce(
+              (subAcc: number, interaction) =>
+                subAcc + parseInt(interaction.order, 10),
+              0,
+            );
+
+            const order = interactions.reduce(
+              (subAcc: number, interaction) =>
+                subAcc + parseInt(interaction.order, 10),
+              0,
+            );
+
+            return previousOrder > order ? acc : curr;
+          }),
+      );
+
+      updateSelectedProducts(updatedSelectedProducts);
 
       // updateSelectedProducts(
       //   updatedProducts.filter(
@@ -207,14 +267,16 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       connections,
       userQuery,
       currentStep,
+      updateSelectedNutraceuticals,
       updateFoods,
       updateError,
       updateStep,
       updateConnection,
       updateSelectedConnections,
-      updateSelectedNutraceuticals,
-      updateProducts,
       updateHabits,
+      updateProducts,
+      updateProductsGroups,
+      updateSelectedProducts,
     ],
   );
 

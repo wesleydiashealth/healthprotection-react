@@ -53,7 +53,7 @@ export const Title = styled.h3`
   }
 `;
 
-export const Description = styled.p`
+export const Description = styled.div`
   margin-bottom: 20px;
 
   &,
@@ -106,7 +106,7 @@ export const InfoDescription = styled.span`
   line-height: 20px;
 `;
 
-export const Instruction = styled.p`
+export const Instruction = styled.div`
   &,
   p {
     font-size: 12px;

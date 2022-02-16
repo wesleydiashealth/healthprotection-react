@@ -63,7 +63,9 @@ const Summary: React.FC<SummaryProps> = ({ isCustom }) => {
 
     const linkAsin = product.asin;
 
-    return `${acc}&ASIN.${linkIndex}=${linkAsin}&Quantity.${linkIndex}=${product.quantity}`;
+    return `${acc}&ASIN.${linkIndex}=${linkAsin}&Quantity.${linkIndex}=${
+      product.quantity || 1
+    }`;
   }, '');
 
   const cartLink = `https://www.amazon.es/gp/aws/cart/add.html?AssociateTag=healthprote04-21&tag=healthprote04-21${cartParams}`;

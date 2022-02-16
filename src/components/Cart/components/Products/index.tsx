@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
@@ -10,56 +10,53 @@ import Product from './components/Product';
 
 import Container from './styles';
 
-interface ProductsGroupData {
-  [key: string]: ProductData[];
-}
-
-interface ProductsData {
-  products: ProductData[];
-}
-
-const Products: React.FC<ProductsData> = props => {
-  const { products } = props;
-
+const Products: React.FC = () => {
   const context = useApp();
-  const { labels } = context;
+  const { labels, productsGroups, selectedProducts, updateSelectedProducts } =
+    context;
 
-  // Temporary
-  const productsGroups = products.reduce((acc: ProductsGroupData, product) => {
-    const { interactions } = product;
+  const productTabClick = useCallback(
+    (product: ProductData) => {
+      const productDietarySupplement = product.interactions.reduce(
+        (acc, curr) => curr.dietarySupplementSlug,
+        '',
+      );
 
-    const updatedInteractions = interactions.reduce(
-      (subAcc: ProductsGroupData, interaction) => {
-        const existentValues =
-          Object.entries(acc)
-            .filter(({ 0: key }) => key === interaction.dietarySupplementSlug)
-            ?.reduce((subAcc2: ProductData[], { 1: values }) => {
-              return [...subAcc2, ...values];
-            }, []) || [];
+      // Selected products without existent product for same nutraceutical (that will be replaced)
+      const filteredSelectedProducts = selectedProducts.filter(
+        selectedProduct =>
+          selectedProduct.interactions.find(
+            interaction =>
+              interaction.dietarySupplementSlug !== productDietarySupplement,
+          ),
+      );
 
-        return {
-          ...subAcc,
-          ...{
-            [interaction.dietarySupplementSlug]: [...existentValues, product],
-          },
-        };
-      },
-      {},
-    );
-
-    return {
-      ...acc,
-      ...updatedInteractions,
-    };
-  }, {});
+      updateSelectedProducts([...filteredSelectedProducts, product]);
+    },
+    [selectedProducts, updateSelectedProducts],
+  );
 
   return (
     <Container>
       {Object.entries(productsGroups).map(
         ({ 0: nutraceutical, 1: productsGroup }) => {
-          const bestRatingProduct = productsGroup.reduce(
+          const recommendedProduct = productsGroup.reduce(
             (acc: ProductData, curr) => {
-              return acc.rating > curr.rating ? acc : curr;
+              const { interactions } = curr;
+
+              const previousOrder = acc.interactions.reduce(
+                (subAcc: number, interaction) =>
+                  subAcc + parseInt(interaction.order, 10),
+                0,
+              );
+
+              const order = interactions.reduce(
+                (subAcc: number, interaction) =>
+                  subAcc + parseInt(interaction.order, 10),
+                0,
+              );
+
+              return previousOrder > order ? acc : curr;
             },
           );
 
@@ -79,15 +76,35 @@ const Products: React.FC<ProductsData> = props => {
             },
           );
 
+          const bestRatingProduct = productsGroup.reduce(
+            (acc: ProductData, curr) => (acc.rating > curr.rating ? acc : curr),
+          );
+
           return (
             productsGroup && (
               <Tabs key={nutraceutical}>
                 <TabList>
-                  <Tab>
+                  <Tab
+                    onClick={() => {
+                      productTabClick(recommendedProduct);
+                    }}
+                  >
                     {labels.cart_product_recommended || 'We recommended'}
                   </Tab>
-                  <Tab>{labels.cart_product_cheapest || 'Cheapest'}</Tab>
-                  <Tab>{labels.cart_product_best_rating || 'Best rating'}</Tab>
+                  <Tab
+                    onClick={() => {
+                      productTabClick(cheapestProduct);
+                    }}
+                  >
+                    {labels.cart_product_cheapest || 'Cheapest'}
+                  </Tab>
+                  <Tab
+                    onClick={() => {
+                      productTabClick(bestRatingProduct);
+                    }}
+                  >
+                    {labels.cart_product_best_rating || 'Best rating'}
+                  </Tab>
                   <Tab>{labels.cart_product_see_all || 'See all'}</Tab>
                 </TabList>
                 <TabPanel>
@@ -109,9 +126,9 @@ const Products: React.FC<ProductsData> = props => {
                   />
                 </TabPanel>
                 <TabPanel>
-                  {products.map((product: ProductData) => (
+                  {productsGroups[nutraceutical].map((product: ProductData) => (
                     <Product
-                      key={product.asin}
+                      key={`${nutraceutical}-${product.asin}`}
                       dietarySupplement={nutraceutical}
                       {...product}
                     />

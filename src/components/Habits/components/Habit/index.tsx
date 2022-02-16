@@ -294,7 +294,7 @@ const Habit: React.FC<FoodData> = food => {
               );
 
             const isReduced =
-              interactionDiscount >= maxDosage * 0.25 &&
+              interactionDiscount >= maxDosage * 0.49 &&
               interactionDiscount <= maxDosage * 0.74;
             const isRemoved = interactionDiscount >= maxDosage * 0.75;
 

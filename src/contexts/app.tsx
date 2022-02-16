@@ -368,21 +368,21 @@ export const AppProvider: React.FC = ({ children }) => {
   }
 
   async function updateFoods(updatedFoods: FoodData[]) {
-    const newFoods = updatedFoods.filter(
-      updatedFood =>
-        foods.findIndex(food => food.slug === updatedFood.slug) === -1,
-    );
+    // const newFoods = updatedFoods.filter(
+    //   updatedFood =>
+    //     foods.findIndex(food => food.slug === updatedFood.slug) === -1,
+    // );
 
-    setFoods([...foods, ...newFoods]);
+    setFoods(updatedFoods);
   }
 
   async function updateHabits(updatedHabits: HabitData[]) {
-    const newHabits = updatedHabits.filter(
-      updatedHabit =>
-        habits.findIndex(habit => habit.food === updatedHabit.food) === -1,
-    );
+    // const newHabits = updatedHabits.filter(
+    //   updatedHabit =>
+    //     habits.findIndex(habit => habit.food === updatedHabit.food) === -1,
+    // );
 
-    setHabits([...habits, ...newHabits]);
+    setHabits(updatedHabits);
   }
 
   async function updateError(updatedError: string) {
@@ -390,27 +390,27 @@ export const AppProvider: React.FC = ({ children }) => {
   }
 
   async function updateProducts(updatedProducts: ProductData[]) {
-    const newProducts = updatedProducts.filter(
-      updatedProduct =>
-        products.findIndex(product => product.asin === updatedProduct.asin) ===
-        -1,
-    );
+    // const newProducts = updatedProducts.filter(
+    //   updatedProduct =>
+    //     products.findIndex(product => product.asin === updatedProduct.asin) ===
+    //     -1,
+    // );
 
-    setProducts([...products, ...newProducts]);
+    setProducts(updatedProducts);
   }
 
   async function updateSelectedProducts(
     updatedSelectedProducts: ProductData[],
   ) {
-    const newSelectedProducts = updatedSelectedProducts.filter(
-      updatedSelectedProduct =>
-        selectedProducts.findIndex(
-          selectedProduct =>
-            selectedProduct.asin === updatedSelectedProduct.asin,
-        ) === -1,
-    );
+    // const newSelectedProducts = updatedSelectedProducts.filter(
+    //   updatedSelectedProduct =>
+    //     selectedProducts.findIndex(
+    //       selectedProduct =>
+    //         selectedProduct.asin === updatedSelectedProduct.asin,
+    //     ) === -1,
+    // );
 
-    setSelectedProducts([...selectedProducts, ...newSelectedProducts]);
+    setSelectedProducts(updatedSelectedProducts);
   }
 
   async function updateProductsGroups(updatedProductsGroups: {

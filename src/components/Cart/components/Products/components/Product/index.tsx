@@ -76,7 +76,7 @@ const Product: React.FC<ProductData> = ({
     new Set(
       suboutcomes.reduce((acc: string[], curr) => {
         const nutraceuticalSlug = nutraceuticals.find(item => {
-          return item.title === asin;
+          return item.title === productDietarySupplement?.title;
         })?.slug;
 
         const currNutraceuticals = Object.values(curr.nutraceuticals).reduce(

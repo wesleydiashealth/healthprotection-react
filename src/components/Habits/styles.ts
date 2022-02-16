@@ -335,10 +335,9 @@ export const HabitNutraceuticalsItem = styled.div`
 
 export const HabitInvalidNutraceuticals = styled.p`
   margin: 0 auto;
+  border: 3px solid #1bc9bd;
   border-radius: 10px;
   padding: 10px 20px;
-
-  background: #e5e5e5;
 
   font-size: 14px;
   line-height: 22px;
