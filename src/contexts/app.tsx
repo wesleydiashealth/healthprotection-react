@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 import { useLocation } from 'react-router-dom';
 
 import wordpressApi from 'services/wordpress';
@@ -160,37 +166,6 @@ export const AppProvider: React.FC = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const xpto = useCallback(() => {
-  //   const updatedDiscounts = habits.reduce((acc: DiscountsData, habit) => {
-  //     const habitDiscounts: DiscountsData = habit.interactions.reduce(
-  //       (subAcc, interaction) => {
-  //         const nutraceutical = nutraceuticals.find(
-  //           item => item.slug === interaction,
-  //         );
-
-  //         const selectedDosage =
-  //           nutraceutical?.info.dosages[habit.frequencyIndex].dosage;
-
-  //         return {
-  //           ...subAcc,
-  //           [interaction]: [
-  //             ...(discounts[interaction] || []),
-  //             {
-  //               food: habit.food,
-  //               dosage: parseInt(selectedDosage || '', 10),
-  //             },
-  //           ],
-  //         };
-  //       },
-  //       {},
-  //     );
-
-  //     return { ...acc, ...habitDiscounts };
-  //   }, {});
-
-  //   setDiscounts({ ...discounts, ...updatedDiscounts });
-  // }, [nutraceuticals, habits, discounts, setDiscounts]);
-
   useEffect(() => {
     wordpressApi
       .get(`/wp-json/hp/v1/nutraceuticals/${query.get('lang')}`)
@@ -218,6 +193,69 @@ export const AppProvider: React.FC = ({ children }) => {
         }
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const refreshProducts = useCallback((updatedProducts: ProductData[]) => {
+    const updatedProductsGroups = updatedProducts.reduce(
+      (acc: ProductsGroupData, product) => {
+        const { interactions } = product;
+
+        const updatedInteractions = interactions.reduce(
+          (subAcc: ProductsGroupData, interaction) => {
+            const existentValues =
+              Object.entries(acc)
+                .filter(
+                  ({ 0: key }) => key === interaction.dietarySupplementSlug,
+                )
+                ?.reduce((subAcc2: ProductData[], { 1: values }) => {
+                  return [...subAcc2, ...values];
+                }, []) || [];
+
+            return {
+              ...subAcc,
+              ...{
+                [interaction.dietarySupplementSlug]: [
+                  ...existentValues,
+                  product,
+                ],
+              },
+            };
+          },
+          {},
+        );
+
+        return {
+          ...acc,
+          ...updatedInteractions,
+        };
+      },
+      {},
+    );
+
+    setproductsGroups(updatedProductsGroups);
+
+    const updatedSelectedProducts = Object.entries(updatedProductsGroups).map(
+      ({ 1: productsGroup }) =>
+        productsGroup.reduce((acc: ProductData, curr) => {
+          const { interactions } = curr;
+
+          const previousOrder = acc.interactions.reduce(
+            (subAcc: number, interaction) =>
+              subAcc + parseInt(interaction.order, 10),
+            0,
+          );
+
+          const order = interactions.reduce(
+            (subAcc: number, interaction) =>
+              subAcc + parseInt(interaction.order, 10),
+            0,
+          );
+
+          return previousOrder > order ? acc : curr;
+        }),
+    );
+
+    setSelectedProducts(updatedSelectedProducts);
   }, []);
 
   async function updateStep(step: string, attrs: StepData) {
@@ -397,6 +435,8 @@ export const AppProvider: React.FC = ({ children }) => {
     // );
 
     setProducts(updatedProducts);
+
+    refreshProducts(updatedProducts);
   }
 
   async function updateSelectedProducts(

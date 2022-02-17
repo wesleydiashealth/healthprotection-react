@@ -203,18 +203,18 @@ const ReportDocument: React.FC<ReportDocumentData> = ({
                   </View>
                   <View style={styles.productInfo}>
                     <Text style={styles.productInfoLabel}>
-                      {`Why this ${productNutraceutical?.info.title}?`}
+                      {`Why this ${productNutraceutical?.title}?`}
                     </Text>
                     <Text style={styles.productInfoValue}>{product.brand}</Text>
                   </View>
-                  {productNutraceutical?.info.link && (
+                  {productNutraceutical?.link && (
                     <View style={styles.productInfo}>
                       <Text style={styles.productInfoLabel}>Read About</Text>
                       <Link
-                        src={productNutraceutical?.info.link}
+                        src={productNutraceutical?.link}
                         style={styles.productInfoValue}
                       >
-                        {productNutraceutical?.info.title}
+                        {productNutraceutical?.title}
                       </Link>
                     </View>
                   )}

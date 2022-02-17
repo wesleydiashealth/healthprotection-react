@@ -8,8 +8,6 @@ import { useSankey } from 'contexts/sankey';
 
 import getFoods from 'services/getFoods';
 
-import ProductData from 'dtos/ProductData';
-
 import Container, {
   Anchors,
   Anchor,
@@ -47,15 +45,12 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
     userQuery,
     labels,
     steps,
-    nutraceuticals: appNutraceuticals,
     connections,
-    products,
     updateConnection,
     updateFoods,
     updateError,
     updateSelectedNutraceuticals,
     updateStep,
-    updateProducts,
   } = appContext;
 
   const { step2: currentStep, step3: nextStep } = steps;
@@ -97,19 +92,16 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
 
       updateSelectedNutraceuticals(selectedNutraceuticals);
 
-      const selectedProducts = appNutraceuticals
-        .filter(appNutraceutical =>
-          selectedNutraceuticals.includes(appNutraceutical.slug),
-        )
-        .reduce(
-          (acc: ProductData[], nutraceutical) => [
-            ...acc,
-            ...nutraceutical.info.products,
-          ],
-          [],
-        );
+      // const selectedProducts = appNutraceuticals
+      //   .filter(appNutraceutical =>
+      //     selectedNutraceuticals.includes(appNutraceutical.slug),
+      //   )
+      //   .reduce(
+      //     (acc: string[], nutraceutical) => [...acc, ...nutraceutical.products],
+      //     [],
+      //   );
 
-      updateProducts([...products, ...selectedProducts]);
+      // updateProducts([...products, ...selectedProducts]);
 
       const response = await getFoods({
         uuid: userQuery,
@@ -132,15 +124,12 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
     [
       updateConnection,
       connections,
-      products,
       userQuery,
-      appNutraceuticals,
       currentStep,
       nextStep,
       updateFoods,
       updateError,
       updateSelectedNutraceuticals,
-      updateProducts,
       updateStep,
     ],
   );

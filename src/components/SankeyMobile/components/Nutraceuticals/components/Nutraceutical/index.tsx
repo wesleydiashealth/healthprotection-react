@@ -24,16 +24,14 @@ import Container, {
 const Nutraceutical: React.FC<NutraceuticalData> = ({
   slug,
   title,
+  description,
   dosage,
-  info,
 }) => {
   const appContext = useApp();
   const { connections } = appContext;
 
   const context = useSankey();
   const { activeAccordions } = context;
-
-  const { description } = info;
 
   const supConnections = Object.entries(connections)
     .filter(

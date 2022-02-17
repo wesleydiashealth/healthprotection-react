@@ -48,23 +48,23 @@ const Tooltip: React.FC<TooltipProps> = ({ slug, supConnections }) => {
       />
       <ContainerTitle>
         Scientific summary for{' '}
-        <a href={nutraceutical?.info.link} target="_blank" rel="noreferrer">
-          {nutraceutical?.info.title}
+        <a href={nutraceutical?.link} target="_blank" rel="noreferrer">
+          {nutraceutical?.title}
         </a>
       </ContainerTitle>
       <ContainerDescription>
-        {nutraceutical?.info.description &&
-          ReactHtmlParser(nutraceutical?.info.description)}
+        {nutraceutical?.description &&
+          ReactHtmlParser(nutraceutical?.description)}
       </ContainerDescription>
       <ContainerLink
-        href={nutraceutical?.info.link}
+        href={nutraceutical?.link}
         target="_blank"
         rel="noreferrer"
       >
-        {`Access ${nutraceutical?.info.studies} scientific studies`}
+        {`Access ${nutraceutical?.studies} scientific studies`}
       </ContainerLink>
       <ContainerList style={{ height: '400px' }}>
-        {nutraceutical?.info.relations
+        {nutraceutical?.relations
           .sort(relation =>
             supConnections.find(
               supConnection => supConnection === relation.suboutcome.slug,
@@ -75,11 +75,7 @@ const Tooltip: React.FC<TooltipProps> = ({ slug, supConnections }) => {
           .map(relation => (
             <ContainerListItem key={relation.slug}>
               <ContainerListItemTitle>
-                <a
-                  href={nutraceutical.info.link}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a href={nutraceutical.link} target="_blank" rel="noreferrer">
                   {nutraceutical.title}
                 </a>{' '}
                 for{' '}

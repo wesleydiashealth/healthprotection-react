@@ -21,8 +21,8 @@ import Container, {
 const Nutraceutical: React.FC<NutraceuticalData> = ({
   slug,
   title,
+  description,
   dosage,
-  info,
 }) => {
   const appContext = useApp();
   const { connections } = appContext;
@@ -31,8 +31,6 @@ const Nutraceutical: React.FC<NutraceuticalData> = ({
   const { activeNutraceutical, updateActiveNutraceutical } = sankeyContext;
 
   const isActive = activeNutraceutical === slug;
-
-  const { description } = info;
 
   const supConnections = Object.values(connections)
     .filter(
@@ -69,7 +67,7 @@ const Nutraceutical: React.FC<NutraceuticalData> = ({
           }}
         >
           <NutritionInfoIcon />
-          <ContentTitle>{info.title}</ContentTitle>
+          <ContentTitle>{title}</ContentTitle>
           <ContentDescription>{`${dosage}`}</ContentDescription>
         </Content>
         {isActive && (

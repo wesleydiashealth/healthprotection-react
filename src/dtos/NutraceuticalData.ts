@@ -1,21 +1,14 @@
 import RelationData from './RelationData';
-import ProductData from './ProductData';
 
 export default interface NutraceuticalData {
   slug: string;
   title: string;
+  link: string;
+  description: string;
   dosage: string;
-  info: {
-    slug: string;
-    title: string;
-    dosages: {
-      dosage: string;
-    }[];
-    dosageUnit: string;
-    link: string;
-    description: string;
-    relations: RelationData[];
-    studies: number;
-    products: ProductData[];
-  };
+  dosages: number[];
+  maxDosage: number;
+  dosageUnit: string;
+  relations: RelationData[];
+  studies: number;
 }

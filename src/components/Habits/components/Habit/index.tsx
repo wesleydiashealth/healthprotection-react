@@ -12,8 +12,6 @@ import DiscountsData from 'dtos/DiscountsData';
 
 import getProducts from 'services/getProducts';
 
-// import getProducts from 'services/getProducts';
-
 import Tooltip from '../Tooltip';
 
 import Container, {
@@ -84,8 +82,7 @@ const Habit: React.FC<FoodData> = food => {
             item => item.slug === interaction.dietarySupplementSlug,
           );
 
-          const selectedDosage =
-            nutraceutical?.info.dosages[frequencyIndex].dosage;
+          const selectedDosage = nutraceutical?.dosages[frequencyIndex];
 
           const existentValue =
             discounts[interaction.dietarySupplementSlug]?.filter(
@@ -98,13 +95,15 @@ const Habit: React.FC<FoodData> = food => {
               ...existentValue,
               {
                 food: selectedFood.slug,
-                dosage: parseInt(selectedDosage || '', 10),
+                dosage: selectedDosage || 0,
               },
             ],
           };
         }, {});
 
-      updateDiscounts({ ...discounts, ...habitDiscounts });
+      const updatedDiscounts = { ...discounts, ...habitDiscounts };
+
+      updateDiscounts(updatedDiscounts);
 
       if (habitIndex > -1) {
         updatedHabits[habitIndex] = {
@@ -129,24 +128,17 @@ const Habit: React.FC<FoodData> = food => {
         ]);
       }
 
-      const selectedNutraceuticalsDosages = selectedNutraceuticals.map(
-        selectedNutraceutical => {
+      const selectedNutraceuticalsDosages = selectedNutraceuticals
+        .map(selectedNutraceutical => {
           const selectedNutraceuticalObject = nutraceuticals.find(
             nutraceutical => nutraceutical.slug === selectedNutraceutical,
           );
 
-          const selectedNutraceuticalDosages =
-            selectedNutraceuticalObject?.info.dosages;
-          const maxDosageAmount = selectedNutraceuticalDosages
-            ? parseInt(
-                selectedNutraceuticalDosages[
-                  selectedNutraceuticalDosages?.length - 1
-                ].dosage,
-                10,
-              )
-            : 0;
+          if (!selectedNutraceuticalObject) return '';
 
-          const selectedNutraceuticalDiscounts = Object.entries(discounts)
+          const selectedNutraceuticalDiscounts = Object.entries(
+            updatedDiscounts,
+          )
             .filter(({ 0: key }) => key === selectedNutraceutical)
             ?.reduce(
               (acc, { 1: discount }) =>
@@ -159,50 +151,20 @@ const Habit: React.FC<FoodData> = food => {
             );
 
           return `${selectedNutraceutical};${
-            maxDosageAmount - selectedNutraceuticalDiscounts
+            selectedNutraceuticalObject?.maxDosage -
+            selectedNutraceuticalDiscounts
           }`;
-        },
-      );
+        })
+        .filter(selectedNutraceutical => {
+          const { 1: dosage } = selectedNutraceutical.split(';');
+
+          return !!parseInt(dosage, 10);
+        });
 
       // Get and update products from Wordpress
       const updatedProducts = await getProducts(selectedNutraceuticalsDosages);
 
       updateProducts(updatedProducts);
-
-      // console.log(discounts);
-      // console.log(selectedNutraceuticals);
-
-      // const nutraceuticalsWithDosages = selectedNutraceuticals
-      //   .map(selectedNutraceutical => {
-      //     const nutraceutical = nutraceuticals.find(
-      //       item => item.slug === selectedNutraceutical,
-      //     );
-      //     const maxDosage = parseInt(
-      //       nutraceutical?.info.dosages[nutraceutical?.info.dosages.length - 1]
-      //         ?.dosage || '',
-      //       10,
-      //     );
-
-      //     const discounted = Object.entries(discounts)
-      //       .filter(({ 0: key }) => key === selectedNutraceutical)
-      //       .reduce(
-      //         (acc, { 1: discount }) =>
-      //           acc +
-      //           discount.reduce(
-      //             (subAcc, interaction) => subAcc + interaction.dosage,
-      //             0,
-      //           ),
-      //         0,
-      //       );
-
-      //     const resultDosage =
-      //       maxDosage - discounted < 0 ? 0 : maxDosage - discounted;
-
-      //     return { nutraceutical: selectedNutraceutical, dosage: resultDosage };
-      //   })
-      //   .filter(selectedNutraceutical => !!selectedNutraceutical.dosage);
-
-      // const updatedProducts = await getProducts(nutraceuticalsWithDosages);
     },
     [
       nutraceuticals,
@@ -270,12 +232,7 @@ const Habit: React.FC<FoodData> = food => {
                 nutraceuticalsInteraction.dietarySupplementSlug,
             );
 
-            const maxDosage = parseInt(
-              interactionNutraceutical?.info.dosages[
-                interactionNutraceutical?.info.dosages.length - 1
-              ].dosage || '',
-              10,
-            );
+            const maxDosage = interactionNutraceutical?.maxDosage || 0;
 
             const interactionDiscount = Object.entries(discounts)
               .filter(
