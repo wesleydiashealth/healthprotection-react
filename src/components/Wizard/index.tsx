@@ -180,7 +180,11 @@ const Wizard: React.FC = () => {
 
         updateFoods(foods);
 
-        updateStep('step1', { ...currentStep, isLoading: false });
+        updateStep('step1', {
+          ...currentStep,
+          isCompleted: true,
+          isLoading: false,
+        });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
