@@ -21,7 +21,10 @@ const Products: React.FC = () => {
     updateSelectedProducts,
   } = context;
 
-  const previousStep = steps.step3;
+  const { step1: firstStep, step2: secondStep, step3: previousStep } = steps;
+
+  const isReady =
+    !firstStep.isLoading && !secondStep.isLoading && !previousStep.isLoading;
 
   const productTabClick = useCallback(
     (product: ProductData) => {
@@ -46,7 +49,7 @@ const Products: React.FC = () => {
 
   return (
     <Container>
-      {previousStep.isLoading ? (
+      {!isReady ? (
         <Loading color="#ec903f" />
       ) : (
         Object.entries(productsGroups).map(

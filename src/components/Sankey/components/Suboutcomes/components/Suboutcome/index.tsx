@@ -115,7 +115,11 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       updateConnection(suboutcome, fineTuneGroup);
       updateSelectedConnections(connections);
 
-      updateStep('step2', { ...currentStep, isCompleted: true });
+      updateStep('step2', {
+        ...currentStep,
+        isCompleted: true,
+        isLoading: true,
+      });
       updateStep('step3', { ...nextStep, isLoaded: false });
 
       updateHabits([]);
@@ -160,6 +164,11 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
 
       updateProducts(updatedProducts);
 
+      updateStep('step2', {
+        ...currentStep,
+        isCompleted: true,
+        isLoading: false,
+      });
       updateStep('step3', { ...nextStep, isLoaded: true });
 
       if (!foods.length) {

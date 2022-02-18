@@ -35,6 +35,8 @@ const Habits: React.FC = () => {
   } = context;
   const { step1: initialStep, step2: previousStep, step3: currentStep } = steps;
 
+  const isReady = !initialStep.isLoading && !previousStep.isLoading;
+
   const isActive =
     previousStep.isCompleted &&
     initialStep.isCompleted &&
@@ -172,7 +174,7 @@ const Habits: React.FC = () => {
 
       {isActive && (
         <>
-          {currentStep.isLoaded ? (
+          {currentStep.isLoaded && isReady ? (
             <>
               <HabitsContainer id="habits_container">
                 {!error && (

@@ -12,6 +12,7 @@ import { useApp } from 'contexts/app';
 import createUserQuery from 'services/createUserQuery';
 
 import getValidationErrors from 'utils/getValidationErrors';
+import getFoods from 'services/getFoods';
 
 import { WizardProvider } from 'contexts/wizard';
 import Container, {
@@ -54,16 +55,20 @@ const Wizard: React.FC = () => {
 
   const context = useApp();
   const {
+    userQuery,
     labels,
     steps,
+    selectedNutraceuticals,
     updateExcludes,
     updateUserQuery,
     updateOutcomes,
     updateSuboutcomes,
     updateConnections,
+    updateSelectedNutraceuticals,
     updateStep,
     updateCount,
     updateError,
+    updateFoods,
   } = context;
 
   const previousStep = { isCompleted: true };
@@ -92,7 +97,11 @@ const Wizard: React.FC = () => {
 
       if (!isCompleted) return;
 
-      updateStep('step1', { ...currentStep, isCompleted: true });
+      updateStep('step1', {
+        ...currentStep,
+        isCompleted: true,
+        isLoading: true,
+      });
 
       try {
         formRef.current?.setErrors({});
@@ -138,12 +147,40 @@ const Wizard: React.FC = () => {
 
         updateStep('step2', { ...nextStep, isLoaded: true });
 
+        const newNutraceuticals = filteredSuboutcomes.reduce(
+          (acc: string[], suboutcome) => {
+            const abcd = Object.values(suboutcome.nutraceuticals).reduce(
+              (subAcc, nutraceuticals) =>
+                Array.from(new Set([...subAcc, ...nutraceuticals])),
+            );
+
+            return Array.from(new Set([...acc, ...abcd]));
+          },
+          [],
+        );
+
+        const updatedNutraceuticals = selectedNutraceuticals.filter(
+          selectedNutraceutical =>
+            newNutraceuticals.includes(selectedNutraceutical),
+        );
+
         updateUserQuery(uuid);
         updateExcludes(excludes);
         updateOutcomes(filteredOutcomes);
         updateSuboutcomes(filteredSuboutcomes);
         updateCount(count);
         updateConnections(filteredOutcomes, filteredSuboutcomes);
+
+        updateSelectedNutraceuticals(updatedNutraceuticals);
+
+        const { content: foods } = await getFoods({
+          uuid: userQuery,
+          nutraceuticals: updatedNutraceuticals,
+        });
+
+        updateFoods(foods);
+
+        updateStep('step1', { ...currentStep, isLoading: false });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -159,6 +196,7 @@ const Wizard: React.FC = () => {
     [
       currentStep,
       nextStep,
+      selectedNutraceuticals,
       updateUserQuery,
       updateStep,
       updateExcludes,
@@ -167,6 +205,9 @@ const Wizard: React.FC = () => {
       updateConnections,
       updateCount,
       updateError,
+      updateFoods,
+      updateSelectedNutraceuticals,
+      userQuery,
       query,
     ],
   );

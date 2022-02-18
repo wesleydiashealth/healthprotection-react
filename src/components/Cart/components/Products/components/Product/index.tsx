@@ -57,6 +57,7 @@ const Product: React.FC<ProductData> = ({
 }) => {
   const context = useApp();
   const {
+    connections,
     nutraceuticals,
     outcomes,
     suboutcomes,
@@ -67,6 +68,21 @@ const Product: React.FC<ProductData> = ({
   const productDietarySupplement = nutraceuticals.find(
     nutraceutical => nutraceutical.slug === dietarySupplement,
   );
+
+  const activeSuboutcomes = Object.values(connections)
+    .reduce((acc: string[], connection) => {
+      const aaa = Object.entries(connection).reduce(
+        (subAcc: string[], { 0: subConnection, 1: values }) =>
+          values.length ? [...subAcc, subConnection] : subAcc,
+        [],
+      );
+
+      return [...acc, ...aaa];
+    }, [])
+    .map(
+      connection =>
+        suboutcomes.find(suboutcome => suboutcome.id === connection)?.title,
+    );
 
   const productPriceArray = price.split(' ');
   const productPriceValue = parseFloat(productPriceArray[0].replace(/,/g, '.'));
@@ -92,7 +108,7 @@ const Product: React.FC<ProductData> = ({
         return hasNutraceutical ? [...acc, curr.title] : acc;
       }, []),
     ),
-  );
+  ).filter(suboutcome => activeSuboutcomes.includes(suboutcome));
 
   const productTags = [...additives, ...proprietaries];
 
