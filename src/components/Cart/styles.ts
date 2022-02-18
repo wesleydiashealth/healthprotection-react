@@ -6,8 +6,8 @@ interface ContainerProps {
 }
 
 const Container = styled.div<ContainerProps>`
-  margin: 0px auto 40px;
-  padding: 20px;
+  margin: 0px auto;
+  padding: 20px 0;
 
   display: flex;
   flex-flow: column;
@@ -19,7 +19,7 @@ const Container = styled.div<ContainerProps>`
   /* max-width: 1300px; */
 
   @media screen and (min-width: 768px) {
-    padding: 80px 50px 0;
+    padding: 80px 50px 40px;
   }
 
   ${props =>
