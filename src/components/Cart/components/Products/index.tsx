@@ -6,14 +6,22 @@ import { useApp } from 'contexts/app';
 
 import ProductData from 'dtos/ProductData';
 
+import Loading from 'components/Loading';
 import Product from './components/Product';
 
 import Container from './styles';
 
 const Products: React.FC = () => {
   const context = useApp();
-  const { labels, productsGroups, selectedProducts, updateSelectedProducts } =
-    context;
+  const {
+    labels,
+    steps,
+    productsGroups,
+    selectedProducts,
+    updateSelectedProducts,
+  } = context;
+
+  const previousStep = steps.step3;
 
   const productTabClick = useCallback(
     (product: ProductData) => {
@@ -38,106 +46,113 @@ const Products: React.FC = () => {
 
   return (
     <Container>
-      {Object.entries(productsGroups).map(
-        ({ 0: nutraceutical, 1: productsGroup }) => {
-          const recommendedProduct = productsGroup.reduce(
-            (acc: ProductData, curr) => {
-              const { interactions } = curr;
+      {previousStep.isLoading ? (
+        <Loading color="#ec903f" />
+      ) : (
+        Object.entries(productsGroups).map(
+          ({ 0: nutraceutical, 1: productsGroup }) => {
+            const recommendedProduct = productsGroup.reduce(
+              (acc: ProductData, curr) => {
+                const { interactions } = curr;
 
-              const previousOrder = acc.interactions.reduce(
-                (subAcc: number, interaction) =>
-                  subAcc + parseInt(interaction.order, 10),
-                0,
-              );
+                const previousOrder = acc.interactions.reduce(
+                  (subAcc: number, interaction) =>
+                    subAcc + parseInt(interaction.order, 10),
+                  0,
+                );
 
-              const order = interactions.reduce(
-                (subAcc: number, interaction) =>
-                  subAcc + parseInt(interaction.order, 10),
-                0,
-              );
+                const order = interactions.reduce(
+                  (subAcc: number, interaction) =>
+                    subAcc + parseInt(interaction.order, 10),
+                  0,
+                );
 
-              return previousOrder > order ? acc : curr;
-            },
-          );
+                return previousOrder > order ? acc : curr;
+              },
+            );
 
-          const cheapestProduct = productsGroup.reduce(
-            (acc: ProductData, curr) => {
-              const prevProductArray = acc.price.split(' ');
-              const prevProductPrice = parseFloat(
-                prevProductArray[0].replace(/,/g, '.'),
-              );
+            const cheapestProduct = productsGroup.reduce(
+              (acc: ProductData, curr) => {
+                const prevProductArray = acc.price.split(' ');
+                const prevProductPrice = parseFloat(
+                  prevProductArray[0].replace(/,/g, '.'),
+                );
 
-              const currProductArray = curr.price.split(' ');
-              const currProductPrice = parseFloat(
-                currProductArray[0].replace(/,/g, '.'),
-              );
+                const currProductArray = curr.price.split(' ');
+                const currProductPrice = parseFloat(
+                  currProductArray[0].replace(/,/g, '.'),
+                );
 
-              return prevProductPrice > currProductPrice ? curr : acc;
-            },
-          );
+                return prevProductPrice > currProductPrice ? curr : acc;
+              },
+            );
 
-          const bestRatingProduct = productsGroup.reduce(
-            (acc: ProductData, curr) => (acc.rating > curr.rating ? acc : curr),
-          );
+            const bestRatingProduct = productsGroup.reduce(
+              (acc: ProductData, curr) =>
+                acc.rating > curr.rating ? acc : curr,
+            );
 
-          return (
-            productsGroup && (
-              <Tabs key={nutraceutical}>
-                <TabList>
-                  <Tab
-                    onClick={() => {
-                      productTabClick(recommendedProduct);
-                    }}
-                  >
-                    {labels.cart_product_recommended || 'We recommended'}
-                  </Tab>
-                  <Tab
-                    onClick={() => {
-                      productTabClick(cheapestProduct);
-                    }}
-                  >
-                    {labels.cart_product_cheapest || 'Cheapest'}
-                  </Tab>
-                  <Tab
-                    onClick={() => {
-                      productTabClick(bestRatingProduct);
-                    }}
-                  >
-                    {labels.cart_product_best_rating || 'Best rating'}
-                  </Tab>
-                  <Tab>{labels.cart_product_see_all || 'See all'}</Tab>
-                </TabList>
-                <TabPanel>
-                  <Product
-                    dietarySupplement={nutraceutical}
-                    {...bestRatingProduct}
-                  />
-                </TabPanel>
-                <TabPanel>
-                  <Product
-                    dietarySupplement={nutraceutical}
-                    {...cheapestProduct}
-                  />
-                </TabPanel>
-                <TabPanel>
-                  <Product
-                    dietarySupplement={nutraceutical}
-                    {...bestRatingProduct}
-                  />
-                </TabPanel>
-                <TabPanel>
-                  {productsGroups[nutraceutical].map((product: ProductData) => (
+            return (
+              productsGroup && (
+                <Tabs key={nutraceutical}>
+                  <TabList>
+                    <Tab
+                      onClick={() => {
+                        productTabClick(recommendedProduct);
+                      }}
+                    >
+                      {labels.cart_product_recommended || 'We recommended'}
+                    </Tab>
+                    <Tab
+                      onClick={() => {
+                        productTabClick(cheapestProduct);
+                      }}
+                    >
+                      {labels.cart_product_cheapest || 'Cheapest'}
+                    </Tab>
+                    <Tab
+                      onClick={() => {
+                        productTabClick(bestRatingProduct);
+                      }}
+                    >
+                      {labels.cart_product_best_rating || 'Best rating'}
+                    </Tab>
+                    <Tab>{labels.cart_product_see_all || 'See all'}</Tab>
+                  </TabList>
+                  <TabPanel>
                     <Product
-                      key={`${nutraceutical}-${product.asin}`}
                       dietarySupplement={nutraceutical}
-                      {...product}
+                      {...bestRatingProduct}
                     />
-                  ))}
-                </TabPanel>
-              </Tabs>
-            )
-          );
-        },
+                  </TabPanel>
+                  <TabPanel>
+                    <Product
+                      dietarySupplement={nutraceutical}
+                      {...cheapestProduct}
+                    />
+                  </TabPanel>
+                  <TabPanel>
+                    <Product
+                      dietarySupplement={nutraceutical}
+                      {...bestRatingProduct}
+                    />
+                  </TabPanel>
+                  <TabPanel>
+                    {productsGroups[nutraceutical].map(
+                      (product: ProductData) => (
+                        <Product
+                          key={`${nutraceutical}-${product.asin}`}
+                          dietarySupplement={nutraceutical}
+                          {...product}
+                        />
+                      ),
+                    )}
+                  </TabPanel>
+                </Tabs>
+              )
+            );
+          },
+        )
       )}
     </Container>
   );

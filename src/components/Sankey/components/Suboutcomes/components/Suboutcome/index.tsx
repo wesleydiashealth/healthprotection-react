@@ -55,6 +55,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
     updateSelectedNutraceuticals,
     updateHabits,
     updateProducts,
+    updateDiscounts,
   } = appContext;
 
   const [supConnections, setSupConnections] = useState<string[]>([]);
@@ -118,6 +119,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       updateStep('step3', { ...nextStep, isLoaded: false });
 
       updateHabits([]);
+      updateDiscounts({});
 
       const selectedNutraceuticals = Array.from(
         new Set(
@@ -183,6 +185,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       updateSelectedConnections,
       updateHabits,
       updateProducts,
+      updateDiscounts,
     ],
   );
 

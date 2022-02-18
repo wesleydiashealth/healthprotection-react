@@ -31,30 +31,34 @@ const Habit: React.FC<FoodData> = food => {
     title,
     unit,
     intakeFrequency,
+    frequencyUnit,
     icon,
     dosages,
     interactions,
-    dataSource,
   } = food;
 
   const context = useApp();
   const {
+    steps,
     labels,
     habits,
     nutraceuticals,
     selectedNutraceuticals,
     discounts,
+    updateStep,
     updateHabits,
     updateDiscounts,
     updateProducts,
   } = context;
+
+  const currentStep = steps.step3;
 
   const nutraceuticalsInteractions = interactions.filter(interaction => {
     return selectedNutraceuticals.includes(interaction.dietarySupplementSlug);
   });
 
   const habitQuestionLabel =
-    labels.step_3_question || 'How many %s do you consume per week?';
+    labels.step_3_question || `How many %s do you consume per %d?`;
 
   useEffect(() => {
     ReactToolTip.rebuild();
@@ -62,6 +66,8 @@ const Habit: React.FC<FoodData> = food => {
 
   const handleHabitInput = useCallback(
     async (selectedFood: FoodData, frequency) => {
+      updateStep('step3', { ...currentStep, isLoading: true });
+
       const updatedHabits: HabitData[] = [...habits];
 
       const habitIndex = habits.findIndex(habit => habit.food === food.title);
@@ -150,28 +156,34 @@ const Habit: React.FC<FoodData> = food => {
               0,
             );
 
-          return `${selectedNutraceutical};${
+          const finalDosage =
             selectedNutraceuticalObject?.maxDosage -
-            selectedNutraceuticalDiscounts
-          }`;
+            selectedNutraceuticalDiscounts;
+
+          return `${selectedNutraceutical};${finalDosage}`;
         })
         .filter(selectedNutraceutical => {
           const { 1: dosage } = selectedNutraceutical.split(';');
+          const dosageValue = parseInt(dosage, 10);
 
-          return !!parseInt(dosage, 10);
+          return !!dosageValue && dosageValue > 0;
         });
 
       // Get and update products from Wordpress
       const updatedProducts = await getProducts(selectedNutraceuticalsDosages);
 
       updateProducts(updatedProducts);
+
+      updateStep('step3', { ...currentStep, isLoading: false });
     },
     [
+      currentStep,
       nutraceuticals,
       food,
       habits,
       selectedNutraceuticals,
       discounts,
+      updateStep,
       updateHabits,
       updateDiscounts,
       updateProducts,
@@ -196,7 +208,6 @@ const Habit: React.FC<FoodData> = food => {
                   title,
                   dosages,
                   interactions,
-                  dataSource,
                 }}
               />,
             )}
@@ -217,7 +228,9 @@ const Habit: React.FC<FoodData> = food => {
         <Question>
           {habitQuestionLabel &&
             unit.label &&
-            habitQuestionLabel.replace('%s', unit.label)}
+            habitQuestionLabel
+              .replace('%s', unit.label)
+              .replace('%d', frequencyUnit.label)}
         </Question>
         <Dosages>{dosages}</Dosages>
         <Nutraceuticals>
@@ -253,6 +266,7 @@ const Habit: React.FC<FoodData> = food => {
             const isReduced =
               interactionDiscount >= maxDosage * 0.49 &&
               interactionDiscount <= maxDosage * 0.74;
+
             const isRemoved = interactionDiscount >= maxDosage * 0.75;
 
             return (

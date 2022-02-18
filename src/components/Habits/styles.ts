@@ -333,19 +333,45 @@ export const HabitNutraceuticalsItem = styled.div`
   }
 `;
 
-export const HabitInvalidNutraceuticals = styled.p`
-  margin: 0 auto;
-  border: 3px solid #1bc9bd;
-  border-radius: 10px;
-  padding: 10px 20px;
+export const ReducedHabits = styled.div`
+  margin: 0 auto 20px;
+  border: 3px solid orange;
+  border-radius: 20px;
+  padding: 5px 20px;
+
+  font-size: 14px;
+  line-height: 20px;
+
+  strong {
+    font-weight: 600;
+  }
+`;
+
+export const RemovedHabits = styled.div`
+  margin: 0 auto 20px;
+  border: 3px solid red;
+  border-radius: 20px;
+  padding: 5px 20px;
 
   font-size: 14px;
   line-height: 22px;
 
   strong {
     font-weight: 600;
-    font-size: 14px;
-    line-height: 22px;
+  }
+`;
+
+export const InvalidNutraceuticals = styled.div`
+  margin: 0 auto;
+  border: 3px solid #1bc9bd;
+  border-radius: 20px;
+  padding: 5px 20px;
+
+  font-size: 14px;
+  line-height: 20px;
+
+  strong {
+    font-weight: 600;
   }
 `;
 

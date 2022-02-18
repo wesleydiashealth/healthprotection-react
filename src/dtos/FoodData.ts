@@ -3,14 +3,13 @@ import InteractionData from './InteractionData';
 export default interface FoodData {
   slug: string;
   title: string;
-  content: string;
   icon: string;
-  diet: {
-    value: string;
+  diets: {
+    slug: string;
     title: string;
   }[];
-  allergy: {
-    value: string;
+  allergies: {
+    slug: string;
     title: string;
   }[];
   unit: {
@@ -18,10 +17,15 @@ export default interface FoodData {
     label: string;
   };
   dosages: string;
-  interactions: InteractionData[];
-  dataSource: string[];
   intakeFrequency: {
     value: string;
     label: string;
   }[];
+  frequencyUnit: {
+    value: string;
+    label: string;
+  };
+  interactions: InteractionData[];
+  portion: string;
+  portions: number[];
 }

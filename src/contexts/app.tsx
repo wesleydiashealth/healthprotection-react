@@ -34,6 +34,7 @@ interface StepData {
   isActive?: boolean;
   isDisabled?: boolean;
   isLoaded?: boolean;
+  isLoading?: boolean;
 }
 
 interface StepsData {
@@ -102,8 +103,9 @@ export const AppProvider: React.FC = ({ children }) => {
 
   const [steps, setSteps] = useState<StepsData>({
     step1: { isCompleted: false },
-    step2: { isCompleted: false, isDisabled: true },
-    step3: { isCompleted: false, isDisabled: true },
+    step2: { isCompleted: false, isDisabled: true, isLoading: false },
+    step3: { isCompleted: false, isDisabled: true, isLoading: false },
+    cart: { isCompleted: false, isDisabled: true, isLoading: false },
   });
 
   const [answers, setAnswers] = useState<AnswerData[]>([]);
@@ -279,11 +281,7 @@ export const AppProvider: React.FC = ({ children }) => {
   async function updateSelectedNutraceuticals(
     updatedSelectedNutraceuticals: string[],
   ) {
-    setSelectedNutraceuticals(
-      Array.from(
-        new Set([...selectedNutraceuticals, ...updatedSelectedNutraceuticals]),
-      ),
-    );
+    setSelectedNutraceuticals(updatedSelectedNutraceuticals);
   }
 
   async function updateOutcomes(updatedOutcomes: OutcomeData[]) {

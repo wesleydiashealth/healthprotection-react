@@ -7,6 +7,8 @@ import ReactHtmlParser from 'react-html-parser';
 import { useApp } from 'contexts/app';
 import Loading from 'components/Loading';
 
+import BuildNutraceuticalsString from 'services/BuildNutraceuticalsString';
+
 import Habit from './components/Habit';
 
 import Container, {
@@ -15,7 +17,9 @@ import Container, {
   StepTooltip,
   StepDescription,
   HabitsContainer,
-  HabitInvalidNutraceuticals,
+  ReducedHabits,
+  RemovedHabits,
+  InvalidNutraceuticals,
 } from './styles';
 
 const Habits: React.FC = () => {
@@ -26,6 +30,7 @@ const Habits: React.FC = () => {
     nutraceuticals,
     selectedNutraceuticals,
     foods,
+    discounts,
     error,
   } = context;
   const { step1: initialStep, step2: previousStep, step3: currentStep } = steps;
@@ -52,30 +57,60 @@ const Habits: React.FC = () => {
     [],
   );
 
+  const reducedNutraceuticals = selectedNutraceuticals.filter(
+    selectedNutraceutical => {
+      const hasDiscount = !!discounts[selectedNutraceutical];
+
+      if (!hasDiscount) return false;
+
+      const nutraceutical = nutraceuticals.find(
+        item => item.slug === selectedNutraceutical,
+      );
+
+      if (!nutraceutical) return false;
+
+      const { maxDosage } = nutraceutical;
+
+      const discount = discounts[selectedNutraceutical].reduce(
+        (acc, curr) => acc + curr.dosage,
+        0,
+      );
+
+      return (
+        !!discount &&
+        discount >= maxDosage * 0.49 &&
+        discount <= maxDosage * 0.74
+      );
+    },
+  );
+
+  const removedNutraceuticals = selectedNutraceuticals.filter(
+    selectedNutraceutical => {
+      const hasDiscount = !!discounts[selectedNutraceutical];
+
+      if (!hasDiscount) return false;
+
+      const nutraceutical = nutraceuticals.find(
+        item => item.slug === selectedNutraceutical,
+      );
+
+      if (!nutraceutical) return false;
+
+      const { maxDosage } = nutraceutical;
+
+      const discount = discounts[selectedNutraceutical].reduce(
+        (acc, curr) => acc + curr.dosage,
+        0,
+      );
+
+      return !!discount && discount >= maxDosage * 0.75;
+    },
+  );
+
   const invalidNutraceuticals = selectedNutraceuticals.filter(
     selectedNutraceutical =>
       !foodsNutraceuticals.includes(selectedNutraceutical),
   );
-
-  const invalidNutraceuticalsTitles = invalidNutraceuticals.map(
-    invalidNutraceutical =>
-      nutraceuticals.find(
-        nutraceutical => nutraceutical.slug === invalidNutraceutical,
-      )?.title,
-  );
-
-  const invalidNutraceuticalsString = invalidNutraceuticalsTitles.join(', ');
-  const invalidNutraceuticalsSeparator = ',';
-
-  const lastComma = invalidNutraceuticalsString.lastIndexOf(
-    invalidNutraceuticalsSeparator,
-  );
-
-  const invalidNutraceuticalsText =
-    invalidNutraceuticalsString.slice(0, lastComma) +
-    invalidNutraceuticalsString
-      .slice(lastComma)
-      .replace(invalidNutraceuticalsSeparator, ' and');
 
   const InvalidSingularLabel =
     labels.step_3_invalid_nutraceuticals_singular ||
@@ -148,26 +183,46 @@ const Habits: React.FC = () => {
                   </>
                 )}
               </HabitsContainer>
+              {!!reducedNutraceuticals.length && (
+                <ReducedHabits>
+                  Based on your current food intake, the dosage of{' '}
+                  <strong>
+                    {BuildNutraceuticalsString(reducedNutraceuticals)}
+                  </strong>{' '}
+                  {reducedNutraceuticals.length > 1 ? 'were' : 'was'} adjusted.
+                </ReducedHabits>
+              )}
+              {!!removedNutraceuticals.length && (
+                <RemovedHabits>
+                  Based on your current food intake,{' '}
+                  <strong>
+                    {BuildNutraceuticalsString(removedNutraceuticals)}
+                  </strong>{' '}
+                  {removedNutraceuticals.length > 1 ? 'were' : 'was'} removed.
+                </RemovedHabits>
+              )}
               {!!invalidNutraceuticals.length && (
-                <HabitInvalidNutraceuticals id="invalid_habits_container">
+                <InvalidNutraceuticals id="invalid_habits_container">
                   {invalidNutraceuticals.length > 1
                     ? ReactHtmlParser(
                         InvalidPluralLabel &&
-                          invalidNutraceuticalsText &&
                           InvalidPluralLabel.replace(
                             '%s',
-                            `<strong>${invalidNutraceuticalsText}</strong>`,
+                            `<strong>${BuildNutraceuticalsString(
+                              invalidNutraceuticals,
+                            )}</strong>`,
                           ),
                       )
                     : ReactHtmlParser(
                         InvalidSingularLabel &&
-                          invalidNutraceuticalsText &&
                           InvalidSingularLabel.replace(
                             '%s',
-                            `<strong>${invalidNutraceuticalsText}</strong>`,
+                            `<strong>${BuildNutraceuticalsString(
+                              invalidNutraceuticals,
+                            )}</strong>`,
                           ),
                       )}
-                </HabitInvalidNutraceuticals>
+                </InvalidNutraceuticals>
               )}
             </>
           ) : (

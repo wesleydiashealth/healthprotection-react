@@ -12,23 +12,15 @@ import Container, {
   ContainerInteractionsItem,
   ContainerInteractionsItemName,
   ContainerInteractionsItemDosage,
-  ContainerSources,
-  ContainerSourcesItem,
 } from './styles';
 
 interface TooltipProps {
   title: string;
   dosages: string;
   interactions: InteractionData[];
-  dataSource: string[];
 }
 
-const Tooltip: React.FC<TooltipProps> = ({
-  title,
-  dosages,
-  interactions,
-  dataSource,
-}) => {
+const Tooltip: React.FC<TooltipProps> = ({ title, dosages, interactions }) => {
   const context = useApp();
   const { labels } = context;
 
@@ -56,7 +48,7 @@ const Tooltip: React.FC<TooltipProps> = ({
           </ContainerInteractionsItem>
         ))}
       </ContainerInteractions>
-      <ContainerSources>
+      {/* <ContainerSources>
         {dataSource?.map(dataSourceItem => (
           <ContainerSourcesItem
             key={dataSourceItem}
@@ -65,7 +57,7 @@ const Tooltip: React.FC<TooltipProps> = ({
             title={dataSourceItem}
           />
         ))}
-      </ContainerSources>
+      </ContainerSources> */}
     </Container>
   );
 };
