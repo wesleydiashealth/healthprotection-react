@@ -6,7 +6,10 @@ import { HiQuestionMarkCircle } from 'react-icons/hi';
 import { transparentize } from 'polished';
 import TagManager from 'react-gtm-module';
 
+import Loading from 'components/Loading';
+
 import { useApp } from 'contexts/app';
+import { useSankey } from 'contexts/sankey';
 
 import getFoods from 'services/getFoods';
 import getProducts from 'services/getProducts';
@@ -16,6 +19,7 @@ import Container, {
   Anchor,
   Content,
   ContentTitle,
+  LoadingContainer,
   FineTuneGroup,
   FineTune,
 } from './styles';
@@ -65,10 +69,15 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
     updateDiscounts,
   } = appContext;
 
+  const sankeyContext = useSankey();
+  const { clickedSuboutcome, updateClickedSuboutcome } = sankeyContext;
+
   const [supConnections, setSupConnections] = useState<string[]>([]);
   const [subConnections, setSubConnections] = useState<string[]>([]);
 
   const { step2: currentStep, step3: nextStep } = steps;
+
+  const { isLoading } = currentStep;
 
   useEffect(() => {
     const updatedSupConnections = Object.entries(connections)
@@ -119,6 +128,8 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
 
   const handleFineTuneClick = useCallback(
     async (fineTuneGroup: string[], suboutcome: string) => {
+      updateClickedSuboutcome(suboutcome);
+
       updateConnection(suboutcome, fineTuneGroup);
       updateSelectedConnections(connections);
 
@@ -179,7 +190,9 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
         isCompleted: true,
         isLoading: false,
       });
+
       updateStep('step3', { ...nextStep, isLoaded: true });
+
       if (!foods.length) {
         updateError(
           'With your choices there are no adjustments to be made. See below for your list of nutraceuticals.',
@@ -205,6 +218,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       updateHabits,
       updateProducts,
       updateDiscounts,
+      updateClickedSuboutcome,
     ],
   );
 
@@ -261,9 +275,15 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
         />
         <ContentTitle>{title}</ContentTitle>
       </Content>
+      {isLoading && clickedSuboutcome === id && (
+        <LoadingContainer>
+          <Loading color={color} />
+        </LoadingContainer>
+      )}
       <FineTuneGroup>
         <FineTune
           isActive={fineTune[id] === 'off' || !fineTune[id]}
+          isDisabled={isLoading}
           color={color}
           className="step-2-completed"
           onClick={() => {
@@ -288,6 +308,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
                 <FineTune
                   key={key}
                   isActive={fineTune[id] === key}
+                  isDisabled={isLoading}
                   isEmpty={!value.length}
                   color={color}
                   className="step-2-completed"

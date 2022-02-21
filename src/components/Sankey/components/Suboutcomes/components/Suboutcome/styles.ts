@@ -9,6 +9,7 @@ interface ContainerProps {
 
 interface FineTuneProps {
   isActive?: boolean;
+  isDisabled?: boolean;
   isEmpty?: boolean;
   color?: string;
 }
@@ -138,6 +139,17 @@ export const ContentTitle = styled.h3`
   }
 `;
 
+export const LoadingContainer = styled.div`
+  > div > div {
+    display: flex;
+    align-items: center;
+  }
+
+  svg {
+    width: 24px;
+  }
+`;
+
 export const FineTuneGroup = styled.div`
   border-radius: 20px;
   padding: 2px;
@@ -183,6 +195,14 @@ export const FineTune = styled.a<FineTuneProps>`
     css`
       color: #fff;
       background: ${props.color};
+    `}
+
+    ${props =>
+    props.isDisabled &&
+    css`
+      cursor: default;
+      pointer-events: none;
+      opacity: 0.7;
     `}
 
     ${props =>
