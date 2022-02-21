@@ -1,8 +1,12 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import { hotjar } from 'react-hotjar';
 
 import { useApp } from 'contexts/app';
+
+import ConvertLangToRegion from 'services/ConvertLangToRegion';
+import GetAmazonTag from 'services/GetAmazonTag';
 
 import Container, {
   Title,
@@ -20,7 +24,13 @@ interface SummaryProps {
   isCustom?: boolean;
 }
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 const Summary: React.FC<SummaryProps> = ({ isCustom }) => {
+  const query = useQuery();
+
   const context = useApp();
   const { steps, labels, selectedProducts } = context;
   const { step1: initialStep, step2: previousStep } = steps;
@@ -68,7 +78,10 @@ const Summary: React.FC<SummaryProps> = ({ isCustom }) => {
     }`;
   }, '');
 
-  const cartLink = `https://www.amazon.es/gp/aws/cart/add.html?AssociateTag=healthprote04-21&tag=healthprote04-21${cartParams}`;
+  const region = ConvertLangToRegion(query.get('lang') || 'en');
+  const amazonTag = GetAmazonTag(region);
+
+  const cartLink = `https://www.amazon.${region}/gp/aws/cart/add.html?AssociateTag=${amazonTag}&tag=${amazonTag}${cartParams}`;
 
   return (
     <Container>

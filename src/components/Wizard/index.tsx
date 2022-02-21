@@ -195,6 +195,12 @@ const Wizard: React.FC = () => {
         if (err instanceof Error) {
           updateError(err.message);
         }
+
+        updateStep('step1', {
+          ...currentStep,
+          isCompleted: false,
+          isLoading: false,
+        });
       }
     },
     [

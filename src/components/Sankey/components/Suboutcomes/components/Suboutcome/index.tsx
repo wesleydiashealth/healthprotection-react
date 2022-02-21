@@ -180,7 +180,6 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
         isLoading: false,
       });
       updateStep('step3', { ...nextStep, isLoaded: true });
-
       if (!foods.length) {
         updateError(
           'With your choices there are no adjustments to be made. See below for your list of nutraceuticals.',
