@@ -242,17 +242,19 @@ const Product: React.FC<ProductData> = ({
       </Info>
       <PriceGroup>
         <Price>
-          <PriceValue>
-            {!Number.isNaN(productPriceValue)
-              ? productPriceValue.toLocaleString('es-ES', {
+          {!Number.isNaN(productPriceValue) ? (
+            <>
+              <PriceValue>
+                {productPriceValue.toLocaleString('es-ES', {
                   maximumFractionDigits: 2,
                   minimumFractionDigits: 2,
-                })
-              : price}
-          </PriceValue>
-          <PriceCurrency>
-            {!Number.isNaN(productPriceValue) && productPriceCurrency}
-          </PriceCurrency>
+                })}
+              </PriceValue>
+              <PriceCurrency>{productPriceCurrency}</PriceCurrency>
+            </>
+          ) : (
+            <span>{price || 'Price not available'}</span>
+          )}
         </Price>
         <Quantity>
           <FaMinus

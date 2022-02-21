@@ -218,6 +218,9 @@ export const Reviews = styled.span`
 `;
 
 export const PriceGroup = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
   text-align: center;
 `;
 
@@ -226,12 +229,17 @@ export const Price = styled.div`
 
   min-width: 80px;
 
+  span {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
   @media screen and (min-width: 768px) {
     margin-right: 20px;
   }
 `;
 
-export const PriceValue = styled.span`
+export const PriceValue = styled.div`
   display: inline-flex;
 
   max-width: 80px;
@@ -251,6 +259,7 @@ export const Quantity = styled.div`
 
   display: flex;
   align-items: center;
+  justify-content: center;
 
   svg {
     cursor: pointer;

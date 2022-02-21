@@ -17,6 +17,7 @@
     "@types/react-gtm-module": "^2.0.1",
     "@types/react-hamburger-menu": "^0.0.4",
     "@types/react-pdf": "^5.0.7",
+    "@types/react-select": "^5.0.1",
     "@types/react-tabs": "^2.3.4",
     "@unform/core": "^2.1.6",
     "@unform/web": "^2.1.6",

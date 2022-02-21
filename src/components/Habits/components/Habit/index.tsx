@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import ReactDOMServer from 'react-dom/server';
 import ReactToolTip from 'react-tooltip';
 import { HiQuestionMarkCircle } from 'react-icons/hi';
@@ -25,6 +26,10 @@ import Container, {
   Nutraceutical,
 } from './styles';
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 const Habit: React.FC<FoodData> = food => {
   const {
     slug,
@@ -36,6 +41,8 @@ const Habit: React.FC<FoodData> = food => {
     dosages,
     interactions,
   } = food;
+
+  const query = useQuery();
 
   const context = useApp();
   const {
@@ -170,13 +177,17 @@ const Habit: React.FC<FoodData> = food => {
         });
 
       // Get and update products from Wordpress
-      const updatedProducts = await getProducts(selectedNutraceuticalsDosages);
+      const updatedProducts = await getProducts(
+        selectedNutraceuticalsDosages,
+        query.get('lang') || '',
+      );
 
       updateProducts(updatedProducts);
 
       updateStep('step3', { ...currentStep, isLoading: false });
     },
     [
+      query,
       currentStep,
       nutraceuticals,
       food,

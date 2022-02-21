@@ -24,7 +24,10 @@ const CustomCart: React.FC = () => {
     async function fetchProducts() {
       const queryNutraceuticals = query.get('nutraceuticals')?.split(',') || [];
 
-      const products = await getProducts(queryNutraceuticals);
+      const products = await getProducts(
+        queryNutraceuticals,
+        query.get('lang') || '',
+      );
 
       setQueryProducts(
         products.filter(
