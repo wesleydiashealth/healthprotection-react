@@ -16,6 +16,8 @@ const Container = styled.div`
   flex-flow: column;
   align-items: center;
 
+  flex: 1;
+
   & ~ div {
     margin-top: 20px;
     border-top: 1px solid #e5e5e5;
@@ -31,6 +33,8 @@ export const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 80px;
+
+  overflow: hidden;
 `;
 
 export const Image = styled.img`

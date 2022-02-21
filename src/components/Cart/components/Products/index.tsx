@@ -9,7 +9,7 @@ import ProductData from 'dtos/ProductData';
 import Loading from 'components/Loading';
 import Product from './components/Product';
 
-import Container from './styles';
+import Container, { ProductContainer } from './styles';
 
 const Products: React.FC = () => {
   const context = useApp();
@@ -26,12 +26,16 @@ const Products: React.FC = () => {
   const isReady =
     !firstStep.isLoading && !secondStep.isLoading && !previousStep.isLoading;
 
-  const productTabClick = useCallback(
-    (product: ProductData) => {
-      const productDietarySupplement = product.interactions.reduce(
-        (acc, curr) => curr.dietarySupplementSlug,
-        '',
-      );
+  const handleTabClick = useCallback(
+    (products: ProductData[]) => {
+      const productDietarySupplement = products.reduce((acc, product) => {
+        const { interactions } = product;
+
+        return interactions.reduce(
+          (subAcc, curr) => curr.dietarySupplementSlug,
+          '',
+        );
+      }, '');
 
       // Selected products without existent product for same nutraceutical (that will be replaced)
       const filteredSelectedProducts = selectedProducts.filter(
@@ -42,7 +46,26 @@ const Products: React.FC = () => {
           ),
       );
 
-      updateSelectedProducts([...filteredSelectedProducts, product]);
+      updateSelectedProducts([...filteredSelectedProducts, ...products]);
+    },
+    [selectedProducts, updateSelectedProducts],
+  );
+
+  const handleCheckboxClick = useCallback(
+    (product: ProductData) => {
+      const productExists = !!selectedProducts.find(
+        selectedProduct => selectedProduct.asin === product.asin,
+      );
+
+      if (!productExists) {
+        updateSelectedProducts([...selectedProducts, product]);
+      } else {
+        const filteredSelectedProducts = selectedProducts.filter(
+          selectedProduct => selectedProduct.asin !== product.asin,
+        );
+
+        updateSelectedProducts(filteredSelectedProducts);
+      }
     },
     [selectedProducts, updateSelectedProducts],
   );
@@ -101,26 +124,32 @@ const Products: React.FC = () => {
                   <TabList>
                     <Tab
                       onClick={() => {
-                        productTabClick(recommendedProduct);
+                        handleTabClick([recommendedProduct]);
                       }}
                     >
                       {labels.cart_product_recommended || 'We recommended'}
                     </Tab>
                     <Tab
                       onClick={() => {
-                        productTabClick(cheapestProduct);
+                        handleTabClick([cheapestProduct]);
                       }}
                     >
                       {labels.cart_product_cheapest || 'Cheapest'}
                     </Tab>
                     <Tab
                       onClick={() => {
-                        productTabClick(bestRatingProduct);
+                        handleTabClick([bestRatingProduct]);
                       }}
                     >
                       {labels.cart_product_best_rating || 'Best rating'}
                     </Tab>
-                    <Tab>{labels.cart_product_see_all || 'See all'}</Tab>
+                    <Tab
+                      onClick={() => {
+                        handleTabClick(productsGroups[nutraceutical]);
+                      }}
+                    >
+                      {labels.cart_product_see_all || 'See all'}
+                    </Tab>
                   </TabList>
                   <TabPanel>
                     <Product
@@ -143,11 +172,21 @@ const Products: React.FC = () => {
                   <TabPanel>
                     {productsGroups[nutraceutical].map(
                       (product: ProductData) => (
-                        <Product
-                          key={`${nutraceutical}-${product.asin}`}
-                          dietarySupplement={nutraceutical}
-                          {...product}
-                        />
+                        <ProductContainer>
+                          <input
+                            type="checkbox"
+                            name={product.asin}
+                            defaultChecked
+                            onClick={() => {
+                              handleCheckboxClick(product);
+                            }}
+                          />
+                          <Product
+                            key={`${nutraceutical}-${product.asin}`}
+                            dietarySupplement={nutraceutical}
+                            {...product}
+                          />
+                        </ProductContainer>
                       ),
                     )}
                   </TabPanel>

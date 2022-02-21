@@ -16,4 +16,17 @@ const Container = styled.div`
   }
 `;
 
+export const ProductContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  input[type='checkbox'] {
+    margin-right: 10px;
+  }
+
+  & ~ div {
+    margin-top: 40px;
+  }
+`;
+
 export default Container;
