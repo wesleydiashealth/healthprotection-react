@@ -12,7 +12,9 @@ import { useApp } from 'contexts/app';
 import createUserQuery from 'services/createUserQuery';
 
 import getValidationErrors from 'utils/getValidationErrors';
+
 import getFoods from 'services/getFoods';
+import getProducts from 'services/getProducts';
 
 import { WizardProvider } from 'contexts/wizard';
 import Container, {
@@ -58,6 +60,7 @@ const Wizard: React.FC = () => {
     userQuery,
     labels,
     steps,
+    nutraceuticals,
     selectedNutraceuticals,
     updateExcludes,
     updateUserQuery,
@@ -69,6 +72,7 @@ const Wizard: React.FC = () => {
     updateCount,
     updateError,
     updateFoods,
+    updateProducts,
   } = context;
 
   const previousStep = { isCompleted: true };
@@ -150,8 +154,7 @@ const Wizard: React.FC = () => {
         const newNutraceuticals = filteredSuboutcomes.reduce(
           (acc: string[], suboutcome) => {
             const abcd = Object.values(suboutcome.nutraceuticals).reduce(
-              (subAcc, nutraceuticals) =>
-                Array.from(new Set([...subAcc, ...nutraceuticals])),
+              (subAcc, subCurr) => Array.from(new Set([...subAcc, ...subCurr])),
             );
 
             return Array.from(new Set([...acc, ...abcd]));
@@ -180,6 +183,25 @@ const Wizard: React.FC = () => {
 
         updateFoods(foods);
 
+        const nutraceuticalsDosages = updatedNutraceuticals.map(item => {
+          const itemNutraceutical = nutraceuticals.find(
+            nutraceutical => nutraceutical.slug === item,
+          );
+
+          const dosages = itemNutraceutical?.dosages;
+          const maxDosageAmount = dosages ? dosages[dosages?.length - 1] : 0;
+
+          return `${item};${maxDosageAmount}`;
+        });
+
+        // Get and update products from Wordpress
+        const updatedProducts = await getProducts(
+          nutraceuticalsDosages,
+          query.get('lang') || '',
+        );
+
+        updateProducts(updatedProducts);
+
         updateStep('step1', {
           ...currentStep,
           isCompleted: true,
@@ -206,6 +228,7 @@ const Wizard: React.FC = () => {
     [
       currentStep,
       nextStep,
+      nutraceuticals,
       selectedNutraceuticals,
       updateUserQuery,
       updateStep,
@@ -217,6 +240,7 @@ const Wizard: React.FC = () => {
       updateError,
       updateFoods,
       updateSelectedNutraceuticals,
+      updateProducts,
       userQuery,
       query,
     ],
