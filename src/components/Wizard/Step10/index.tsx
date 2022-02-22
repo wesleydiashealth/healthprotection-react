@@ -33,6 +33,8 @@ const Step10: React.FC = () => {
 
   const { step1: currentStep, step2: nextStep } = appSteps;
 
+  const isReady = nextStep.isLoaded && !currentStep.isLoading;
+
   const wizardContext = useWizard();
   const { steps, resetSteps } = wizardContext;
 
@@ -59,7 +61,7 @@ const Step10: React.FC = () => {
         </>
       ) : (
         <>
-          {nextStep.isLoaded ? (
+          {isReady ? (
             <>
               <ChecklistIcon />
               <Title>
@@ -142,7 +144,7 @@ const Step10: React.FC = () => {
           )}
         </>
       )}
-      {nextStep.isLoaded && (
+      {isReady && (
         <Buttons>
           <Button
             background="#707070"

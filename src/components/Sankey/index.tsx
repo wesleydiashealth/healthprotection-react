@@ -37,6 +37,8 @@ const Sankey: React.FC<SankeyProps> = ({
   const { labels, steps, outcomes } = context;
   const { step1: previousStep, step2: currentStep } = steps;
 
+  const isReady = currentStep.isLoaded && !previousStep.isLoading;
+
   const stepDisabledLabel =
     labels.step_2_disabled || 'Step Blocked. Finish Step 1 to proceed.';
 
@@ -92,7 +94,7 @@ const Sankey: React.FC<SankeyProps> = ({
       </StepIntro>
       {previousStep.isCompleted && (
         <SankeyProvider>
-          {currentStep.isLoaded ? (
+          {isReady ? (
             <StepContent>
               {outcomes.length ? (
                 <>
