@@ -180,7 +180,6 @@ const Product: React.FC<ProductData> = ({
       </ImageContainer>
       <Content>
         <ContentTitle>{productDietarySupplement?.title}</ContentTitle>
-        <p>{asin}</p>
         <ContentBrand>{brand}</ContentBrand>
         {!!interactions.length &&
           interactions.map(interaction => (
