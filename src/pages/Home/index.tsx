@@ -24,7 +24,9 @@ const Home: React.FC = () => {
   // const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
   // const isRetina = useMediaQuery({ query: '(min-resolution: 2dppx)' });
 
-  const parts = window.location.hostname.split('.');
+  const { hostname } = window.location;
+
+  const parts = hostname.split('.');
 
   let lastIndex = -2;
   const last = parts[parts.length - 1];
@@ -37,11 +39,12 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <p>Hostname: {window.location.hostname}</p>
+      <p>Hostname: {hostname}</p>
       <p>Last: {last}</p>
       <p>LastIndex: {lastIndex}</p>
       <p>Subdomain 1: {parts.slice(0, lastIndex).join('.')}</p>
       <p>Subdomain 2: {subdomain}</p>
+      <p>Subdomain 3: {GetSubdomain()}</p>
       <AppProvider>
         {/* <Hero /> */}
         <Wizard />
