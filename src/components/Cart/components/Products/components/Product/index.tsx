@@ -10,6 +10,7 @@ import Container, {
   ImageContainer,
   Image,
   Content,
+  ProductIntro,
   ContentTitle,
   ContentBrand,
   // ContentTitleLink,
@@ -29,6 +30,7 @@ import Container, {
   QuantityValue,
   Rating,
   Reviews,
+  ProductActions,
   PriceGroup,
   Price,
   PriceValue,
@@ -175,26 +177,30 @@ const Product: React.FC<ProductData> = ({
 
   return (
     <Container>
-      <ImageContainer>
-        {image && <Image src={image} alt={asin} title={asin} />}
-      </ImageContainer>
-      <Content>
-        <ContentTitle>{productDietarySupplement?.title}</ContentTitle>
-        <ContentBrand>{brand}</ContentBrand>
-        {!!interactions.length &&
-          interactions.map(interaction => (
-            <ContentDosage
-              key={interaction.dietarySupplementSlug}
-            >{`${interaction.capsuleDosage} ${interaction.capsuleDosageUnit} (${capsules} capsules)`}</ContentDosage>
-          ))}
-        {!!rating && starRating && (
-          <Rating>
-            <span>{rating}</span>
-            {ReactHtmlParser(starRating)}
-          </Rating>
+      <ProductIntro>
+        {image && (
+          <ImageContainer>
+            {image && <Image src={image} alt={asin} title={asin} />}
+          </ImageContainer>
         )}
-        {reviews && <Reviews>{reviews}</Reviews>}
-      </Content>
+        <Content>
+          <ContentTitle>{productDietarySupplement?.title}</ContentTitle>
+          <ContentBrand>{brand}</ContentBrand>
+          {!!interactions.length &&
+            interactions.map(interaction => (
+              <ContentDosage
+                key={interaction.dietarySupplementSlug}
+              >{`${interaction.capsuleDosage} ${interaction.capsuleDosageUnit} (${capsules} capsules)`}</ContentDosage>
+            ))}
+          {!!rating && starRating && (
+            <Rating>
+              <span>{rating}</span>
+              {ReactHtmlParser(starRating)}
+            </Rating>
+          )}
+          {reviews && <Reviews>{reviews}</Reviews>}
+        </Content>
+      </ProductIntro>
       <Info>
         <InfoCategories>
           <InfoCategoriesLabel>Characteristics:</InfoCategoriesLabel>
@@ -240,48 +246,50 @@ const Product: React.FC<ProductData> = ({
           </InfoSuboutcomesList>
         </InfoSuboutcomes>
       </Info>
-      <PriceGroup>
-        <Price>
-          {!Number.isNaN(productPriceValue) ? (
-            <>
-              <PriceValue>
-                {productPriceValue.toLocaleString('es-ES', {
-                  maximumFractionDigits: 2,
-                  minimumFractionDigits: 2,
-                })}
-              </PriceValue>
-              <PriceCurrency>{productPriceCurrency}</PriceCurrency>
-            </>
-          ) : (
-            <span>{price || 'Price not available'}</span>
-          )}
-        </Price>
-        <Quantity>
-          <FaMinus
-            size={16}
-            color="#565656"
-            onClick={() => handleQuantityButton(asin, -1)}
-          />
-          <QuantityValue>{quantity || 1}</QuantityValue>
-          <FaPlus
-            size={16}
-            color="#565656"
-            onClick={() => handleQuantityButton(asin, 1)}
-          />
-        </Quantity>
-      </PriceGroup>
-      {/* <Replace
-        size={20}
-        onClick={() => {
-          handleReplaceButton(selectedProduct);
-        }}
-      /> */}
-      <Remove
-        size={20}
-        onClick={() => {
-          handleRemoveButton(asin);
-        }}
-      />
+      <ProductActions>
+        <PriceGroup>
+          <Price>
+            {!Number.isNaN(productPriceValue) ? (
+              <>
+                <PriceValue>
+                  {productPriceValue.toLocaleString('es-ES', {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2,
+                  })}
+                </PriceValue>
+                <PriceCurrency>{productPriceCurrency}</PriceCurrency>
+              </>
+            ) : (
+              <span>{price || 'Price not available'}</span>
+            )}
+          </Price>
+          <Quantity>
+            <FaMinus
+              size={16}
+              color="#565656"
+              onClick={() => handleQuantityButton(asin, -1)}
+            />
+            <QuantityValue>{quantity || 1}</QuantityValue>
+            <FaPlus
+              size={16}
+              color="#565656"
+              onClick={() => handleQuantityButton(asin, 1)}
+            />
+          </Quantity>
+        </PriceGroup>
+        {/* <Replace
+          size={20}
+          onClick={() => {
+            handleReplaceButton(selectedProduct);
+          }}
+        /> */}
+        <Remove
+          size={20}
+          onClick={() => {
+            handleRemoveButton(asin);
+          }}
+        />
+      </ProductActions>
     </Container>
   );
 };

@@ -7,6 +7,7 @@ import { useApp } from 'contexts/app';
 import { useSankey } from 'contexts/sankey';
 
 import getFoods from 'services/getFoods';
+import getProducts from 'services/getProducts';
 
 import Container, {
   Anchors,
@@ -42,15 +43,18 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
 }) => {
   const appContext = useApp();
   const {
+    nutraceuticals: appNutraceuticals,
     userQuery,
     labels,
     steps,
     connections,
     updateConnection,
+    updateSelectedConnections,
     updateFoods,
     updateError,
     updateSelectedNutraceuticals,
     updateStep,
+    updateProducts,
   } = appContext;
 
   const { step2: currentStep, step3: nextStep } = steps;
@@ -73,8 +77,13 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
   const handleFineTuneClick = useCallback(
     async (fineTuneGroup, suboutcome) => {
       updateConnection(suboutcome, fineTuneGroup);
+      updateSelectedConnections(connections);
 
-      updateStep('step2', { ...currentStep, isCompleted: true });
+      updateStep('step2', {
+        ...currentStep,
+        isCompleted: true,
+        isLoading: true,
+      });
       updateStep('step3', { ...nextStep, isLoaded: false });
 
       const selectedNutraceuticals = Array.from(
@@ -92,23 +101,34 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
 
       updateSelectedNutraceuticals(selectedNutraceuticals);
 
-      // const selectedProducts = appNutraceuticals
-      //   .filter(appNutraceutical =>
-      //     selectedNutraceuticals.includes(appNutraceutical.slug),
-      //   )
-      //   .reduce(
-      //     (acc: string[], nutraceutical) => [...acc, ...nutraceutical.products],
-      //     [],
-      //   );
-
-      // updateProducts([...products, ...selectedProducts]);
-
       const response = await getFoods({
         uuid: userQuery,
         nutraceuticals: selectedNutraceuticals,
       });
 
       updateFoods(response.content);
+
+      const nutraceuticalsDosages = selectedNutraceuticals.map(item => {
+        const itemNutraceutical = appNutraceuticals.find(
+          nutraceutical => nutraceutical.slug === item,
+        );
+
+        const dosages = itemNutraceutical?.dosages;
+        const maxDosageAmount = dosages ? dosages[dosages?.length - 1] : 0;
+
+        return `${item};${maxDosageAmount}`;
+      });
+
+      // Get and update products from Wordpress
+      const updatedProducts = await getProducts(nutraceuticalsDosages);
+
+      updateProducts(updatedProducts);
+
+      updateStep('step2', {
+        ...currentStep,
+        isCompleted: true,
+        isLoading: false,
+      });
 
       updateStep('step3', { ...nextStep, isLoaded: true });
 
@@ -122,7 +142,9 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       }
     },
     [
+      appNutraceuticals,
       updateConnection,
+      updateSelectedConnections,
       connections,
       userQuery,
       currentStep,
@@ -131,6 +153,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       updateError,
       updateSelectedNutraceuticals,
       updateStep,
+      updateProducts,
     ],
   );
 

@@ -21,7 +21,9 @@ import { SankeyProvider } from '../../contexts/sankey';
 const Sankey: React.FC = () => {
   const context = useApp();
   const { steps, outcomes } = context;
-  const { step1: previousStep } = steps;
+  const { step1: previousStep, step2: currentStep } = steps;
+
+  const isReady = currentStep.isLoaded && !previousStep.isLoading;
 
   return (
     <Container id="step_2" isActive={previousStep.isCompleted}>
@@ -32,16 +34,14 @@ const Sankey: React.FC = () => {
         />
         <StepTitle>
           {!previousStep.isCompleted && (
-            <>
-              <HiLockClosed size={20} className="locked-icon" />
-            </>
+            <HiLockClosed size={20} className="locked-icon" />
           )}
           Step 2
           <HiQuestionMarkCircle
             className="tooltip-icon"
             size={20}
             color={previousStep.isCompleted ? '#DB71AF' : '#565656'}
-            data-tip="<strong>Step 2</strong><span>We already made a pre-selection...</span>"
+            data-tip="<strong>Step 2</strong><span>We have already preselected the results that are available for you to choose from. Adjust the areas of health in which you want to improve by setting the desired intensity.</span>"
             data-for="sankey-title-tooltip"
           />
           <ReactToolTip
@@ -68,7 +68,7 @@ const Sankey: React.FC = () => {
       {previousStep.isCompleted && (
         <SankeyProvider>
           <StepContent>
-            {outcomes.length ? (
+            {isReady && outcomes.length ? (
               <>
                 <Outcomes />
                 <Nutraceuticals />

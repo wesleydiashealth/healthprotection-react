@@ -9,8 +9,30 @@ const Container = styled.div`
 
   .react-tabs {
     &__tab {
+      padding: 6px;
+
       &-panel {
-        padding: 20px 0 0 10px;
+        padding: 0;
+      }
+
+      &-list {
+        font-size: 9px;
+      }
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .react-tabs {
+      &__tab {
+        padding: 6px 12px;
+
+        &-panel {
+          padding: 20px 0 0 10px;
+        }
+
+        &-list {
+          font-size: 16px;
+        }
       }
     }
   }

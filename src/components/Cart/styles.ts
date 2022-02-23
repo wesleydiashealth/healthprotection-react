@@ -7,7 +7,7 @@ interface ContainerProps {
 
 const Container = styled.div<ContainerProps>`
   margin: 0px auto;
-  padding: 20px 0;
+  padding: 20px;
 
   display: flex;
   flex-flow: column;
@@ -174,6 +174,7 @@ export const CheckoutProducts = styled.div`
   padding: 20px;
 
   overflow: hidden;
+  max-width: 100%;
 
   flex: 1;
 

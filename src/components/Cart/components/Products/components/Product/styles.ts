@@ -14,7 +14,6 @@ interface InfoTagsListProps {
 const Container = styled.div`
   display: flex;
   flex-flow: column;
-  align-items: center;
 
   flex: 1;
 
@@ -26,15 +25,26 @@ const Container = styled.div`
 
   @media screen and (min-width: 768px) {
     flex-flow: row nowrap;
+    align-items: center;
   }
 `;
 
+export const ProductIntro = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const ImageContainer = styled.div`
+  margin: 0 20px 0 0;
+
   display: flex;
   justify-content: center;
-  width: 80px;
 
   overflow: hidden;
+
+  @media screen and (min-width: 768px) {
+    width: 80px;
+  }
 `;
 
 export const Image = styled.img`
@@ -43,27 +53,26 @@ export const Image = styled.img`
 `;
 
 export const Content = styled.div`
-  text-align: center;
+  text-align: left;
 
-  width: 200px;
+  max-width: 200px;
 
   @media screen and (min-width: 768px) {
-    margin-left: 20px;
-    margin-right: 20px;
-
-    text-align: left;
+    margin: 0 20px;
   }
 `;
 
 export const ContentTitle = styled.h4`
-  margin: 20px 0 0;
+  font-size: 14px;
+  line-height: 22px;
 
-  font-size: 22px;
-  line-height: 32px;
   font-weight: 600;
 
   @media screen and (min-width: 768px) {
     margin: 0;
+
+    font-size: 22px;
+    line-height: 32px;
   }
 `;
 
@@ -78,16 +87,19 @@ export const Info = styled.div`
   margin: 10px 0 0;
 
   position: relative;
+  max-width: 100%;
 
   display: flex;
+  flex-flow: row nowrap;
   align-items: initial;
   text-align: center;
+
   flex: 1;
 
   p {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
-    font-size: 14px;
+    font-size: 10px;
     font-weight: 600;
     color: #565656;
   }
@@ -108,11 +120,28 @@ export const Info = styled.div`
     line-height: 22px;
   }
 
+  > div {
+    width: 33.33%;
+
+    & ~ div {
+      margin-left: 20px;
+    }
+  }
+
   @media screen and (min-width: 768px) {
     margin: 0 20px 0 0;
 
-    display: flex;
     flex-flow: column wrap;
+
+    p {
+      margin-bottom: 20px;
+
+      font-size: 14px;
+    }
+
+    > div {
+      width: initial;
+    }
   }
 
   @media screen and (min-width: 1600px) {
@@ -162,17 +191,31 @@ export const InfoCategoriesList = styled.div`
 `;
 
 export const InfoSuboutcomes = styled.div`
-  margin-top: 10px;
+  @media screen and (min-width: 768px) {
+    margin-top: 10px;
+  }
 `;
 
 export const InfoSuboutcomesList = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+
+  span {
+    font-size: 8px;
+  }
+
+  @media screen and (min-width: 768px) {
+    span {
+      font-size: 14px;
+    }
+  }
 `;
 
 export const InfoSuboutcomesItem = styled.span<InfoSuboutcomesItemProps>`
   background-color: transparent !important;
+
+  max-width: 100%;
 
   ${props =>
     props.color &&
@@ -219,6 +262,12 @@ export const Rating = styled.div`
 export const Reviews = styled.span`
   font-size: 12px;
   line-height: 1;
+`;
+
+export const ProductActions = styled.div`
+  display: flex;
+  align-self: center;
+  align-items: center;
 `;
 
 export const PriceGroup = styled.div`
@@ -320,6 +369,7 @@ export const Replace = styled(BiRefresh)`
 `;
 
 export const Remove = styled(FaTimes)`
+  margin-left: 10px;
   color: #ffae30;
 
   cursor: pointer;

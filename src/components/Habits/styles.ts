@@ -8,7 +8,7 @@ interface ContainerProps {
 }
 
 const Container = styled.div<ContainerProps>`
-  margin: 0 auto;
+  margin: 80px auto 0;
   padding: 0 10px;
 
   display: flex;
