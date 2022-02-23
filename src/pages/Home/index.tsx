@@ -11,6 +11,8 @@ import Habits from 'components/Habits';
 
 import { AppProvider } from 'contexts/app';
 
+import GetSubdomain from 'services/GetSubdomain';
+
 import Container from './styles';
 
 const Home: React.FC = () => {
@@ -24,6 +26,7 @@ const Home: React.FC = () => {
 
   return (
     <Container>
+      <p>{GetSubdomain}</p>
       <AppProvider>
         {/* <Hero /> */}
         <Wizard />
