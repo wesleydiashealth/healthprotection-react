@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { CarouselContext, CarouselStoreInterface } from 'pure-react-carousel';
 
 import wordpressApi from 'services/wordpress';
-import GetSubdomain from 'services/GetSubdomain';
 
 import QuestionData from 'dtos/QuestionData';
 import QuestionAnswersData from 'dtos/QuestionAnswersData';
@@ -69,7 +68,7 @@ export const WizardProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     wordpressApi
-      .get(`/wp-json/hp/v1/wizard/${GetSubdomain()}`)
+      .get(`/wp-json/hp/v1/wizard}`)
       .then(response => {
         const { content, success, message } = response.data;
 

@@ -8,8 +8,6 @@ import React, {
 
 import wordpressApi from 'services/wordpress';
 
-import GetSubdomain from 'services/GetSubdomain';
-
 import defaultLabels from 'labels.json';
 
 import ConnectionsData from 'dtos/ConnectionsData';
@@ -147,7 +145,7 @@ export const AppProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     wordpressApi
-      .get(`/wp-json/hp/v1/labels/${GetSubdomain()}`)
+      .get(`/wp-json/hp/v1/labels/`)
       .then(response => {
         const { content, success } = response.data;
 
@@ -165,7 +163,7 @@ export const AppProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     wordpressApi
-      .get(`/wp-json/hp/v1/nutraceuticals/${GetSubdomain()}`)
+      .get(`/wp-json/hp/v1/nutraceuticals/`)
       .then(response => {
         const { content, success, message } = response.data;
 

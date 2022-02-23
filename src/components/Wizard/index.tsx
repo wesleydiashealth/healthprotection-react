@@ -11,8 +11,6 @@ import { useApp } from 'contexts/app';
 
 import createUserQuery from 'services/createUserQuery';
 
-import wordpressApi from 'services/wordpress';
-
 import getValidationErrors from 'utils/getValidationErrors';
 
 import getFoods from 'services/getFoods';
@@ -119,27 +117,6 @@ const Wizard: React.FC = () => {
         await schema.validate(data, {
           abortEarly: false,
         });
-
-        wordpressApi
-          .post(`/wp-json/hp/v1/sankey`, data)
-          .then(async response => {
-            const { content } = response.data;
-            const { outcomes, suboutcomes } = content;
-
-            // eslint-disable-next-line no-console
-            console.log(response);
-
-            if (!outcomes || !suboutcomes) {
-              throw new Error('No health goals found');
-            }
-
-            // eslint-disable-next-line no-console
-            console.log(response.data);
-          })
-          .catch(error => {
-            // eslint-disable-next-line no-console
-            console.log(error);
-          });
 
         const response = await createUserQuery(requestData);
 
