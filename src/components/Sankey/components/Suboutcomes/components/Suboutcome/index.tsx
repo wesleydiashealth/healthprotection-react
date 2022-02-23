@@ -10,8 +10,6 @@ import Loading from 'components/Loading';
 import { useApp } from 'contexts/app';
 import { useSankey } from 'contexts/sankey';
 
-import GetSubdomain from 'services/GetSubdomain';
-
 import getFoods from 'services/getFoods';
 import getProducts from 'services/getProducts';
 
@@ -173,10 +171,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       });
 
       // Get and update products from Wordpress
-      const updatedProducts = await getProducts(
-        nutraceuticalsDosages,
-        GetSubdomain(),
-      );
+      const updatedProducts = await getProducts(nutraceuticalsDosages);
 
       updateProducts(updatedProducts);
 

@@ -11,7 +11,6 @@ import FoodData from 'dtos/FoodData';
 import DiscountsData from 'dtos/DiscountsData';
 
 import getProducts from 'services/getProducts';
-import GetSubdomain from 'services/GetSubdomain';
 
 import Tooltip from '../Tooltip';
 
@@ -171,10 +170,7 @@ const Habit: React.FC<FoodData> = food => {
         });
 
       // Get and update products from Wordpress
-      const updatedProducts = await getProducts(
-        selectedNutraceuticalsDosages,
-        GetSubdomain(),
-      );
+      const updatedProducts = await getProducts(selectedNutraceuticalsDosages);
 
       updateProducts(updatedProducts);
 

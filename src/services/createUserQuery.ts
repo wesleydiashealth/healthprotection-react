@@ -22,11 +22,10 @@ interface ResponseData extends Response {
 
 export default function createUserQuery(
   data: RequestData[],
-  lang: string,
 ): Promise<ResponseData> {
   return new Promise((resolve, reject) => {
     wordpressApi
-      .post(`/wp-json/hp/v1/sankey/${lang}`, data)
+      .post(`/wp-json/hp/v1/sankey`, data)
       .then(async response => {
         const { content } = response.data;
         const { outcomes, suboutcomes } = content;

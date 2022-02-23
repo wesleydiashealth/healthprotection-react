@@ -6,7 +6,6 @@ import Cart from 'components/Cart';
 import { AppProvider } from 'contexts/app';
 
 import getProducts from 'services/getProducts';
-import GetSubdomain from 'services/GetSubdomain';
 
 import ProductData from 'dtos/ProductData';
 
@@ -25,7 +24,7 @@ const CustomCart: React.FC = () => {
     async function fetchProducts() {
       const queryNutraceuticals = query.get('nutraceuticals')?.split(',') || [];
 
-      const products = await getProducts(queryNutraceuticals, GetSubdomain());
+      const products = await getProducts(queryNutraceuticals);
 
       setQueryProducts(
         products.filter(
