@@ -13,6 +13,8 @@ import createUserQuery from 'services/createUserQuery';
 
 import getValidationErrors from 'utils/getValidationErrors';
 
+import GetSubdomain from 'services/GetSubdomain';
+
 import getFoods from 'services/getFoods';
 import getProducts from 'services/getProducts';
 
@@ -118,10 +120,7 @@ const Wizard: React.FC = () => {
           abortEarly: false,
         });
 
-        const response = await createUserQuery(
-          requestData,
-          query.get('lang') || '',
-        );
+        const response = await createUserQuery(requestData, GetSubdomain());
 
         const { uuid, outcomes, suboutcomes, excludes, count } =
           response.content;
@@ -197,7 +196,7 @@ const Wizard: React.FC = () => {
         // Get and update products from Wordpress
         const updatedProducts = await getProducts(
           nutraceuticalsDosages,
-          query.get('lang') || '',
+          GetSubdomain(),
         );
 
         updateProducts(updatedProducts);

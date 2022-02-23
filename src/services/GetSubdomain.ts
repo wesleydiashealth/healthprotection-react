@@ -8,7 +8,7 @@ export default function GetSubdomain(): string {
     lastIndex = -1;
   }
 
-  const subdomain = parts.slice(0, lastIndex).join('.');
+  const subdomain = parts.slice(0, lastIndex).join('.').replace('.react', '');
 
-  return subdomain;
+  return subdomain || 'en';
 }

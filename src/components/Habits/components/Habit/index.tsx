@@ -1,5 +1,4 @@
 import React, { useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
 import ReactDOMServer from 'react-dom/server';
 import ReactToolTip from 'react-tooltip';
 import { HiQuestionMarkCircle } from 'react-icons/hi';
@@ -12,6 +11,7 @@ import FoodData from 'dtos/FoodData';
 import DiscountsData from 'dtos/DiscountsData';
 
 import getProducts from 'services/getProducts';
+import GetSubdomain from 'services/GetSubdomain';
 
 import Tooltip from '../Tooltip';
 
@@ -26,10 +26,6 @@ import Container, {
   Nutraceutical,
 } from './styles';
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 const Habit: React.FC<FoodData> = food => {
   const {
     slug,
@@ -41,8 +37,6 @@ const Habit: React.FC<FoodData> = food => {
     dosages,
     interactions,
   } = food;
-
-  const query = useQuery();
 
   const context = useApp();
   const {
@@ -179,7 +173,7 @@ const Habit: React.FC<FoodData> = food => {
       // Get and update products from Wordpress
       const updatedProducts = await getProducts(
         selectedNutraceuticalsDosages,
-        query.get('lang') || '',
+        GetSubdomain(),
       );
 
       updateProducts(updatedProducts);
@@ -187,7 +181,6 @@ const Habit: React.FC<FoodData> = food => {
       updateStep('step3', { ...currentStep, isLoading: false });
     },
     [
-      query,
       currentStep,
       nutraceuticals,
       food,

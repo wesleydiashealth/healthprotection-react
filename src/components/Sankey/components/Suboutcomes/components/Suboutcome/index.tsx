@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import ReactToolTip from 'react-tooltip';
 import Xarrow from 'react-xarrows';
 import { HiQuestionMarkCircle } from 'react-icons/hi';
@@ -10,6 +9,8 @@ import Loading from 'components/Loading';
 
 import { useApp } from 'contexts/app';
 import { useSankey } from 'contexts/sankey';
+
+import GetSubdomain from 'services/GetSubdomain';
 
 import getFoods from 'services/getFoods';
 import getProducts from 'services/getProducts';
@@ -36,10 +37,6 @@ interface SuboutcomeProps {
   };
 }
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 const Suboutcome: React.FC<SuboutcomeProps> = ({
   id,
   title,
@@ -47,8 +44,6 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
   description,
   nutraceuticals: suboutcomeNutraceuticals,
 }) => {
-  const query = useQuery();
-
   const appContext = useApp();
   const {
     labels,
@@ -180,7 +175,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       // Get and update products from Wordpress
       const updatedProducts = await getProducts(
         nutraceuticalsDosages,
-        query.get('lang') || '',
+        GetSubdomain(),
       );
 
       updateProducts(updatedProducts);
@@ -203,7 +198,6 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
       }
     },
     [
-      query,
       nextStep,
       nutraceuticals,
       connections,

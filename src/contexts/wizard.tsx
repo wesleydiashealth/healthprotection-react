@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { CarouselContext, CarouselStoreInterface } from 'pure-react-carousel';
 
 import wordpressApi from 'services/wordpress';
+import GetSubdomain from 'services/GetSubdomain';
+
 import QuestionData from 'dtos/QuestionData';
 import QuestionAnswersData from 'dtos/QuestionAnswersData';
 
@@ -32,14 +33,8 @@ interface WizardContextData {
 
 const WizardContext = createContext<WizardContextData>({} as WizardContextData);
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 export const WizardProvider: React.FC = ({ children }) => {
   const carouselContext: CarouselStoreInterface = useContext(CarouselContext);
-
-  const query = useQuery();
 
   const [steps, setSteps] = useState<StepsData>({
     step1: { index: 1, isCompleted: false, answers: [] },
@@ -74,7 +69,7 @@ export const WizardProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     wordpressApi
-      .get(`/wp-json/hp/v1/wizard/${query.get('lang')}`)
+      .get(`/wp-json/hp/v1/wizard/${GetSubdomain()}`)
       .then(response => {
         const { content, success, message } = response.data;
 

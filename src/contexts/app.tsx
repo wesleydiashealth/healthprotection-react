@@ -5,9 +5,10 @@ import React, {
   useEffect,
   useCallback,
 } from 'react';
-import { useLocation } from 'react-router-dom';
 
 import wordpressApi from 'services/wordpress';
+
+import GetSubdomain from 'services/GetSubdomain';
 
 import defaultLabels from 'labels.json';
 
@@ -92,13 +93,7 @@ interface AppContextData {
 
 const AppContext = createContext<AppContextData>({} as AppContextData);
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 export const AppProvider: React.FC = ({ children }) => {
-  const query = useQuery();
-
   const [labels, setLabels] = useState<LabelsData>(defaultLabels);
 
   const [steps, setSteps] = useState<StepsData>({
@@ -152,7 +147,7 @@ export const AppProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     wordpressApi
-      .get(`/wp-json/hp/v1/labels/${query.get('lang') || ''}`)
+      .get(`/wp-json/hp/v1/labels/${GetSubdomain()}`)
       .then(response => {
         const { content, success } = response.data;
 
@@ -170,7 +165,7 @@ export const AppProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     wordpressApi
-      .get(`/wp-json/hp/v1/nutraceuticals/${query.get('lang')}`)
+      .get(`/wp-json/hp/v1/nutraceuticals/${GetSubdomain()}`)
       .then(response => {
         const { content, success, message } = response.data;
 
