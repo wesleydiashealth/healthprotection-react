@@ -10,6 +10,7 @@ import Cart from 'components/Cart';
 import Habits from 'components/Habits';
 
 import { AppProvider } from 'contexts/app';
+import GetSubdomain from 'services/GetSubdomain';
 
 import Container from './styles';
 
@@ -26,6 +27,7 @@ const Home: React.FC = () => {
     <Container>
       <AppProvider>
         {/* <Hero /> */}
+        <p>Subdomain: {GetSubdomain()}</p>
         <Wizard />
         {isDesktopOrLaptop ? <Sankey /> : <SankeyMobile />}
         <Habits />
