@@ -11,6 +11,8 @@ import Habits from 'components/Habits';
 
 import { AppProvider } from 'contexts/app';
 
+import GetSubdomain from 'services/GetSubdomain';
+
 import Container from './styles';
 
 const Home: React.FC = () => {
@@ -22,9 +24,12 @@ const Home: React.FC = () => {
   // const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
   // const isRetina = useMediaQuery({ query: '(min-resolution: 2dppx)' });
 
+  const region = GetSubdomain();
+
   return (
     <Container>
       <AppProvider>
+        <p>{region || 'invalid'}</p>
         {/* <Hero /> */}
         <Wizard />
         {isDesktopOrLaptop ? <Sankey /> : <SankeyMobile />}
