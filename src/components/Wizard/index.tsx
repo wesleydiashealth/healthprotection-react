@@ -13,6 +13,8 @@ import createUserQuery from 'services/createUserQuery';
 
 import getValidationErrors from 'utils/getValidationErrors';
 
+import GetSubdomain from 'services/GetSubdomain';
+
 import getFoods from 'services/getFoods';
 import getProducts from 'services/getProducts';
 
@@ -84,6 +86,10 @@ const Wizard: React.FC = () => {
         data;
 
       updateStep('step2', { ...nextStep, isLoaded: false });
+
+      const region = GetSubdomain();
+
+      console.log(region);
 
       const requestData: RequestData[] = [
         { question: 'age', answer: age },
