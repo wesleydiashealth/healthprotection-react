@@ -9,6 +9,8 @@ const Carousel: React.FC = ({ children }) => {
   const context = useWizard();
   const { questions, error } = context;
 
+  console.log(questions);
+
   if (error) return <Error message={error} />;
 
   return Object.keys(questions).length > 1 ? (

@@ -68,7 +68,7 @@ export const WizardProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     wordpressApi
-      .get(`/wp-json/hp/v1/wizard}`)
+      .get(`/wp-json/hp/v1/wizard`)
       .then(response => {
         const { content, success, message } = response.data;
 
