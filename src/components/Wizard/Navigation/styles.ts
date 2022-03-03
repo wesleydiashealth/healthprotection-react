@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { transparentize } from 'polished';
 
-const StepContainer = styled.div`
+const Container = styled.div`
   margin-bottom: 20px;
   padding: 10px 0;
 
@@ -26,6 +26,15 @@ const StepContainer = styled.div`
     }
   }
 
+  .carousel__back-button,
+  .carousel__next-button {
+    font-size: 12px;
+
+    @media screen and (min-width: 768px) {
+      font-size: 14px;
+    }
+  }
+
   .carousel__back-button {
     svg {
       margin-right: 10px;
@@ -39,7 +48,7 @@ const StepContainer = styled.div`
   }
 
   .carousel__dot-group {
-    margin: 0 20px;
+    margin: 0 5px;
 
     display: flex;
 
@@ -51,8 +60,8 @@ const StepContainer = styled.div`
       margin: 0 5px;
       border: none;
 
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
 
       background: #c6c6c6;
@@ -87,4 +96,4 @@ const StepContainer = styled.div`
   }
 `;
 
-export default StepContainer;
+export default Container;

@@ -62,8 +62,6 @@ export const ContainerAlertTitle = styled(AlertTitle)`
 `;
 
 export const HabitsContainer = styled.div`
-  padding: 0 20px;
-
   max-width: 100vw;
   width: 100%;
 

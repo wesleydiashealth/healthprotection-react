@@ -6,44 +6,11 @@ interface NutraceuticalProps {
 }
 
 const Container = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 
   display: flex;
-  flex-flow: column;
+  flex-flow: column wrap;
   justify-content: center;
-
-  @media screen and (min-width: 768px) {
-    width: calc(50% - 20px);
-
-    flex-flow: row nowrap;
-
-    &:nth-child(odd) {
-      margin-right: 40px;
-    }
-  }
-`;
-
-export const Intro = styled.div`
-  text-align: center;
-
-  img {
-    max-width: 60px;
-    height: auto;
-  }
-
-  @media screen and (min-width: 768px) {
-    margin-right: 20px;
-
-    img {
-      max-width: 100px;
-    }
-  }
-`;
-
-export const Content = styled.div`
-  text-align: center;
-
-  flex: 1;
 
   .Dropdown-root {
     width: 360px;
@@ -73,18 +40,52 @@ export const Content = styled.div`
   }
 
   @media screen and (min-width: 768px) {
-    text-align: left;
+    margin-bottom: 80px;
+
+    width: calc(50% - 20px);
+
+    &:nth-child(odd) {
+      margin-right: 40px;
+    }
 
     .Dropdown-root {
+      margin-top: 10px;
+
+      width: 100%;
+
       font-size: 12px;
       line-height: 20px;
     }
   }
 `;
 
-export const Title = styled.h4`
-  margin-bottom: 10px;
+export const Row = styled.div`
+  display: flex;
+  align-items: flex-start;
 
+  @media screen and (min-width: 768px) {
+    align-items: center;
+
+    text-align: left;
+  }
+`;
+
+export const Image = styled.img`
+  margin-right: 10px;
+
+  max-width: 48px;
+  height: auto;
+
+  @media screen and (min-width: 768px) {
+    margin-right: 20px;
+
+    max-width: 100px;
+  }
+`;
+
+export const Column = styled.div``;
+
+export const Title = styled.h4`
   font-size: 16px;
   line-height: 24px;
 
@@ -98,17 +99,26 @@ export const Title = styled.h4`
 
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.11);
   }
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: 5px;
+  }
 `;
 
 export const Question = styled.span`
   display: block;
 
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 12px;
+  line-height: 20px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 14px;
+    line-height: 22px;
+  }
 `;
 
 export const Dosages = styled.span`
-  margin-bottom: 5px;
+  margin: 5px 0;
 
   display: block;
 

@@ -15,8 +15,9 @@ import getProducts from 'services/getProducts';
 import Tooltip from '../Tooltip';
 
 import Container, {
-  Intro,
-  Content,
+  Row,
+  Image,
+  Column,
   Title,
   Question,
   Dosages,
@@ -192,106 +193,106 @@ const Habit: React.FC<FoodData> = food => {
 
   return (
     <Container key={slug}>
-      <Intro>
-        <img src={icon} alt={title} title={title} />
-      </Intro>
-      <Content>
-        <Title>
-          {title}
-          <HiQuestionMarkCircle
-            className="tooltip-icon"
-            size={20}
-            color="#1bc9bd"
-            data-tip={ReactDOMServer.renderToStaticMarkup(
-              <Tooltip
-                {...{
-                  title,
-                  dosages,
-                  interactions,
-                }}
-              />,
-            )}
-            data-for="habit-title-tooltip"
-          />
-          <ReactToolTip
-            id="habit-title-tooltip"
-            className="habit-title-tooltip"
-            place="bottom"
-            type="light"
-            effect="solid"
-            offset={{ top: 10, left: 10 }}
-            html
-            backgroundColor="#fff"
-          />
-        </Title>
+      <Row>
+        <Image src={icon} alt={title} title={title} />
+        <Column>
+          <Title>
+            {title}
+            <HiQuestionMarkCircle
+              className="tooltip-icon"
+              size={20}
+              color="#1bc9bd"
+              data-tip={ReactDOMServer.renderToStaticMarkup(
+                <Tooltip
+                  {...{
+                    title,
+                    dosages,
+                    interactions,
+                  }}
+                />,
+              )}
+              data-for="habit-title-tooltip"
+            />
+            <ReactToolTip
+              id="habit-title-tooltip"
+              className="habit-title-tooltip"
+              place="bottom"
+              type="light"
+              effect="solid"
+              offset={{ top: 10, left: 10 }}
+              html
+              backgroundColor="#fff"
+            />
+          </Title>
 
-        <Question>
-          {habitQuestionLabel &&
-            unit.label &&
-            habitQuestionLabel
-              .replace('%s', unit.label)
-              .replace('%d', frequencyUnit.label)}
-        </Question>
-        <Dosages>{dosages}</Dosages>
-        <Nutraceuticals>
-          <NutraceuticalsLabel>
-            {labels.step_3_interactions}
-          </NutraceuticalsLabel>
+          <Question>
+            {habitQuestionLabel &&
+              unit.label &&
+              habitQuestionLabel
+                .replace('%s', unit.label)
+                .replace('%d', frequencyUnit.label)}
+          </Question>
+          <Dosages>{dosages}</Dosages>
+          <Nutraceuticals>
+            <NutraceuticalsLabel>
+              {labels.step_3_interactions}
+            </NutraceuticalsLabel>
 
-          {nutraceuticalsInteractions.map(nutraceuticalsInteraction => {
-            const interactionNutraceutical = nutraceuticals.find(
-              nutraceutical =>
-                nutraceutical.slug ===
-                nutraceuticalsInteraction.dietarySupplementSlug,
-            );
-
-            const maxDosage = interactionNutraceutical?.maxDosage || 0;
-
-            const interactionDiscount = Object.entries(discounts)
-              .filter(
-                ({ 0: nutraceutical }) =>
-                  nutraceutical ===
+            {nutraceuticalsInteractions.map(nutraceuticalsInteraction => {
+              const interactionNutraceutical = nutraceuticals.find(
+                nutraceutical =>
+                  nutraceutical.slug ===
                   nutraceuticalsInteraction.dietarySupplementSlug,
-              )
-              .reduce(
-                (acc, { 1: discount }) =>
-                  acc +
-                  discount.reduce(
-                    (subAcc, interaction) => subAcc + interaction.dosage,
-                    0,
-                  ),
-                0,
               );
 
-            const isReduced =
-              interactionDiscount >= maxDosage * 0.49 &&
-              interactionDiscount <= maxDosage * 0.74;
+              const maxDosage = interactionNutraceutical?.maxDosage || 0;
 
-            const isRemoved = interactionDiscount >= maxDosage * 0.75;
+              const interactionDiscount = Object.entries(discounts)
+                .filter(
+                  ({ 0: nutraceutical }) =>
+                    nutraceutical ===
+                    nutraceuticalsInteraction.dietarySupplementSlug,
+                )
+                .reduce(
+                  (acc, { 1: discount }) =>
+                    acc +
+                    discount.reduce(
+                      (subAcc, interaction) => subAcc + interaction.dosage,
+                      0,
+                    ),
+                  0,
+                );
 
-            return (
-              <Nutraceutical
-                isReduced={isReduced}
-                isRemoved={isRemoved}
-                key={nutraceuticalsInteraction.dietarySupplementSlug}
-              >
-                {nutraceuticalsInteraction.dietarySupplementTitle}
-              </Nutraceutical>
-            );
-          })}
-        </Nutraceuticals>
-        <Dropdown
-          options={intakeFrequency}
-          value={intakeFrequency[0]}
-          placeholder={labels.step_3_answer}
-          onChange={({ value: frequencyValue, label: frequencyLabel }) =>
-            handleHabitInput(food, {
-              value: frequencyValue,
-              label: frequencyLabel,
-            })
-          }
-        />
-      </Content>
+              const isReduced =
+                interactionDiscount >= maxDosage * 0.49 &&
+                interactionDiscount <= maxDosage * 0.74;
+
+              const isRemoved = interactionDiscount >= maxDosage * 0.75;
+
+              return (
+                <Nutraceutical
+                  isReduced={isReduced}
+                  isRemoved={isRemoved}
+                  key={nutraceuticalsInteraction.dietarySupplementSlug}
+                >
+                  {nutraceuticalsInteraction.dietarySupplementTitle}
+                </Nutraceutical>
+              );
+            })}
+          </Nutraceuticals>
+        </Column>
+      </Row>
+      <Dropdown
+        options={intakeFrequency}
+        value={intakeFrequency[0]}
+        placeholder={labels.step_3_answer}
+        onChange={({ value: frequencyValue, label: frequencyLabel }) =>
+          handleHabitInput(food, {
+            value: frequencyValue,
+            label: frequencyLabel,
+          })
+        }
+      />
     </Container>
   );
 };

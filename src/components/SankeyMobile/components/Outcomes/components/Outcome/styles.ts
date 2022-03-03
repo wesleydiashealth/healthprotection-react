@@ -25,7 +25,7 @@ const Container = styled(Accordion)<OutcomeProps>`
   }
 
   &:before {
-    background-color: transparent;
+    display: none;
   }
 
   @media screen and (min-width: 768px) {
@@ -41,7 +41,7 @@ export const Anchors = styled.div`
   position: absolute;
 
   top: calc(50% - 14px);
-  right: 5px;
+  right: 0px;
 
   &,
   & > div {

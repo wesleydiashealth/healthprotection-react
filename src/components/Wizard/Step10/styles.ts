@@ -3,7 +3,6 @@ import { transparentize } from 'polished';
 import { FiTarget } from 'react-icons/fi';
 
 import { ReactComponent as ChecklistSvg } from 'assets/check_list.svg';
-// import { ReactComponent as OutcomesSvg } from 'assets/jar.svg';
 import { ReactComponent as NutraceuticalsSvg } from 'assets/nutraceuticals.svg';
 
 interface ButtonProps {
@@ -19,7 +18,7 @@ const Container = styled.div`
 
   margin: 20px;
   border-radius: 20px;
-  padding: 24px;
+  padding: 24px 16px;
 
   width: 600px;
 
@@ -33,13 +32,27 @@ const Container = styled.div`
 export const ChecklistIcon = styled(ChecklistSvg)``;
 
 export const OutcomesIcon = styled(FiTarget)`
-  width: 48px;
+  width: 32px !important;
+  height: 32px !important;
+
+  @media screen and (min-width: 768px) {
+    width: 48px !important;
+    height: 48px !important;
+  }
 `;
 
-export const NutraceuticalsIcon = styled(NutraceuticalsSvg)``;
+export const NutraceuticalsIcon = styled(NutraceuticalsSvg)`
+  width: 32px !important;
+  height: 32px !important;
+
+  @media screen and (min-width: 768px) {
+    width: 48px !important;
+    height: 48px !important;
+  }
+`;
 
 export const Title = styled.h3`
-  margin: 20px 0;
+  margin: 10px 0;
 
   font-weight: 700;
   text-align: center;
@@ -48,6 +61,8 @@ export const Title = styled.h3`
   line-height: 22px;
 
   @media screen and (min-width: 768px) {
+    margin: 20px 0;
+
     font-size: 16px;
     line-height: 24px;
   }
@@ -95,20 +110,31 @@ export const InfoTitle = styled.h4`
   text-transform: uppercase;
   font-weight: 600;
 
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 10px;
+  line-height: 18px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 14px;
+    line-height: 22px;
+  }
 `;
 
 export const InfoDescription = styled.span`
   font-weight: 600;
 
-  font-size: 12px;
-  line-height: 20px;
+  font-size: 10px;
+  line-height: 18px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 12px;
+    line-height: 20px;
+  }
 `;
 
 export const Instruction = styled.div`
   &,
   p {
+    font-weight: 600;
     font-size: 12px;
     line-height: 20px;
   }
@@ -142,7 +168,7 @@ export const Buttons = styled.div`
 export const Button = styled.a<ButtonProps>`
   border: none;
   border-radius: 32px;
-  padding: 12px;
+  padding: 8px 16px;
 
   display: inline-block;
   box-sizing: border-box;
@@ -150,7 +176,7 @@ export const Button = styled.a<ButtonProps>`
   text-decoration: none;
   color: #fff;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1;
   background-color: #db71af;
 
@@ -161,7 +187,9 @@ export const Button = styled.a<ButtonProps>`
   }
 
   @media screen and (min-width: 768px) {
-    padding: 16px 24px;
+    padding: 12px 24px;
+
+    font-size: 14px;
   }
 
   ${props =>

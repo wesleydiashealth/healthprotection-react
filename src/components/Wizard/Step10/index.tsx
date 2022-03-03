@@ -76,7 +76,7 @@ const Step10: React.FC = () => {
               <Infos>
                 {count?.outcomes?.total && count?.outcomes?.filtered && (
                   <Info>
-                    <OutcomesIcon size={48} color="#565656" />
+                    <OutcomesIcon color="#565656" />
                     <InfoTitle>Health Goals</InfoTitle>
                     <InfoDescription>
                       {labels.step_1_info_text &&
