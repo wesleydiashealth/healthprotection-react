@@ -123,7 +123,7 @@ const Step2: React.FC = () => {
 
       updateStep('step2', {
         index: 2,
-        isCompleted: step.isCompleted,
+        isCompleted: true,
         isExcluded: subAnswer.api === 'exclude',
         excludeMessage: subAnswer?.exclude,
         answers: step.answers,

@@ -48,7 +48,7 @@ const Navigation: React.FC = () => {
               .length === parentSteps.length;
 
           return (
-            <div className="carousel__dot-group" {...props}>
+            <div className="carousel__dot-group">
               {parentSteps.map(({ 0: key }) => {
                 const index = parseInt(key.replace(/^\D+/g, ''), 10);
 

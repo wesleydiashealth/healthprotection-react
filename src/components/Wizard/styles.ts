@@ -1,16 +1,12 @@
 import styled, { css } from 'styled-components';
 import { transparentize } from 'polished';
 
-interface ContainerProps {
-  isActive?: boolean;
-}
-
 interface StepContainerProps {
   isCompleted?: boolean;
   isDisabled?: boolean;
 }
 
-const Container = styled.div<ContainerProps>`
+const Container = styled.div`
   margin: 0 auto;
   padding: 20px;
 
@@ -52,16 +48,6 @@ const Container = styled.div<ContainerProps>`
       padding-right: calc((100% - 400px) / 2);
     }
   }
-
-  ${props =>
-    !!props.isActive &&
-    css`
-      h3 {
-        strong {
-          color: #7664c8;
-        }
-      }
-    `}
 `;
 
 export const StepSubDescription = styled.span`

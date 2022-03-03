@@ -71,8 +71,8 @@ const Wizard: React.FC = () => {
     updateProducts,
   } = context;
 
-  const previousStep = { isCompleted: true };
   const { step1: currentStep, step2: nextStep } = steps;
+  const stepId = 'step_01';
 
   const handleSubmit = useCallback(
     async (data: HTMLFormElement) => {
@@ -237,9 +237,9 @@ const Wizard: React.FC = () => {
   );
 
   return (
-    <Container id="step_1" isActive={!!previousStep.isCompleted}>
+    <Container id={stepId}>
       <StepIntro
-        id="step_1"
+        id={stepId}
         title={labels?.step_1_title}
         subtitle={labels?.step_1_description}
         description={labels?.step_1_tooltip}
@@ -247,56 +247,54 @@ const Wizard: React.FC = () => {
         color="#7664C8"
         isActive
       />
-      {previousStep.isCompleted && (
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <CarouselProvider
-            naturalSlideWidth={400}
-            naturalSlideHeight={600}
-            totalSlides={7}
-            visibleSlides={1}
-            step={1}
-            dragEnabled={false}
-          >
-            <WizardProvider>
-              <Carousel>
-                <Navigation />
-                <Slider>
-                  <Slide index={1}>
-                    <Step1 />
-                  </Slide>
-                  <Slide index={2}>
-                    <Step2 />
-                  </Slide>
-                  <Slide index={3}>
-                    <Step3 />
-                  </Slide>
-                  <Slide index={4}>
-                    <Step4 />
-                  </Slide>
-                  <Slide index={5}>
-                    <Step5 />
-                  </Slide>
-                  {/* <Slide index={6}>
+      <Form ref={formRef} onSubmit={handleSubmit}>
+        <CarouselProvider
+          naturalSlideWidth={400}
+          naturalSlideHeight={600}
+          totalSlides={7}
+          visibleSlides={1}
+          step={1}
+          dragEnabled={false}
+        >
+          <WizardProvider>
+            <Carousel>
+              <Navigation />
+              <Slider>
+                <Slide index={1}>
+                  <Step1 />
+                </Slide>
+                <Slide index={2}>
+                  <Step2 />
+                </Slide>
+                <Slide index={3}>
+                  <Step3 />
+                </Slide>
+                <Slide index={4}>
+                  <Step4 />
+                </Slide>
+                <Slide index={5}>
+                  <Step5 />
+                </Slide>
+                {/* <Slide index={6}>
                     <Step6 />
                   </Slide> */}
-                  <Slide index={6}>
-                    <Step7 />
-                  </Slide>
-                  {/* <Slide index={8}>
+                <Slide index={6}>
+                  <Step7 />
+                </Slide>
+                {/* <Slide index={8}>
                     <Step8 />
                   </Slide> */}
-                  {/* <Slide index={7}>
+                {/* <Slide index={7}>
                     <Step9 />
                   </Slide> */}
-                  <Slide index={8}>
-                    <Step10 />
-                  </Slide>
-                </Slider>
-              </Carousel>
-            </WizardProvider>
-          </CarouselProvider>
-        </Form>
-      )}
+                <Slide index={8}>
+                  <Step10 />
+                </Slide>
+              </Slider>
+            </Carousel>
+          </WizardProvider>
+        </CarouselProvider>
+      </Form>
     </Container>
   );
 };
