@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Container = styled.div`
   > div {
     & ~ div {
-      margin-top: 80px;
+      margin-top: 20px;
     }
   }
 
@@ -22,6 +22,12 @@ const Container = styled.div`
   }
 
   @media screen and (min-width: 768px) {
+    > div {
+      & ~ div {
+        margin-top: 80px;
+      }
+    }
+
     .react-tabs {
       &__tab {
         padding: 6px 12px;

@@ -49,7 +49,11 @@ export const ImageContainer = styled.div`
 
 export const Image = styled.img`
   width: auto;
-  height: 120px;
+  height: 80px;
+
+  @media screen and (min-width: 768px) {
+    height: 120px;
+  }
 `;
 
 export const Content = styled.div`
@@ -110,14 +114,12 @@ export const Info = styled.div`
     border-radius: 20px;
     padding: 2px 10px;
 
-    white-space: nowrap;
-
     background: #f5f5f5;
     color: #565656;
     text-decoration: none;
     font-weight: 600;
     font-size: 11px;
-    line-height: 22px;
+    line-height: 1.2;
   }
 
   > div {
@@ -272,23 +274,23 @@ export const ProductActions = styled.div`
 
 export const PriceGroup = styled.div`
   display: flex;
-  flex-flow: column wrap;
+
   align-items: center;
   text-align: center;
+
+  @media screen and (min-width: 768px) {
+    flex-flow: column wrap;
+  }
 `;
 
 export const Price = styled.div`
-  margin-bottom: 10px;
+  margin-right: 20px;
 
   min-width: 80px;
 
   span {
     font-size: 12px;
     line-height: 20px;
-  }
-
-  @media screen and (min-width: 768px) {
-    margin-right: 20px;
   }
 `;
 

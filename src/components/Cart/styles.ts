@@ -75,12 +75,18 @@ export const CheckoutProducts = styled.div`
     margin-bottom: 20px;
 
     font-weight: 600;
+    font-size: 14px;
+    line-height: 1;
 
     color: #ec903f;
   }
 
   @media screen and (min-width: 1400px) {
     margin-right: 40px;
+
+    > h4 {
+      font-size: 16px;
+    }
   }
 `;
 
