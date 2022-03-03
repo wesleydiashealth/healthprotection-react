@@ -1,6 +1,5 @@
 import React, { useCallback, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { HiQuestionMarkCircle, HiLockClosed } from 'react-icons/hi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
@@ -16,13 +15,10 @@ import getValidationErrors from 'utils/getValidationErrors';
 import getFoods from 'services/getFoods';
 import getProducts from 'services/getProducts';
 
+import StepIntro from 'components/StepIntro';
+
 import { WizardProvider } from 'contexts/wizard';
-import Container, {
-  StepIntro,
-  StepTooltip,
-  StepTitle,
-  StepDescription,
-} from './styles';
+import Container from './styles';
 import 'react-multi-carousel/lib/styles.css';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
@@ -242,37 +238,15 @@ const Wizard: React.FC = () => {
 
   return (
     <Container id="step_1" isActive={!!previousStep.isCompleted}>
-      <StepIntro>
-        <IoChatbubblesOutline
-          size={52}
-          color={previousStep.isCompleted ? '#7664C8' : '#565656'}
-        />
-        <StepTitle>
-          {!previousStep.isCompleted && <HiLockClosed size={20} />}
-          {labels?.step_1_title}
-          <HiQuestionMarkCircle
-            size={20}
-            color={previousStep.isCompleted ? '#7664C8' : '#565656'}
-            data-tip={`<strong>${labels?.step_1_title}</strong><span>${labels?.step_1_tooltip}</span>`}
-            data-for="wizard-title-tooltip"
-          />
-          <StepTooltip
-            id="wizard-title-tooltip"
-            place="bottom"
-            type="light"
-            effect="solid"
-            offset={{ top: 10, left: 10 }}
-            html
-            backgroundColor="#fff"
-          />
-        </StepTitle>
-        <StepDescription>
-          <strong>{labels?.step_1_description.split(' ')[0]}</strong>{' '}
-          {labels.step_1_description.substr(
-            labels.step_1_description.indexOf(' ') + 1,
-          )}
-        </StepDescription>
-      </StepIntro>
+      <StepIntro
+        id="step_1"
+        title={labels?.step_1_title}
+        subtitle={labels?.step_1_description}
+        description={labels?.step_1_tooltip}
+        icon={IoChatbubblesOutline}
+        color="#7664C8"
+        isActive
+      />
       {previousStep.isCompleted && (
         <Form ref={formRef} onSubmit={handleSubmit}>
           <CarouselProvider

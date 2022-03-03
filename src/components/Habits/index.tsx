@@ -1,21 +1,18 @@
 import React from 'react';
-import { HiQuestionMarkCircle, HiLockClosed } from 'react-icons/hi';
 import { GiForkKnifeSpoon } from 'react-icons/gi';
 import 'react-dropdown/style.css';
 import ReactHtmlParser from 'react-html-parser';
 
 import { useApp } from 'contexts/app';
+
 import Loading from 'components/Loading';
+import StepIntro from 'components/StepIntro';
 
 import BuildNutraceuticalsString from 'services/BuildNutraceuticalsString';
 
 import Habit from './components/Habit';
 
 import Container, {
-  StepIntro,
-  StepTitle,
-  StepTooltip,
-  StepDescription,
   HabitsContainer,
   ReducedHabits,
   RemovedHabits,
@@ -124,47 +121,16 @@ const Habits: React.FC = () => {
 
   return (
     <Container id="step_3" isActive={isActive}>
-      <StepIntro>
-        <GiForkKnifeSpoon size={52} color={isActive ? '#1bc9bd' : '#565656'} />
-        <StepTitle>
-          {!isActive && <HiLockClosed size={20} />}
-          {labels.step_3_title}
-          <HiQuestionMarkCircle
-            className="tooltip-icon"
-            size={20}
-            color={isActive ? '#1bc9bd' : '#565656'}
-            data-tip={`<strong>${labels.step_3_title}</strong><span>${labels.step_3_tooltip}</span>`}
-            data-for="habits-title-tooltip"
-          />
-          <StepTooltip
-            id="habits-title-tooltip"
-            className="habits-title-tooltip"
-            place="bottom"
-            type="light"
-            effect="solid"
-            offset={{ top: 10, left: 10 }}
-            html
-            backgroundColor="#fff"
-          />
-        </StepTitle>
+      <StepIntro
+        id="step_3"
+        title={labels?.step_3_title}
+        subtitle={labels?.step_3_description}
+        description={labels?.step_3_tooltip}
+        icon={GiForkKnifeSpoon}
+        color="#1bc9bd"
+        isActive={isActive}
+      />
 
-        {!isActive && (
-          <div className="step-disabled">
-            <strong>{labels.step_3_disabled.split('.')[0]}</strong>.
-            {labels.step_3_disabled.substr(
-              labels.step_3_disabled.indexOf('.') + 1,
-            )}
-          </div>
-        )}
-        {labels.step_3_description && (
-          <StepDescription>
-            <strong>{labels.step_3_description.split(' ')[0]}</strong>{' '}
-            {labels.step_3_description.substr(
-              labels.step_3_description.indexOf(' ') + 1,
-            )}
-          </StepDescription>
-        )}
-      </StepIntro>
       {/* <ContainerAlert severity="info">
         <ContainerAlertTitle>
           {labels.step_3_notification_title}
