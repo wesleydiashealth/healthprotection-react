@@ -120,27 +120,50 @@ const Wizard: React.FC = () => {
           response.content;
 
         const queryOutcome = query.get('outcome');
+        const queryExclude = query.get('exclude');
 
-        const filteredOutcomes = queryOutcome
-          ? outcomes
-              .filter(
-                outcome =>
-                  outcome.id === queryOutcome ||
-                  outcome.suboutcomes.includes(queryOutcome),
-              )
-              .map(outcome => {
-                return {
-                  ...outcome,
-                  suboutcomes: outcome.suboutcomes.filter(
-                    suboutcome => suboutcome === queryOutcome,
-                  ),
-                };
-              })
+        const isOutcome = !!outcomes.find(
+          outcome => outcome.id === queryOutcome,
+        );
+
+        let filteredOutcomes = queryOutcome
+          ? outcomes.filter(
+              outcome =>
+                outcome.id === queryOutcome ||
+                outcome.suboutcomes.includes(queryOutcome),
+            )
           : outcomes;
 
-        const filteredSuboutcomes = queryOutcome
-          ? suboutcomes.filter(suboutcome => suboutcome.id === queryOutcome)
-          : suboutcomes;
+        if (!isOutcome) {
+          filteredOutcomes = filteredOutcomes.map(outcome => {
+            return {
+              ...outcome,
+              suboutcomes: outcome.suboutcomes.filter(
+                suboutcome => suboutcome === queryOutcome,
+              ),
+            };
+          });
+        }
+
+        let filteredSuboutcomes =
+          queryOutcome && !isOutcome
+            ? suboutcomes.filter(suboutcome => suboutcome.id === queryOutcome)
+            : suboutcomes;
+
+        if (queryExclude) {
+          filteredOutcomes = filteredOutcomes.map(outcome => {
+            return {
+              ...outcome,
+              suboutcomes: outcome.suboutcomes.filter(
+                suboutcome => suboutcome !== queryExclude,
+              ),
+            };
+          });
+
+          filteredSuboutcomes = filteredSuboutcomes.filter(
+            suboutcome => suboutcome.id !== queryExclude,
+          );
+        }
 
         updateStep('step2', { ...nextStep, isLoaded: true });
 
