@@ -134,7 +134,7 @@ const Wizard: React.FC = () => {
             )
           : outcomes;
 
-        if (!isOutcome) {
+        if (queryOutcome && !isOutcome) {
           filteredOutcomes = filteredOutcomes.map(outcome => {
             return {
               ...outcome,
