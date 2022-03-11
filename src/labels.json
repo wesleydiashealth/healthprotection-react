@@ -16,7 +16,7 @@
   "step_2_tooltip": "We have already preselected the results that are available for you to choose from. Adjust the areas of health in which you want to improve by setting the desired intensity.",
   "step_3_title": "Step 3",
   "step_3_disabled": "Step Blocked. Finish Step 2 to proceed.",
-  "step_3_description": "Fine-tune by adjusting your food habits",
+  "step_3_description": "Fine-tune your dosages by adjusting your food habits",
   "step_3_tooltip": "Select the frequency of consumption in each food, this will help us calibrate the dosages with your average consumption. ",
   "step_3_notification_title": "Download our App",
   "step_3_notification_description": "Help us to train our app for food recognition with artificial intelligence",

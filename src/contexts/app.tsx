@@ -92,7 +92,7 @@ interface AppContextData {
 const AppContext = createContext<AppContextData>({} as AppContextData);
 
 export const AppProvider: React.FC = ({ children }) => {
-  const [labels, setLabels] = useState<LabelsData>(defaultLabels);
+  const [labels] = useState<LabelsData>(defaultLabels);
 
   const [steps, setSteps] = useState<StepsData>({
     step1: { isCompleted: false },
@@ -142,24 +142,6 @@ export const AppProvider: React.FC = ({ children }) => {
   const [selectedProducts, setSelectedProducts] = useState<ProductData[]>([]);
 
   const [discounts, setDiscounts] = useState<DiscountsData>({});
-
-  useEffect(() => {
-    wordpressApi
-      .get(`/wp-json/hp/v1/labels/`)
-      .then(response => {
-        const { content, success } = response.data;
-
-        if (success) {
-          setLabels(content);
-        }
-      })
-      .catch(err => {
-        if (err instanceof Error) {
-          setError(err.message);
-        }
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     wordpressApi
