@@ -1,5 +1,4 @@
 import React, { useCallback, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
@@ -7,6 +6,8 @@ import * as Yup from 'yup';
 import { IoChatbubblesOutline } from 'react-icons/io5';
 
 import { useApp } from 'contexts/app';
+
+import useQuery from 'services/useQuery';
 
 import createUserQuery from 'services/createUserQuery';
 
@@ -41,11 +42,6 @@ interface RequestData {
   question: string;
   answer: string;
 }
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 const Wizard: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
