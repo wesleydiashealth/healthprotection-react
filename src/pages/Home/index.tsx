@@ -30,8 +30,7 @@ const Home: React.FC = () => {
   // const isRetina = useMediaQuery({ query: '(min-resolution: 2dppx)' });
 
   useEffect(() => {
-    TagManager.initialize({
-      gtmId: 'GTM-PPMT6FP',
+    TagManager.dataLayer({
       dataLayer: { project },
     });
   }, [project]);
