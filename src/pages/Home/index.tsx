@@ -19,7 +19,9 @@ import Container from './styles';
 const Home: React.FC = () => {
   const query = useQuery();
 
-  const project = query.get('project')?.replace(/[^a-zA-Z]/g, '') || 'default';
+  const project = query.get('project')?.replace(/[^a-zA-Z-]/g, '') || 'default';
+
+  console.log(project);
 
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 1224px)',
