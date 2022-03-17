@@ -43,6 +43,7 @@
     "react-select": "^5.0.0",
     "react-tabs": "^3.2.3",
     "react-tooltip": "^4.2.21",
+    "react-visibility-sensor": "^5.1.1",
     "react-xarrows": "^1.7.0",
     "reactjs-popup": "^2.0.5",
     "regexify-string": "^1.0.16",

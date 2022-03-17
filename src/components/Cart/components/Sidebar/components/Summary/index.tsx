@@ -1,6 +1,7 @@
 import React from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import { hotjar } from 'react-hotjar';
+import TagManager from 'react-gtm-module';
 
 import { useApp } from 'contexts/app';
 
@@ -107,6 +108,12 @@ const Summary: React.FC<SummaryProps> = ({ isCustom }) => {
         className="buy-button"
         onClick={() => {
           hotjar.event('buy-button');
+
+          TagManager.dataLayer({
+            dataLayer: {
+              event: 'goToCheckout',
+            },
+          });
         }}
         isActive={isActive}
       >

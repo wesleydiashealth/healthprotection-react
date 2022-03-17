@@ -3,6 +3,7 @@ import ReactDOMServer from 'react-dom/server';
 import ReactToolTip from 'react-tooltip';
 import { HiQuestionMarkCircle } from 'react-icons/hi';
 import Dropdown from 'react-dropdown';
+import TagManager from 'react-gtm-module';
 
 import { useApp } from 'contexts/app';
 
@@ -286,12 +287,20 @@ const Habit: React.FC<FoodData> = food => {
         options={intakeFrequency}
         value={intakeFrequency[0]}
         placeholder={labels.step_3_answer}
-        onChange={({ value: frequencyValue, label: frequencyLabel }) =>
+        onChange={({ value: frequencyValue, label: frequencyLabel }) => {
           handleHabitInput(food, {
             value: frequencyValue,
             label: frequencyLabel,
-          })
-        }
+          });
+
+          TagManager.dataLayer({
+            dataLayer: {
+              event: 'habitChanged',
+              habitFood: food.title,
+              habitFrequency: frequencyLabel,
+            },
+          });
+        }}
       />
     </Container>
   );

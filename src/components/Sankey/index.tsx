@@ -1,6 +1,8 @@
 import React from 'react';
 import 'reactjs-popup/dist/index.css';
 import { IoOptionsOutline } from 'react-icons/io5';
+import TagManager from 'react-gtm-module';
+import VisibilitySensor from 'react-visibility-sensor';
 
 import { useApp } from 'contexts/app';
 import { SankeyProvider } from 'contexts/sankey';
@@ -36,45 +38,63 @@ const Sankey: React.FC<SankeyProps> = ({
 
   return (
     <Container id="step_2" isActive={previousStep.isCompleted}>
-      <StepIntro
-        id="step_2"
-        title={labels?.step_2_title}
-        subtitle={labels?.step_2_description}
-        description={labels?.step_2_tooltip}
-        icon={IoOptionsOutline}
-        color="#DB71AF"
-        isActive={previousStep.isCompleted}
-      />
-      {previousStep.isCompleted && (
-        <SankeyProvider>
-          {isReady ? (
-            <StepContent>
-              {outcomes.length ? (
-                <>
-                  <Outcomes
-                    {...showTooltips}
-                    selectedOutcomes={Object.keys(connections || {})}
-                  />
-                  <Suboutcomes
-                    {...{ showTooltips, showFineTune }}
-                    selectedSuboutcomes={Object.values(
-                      connections || {},
-                    ).reduce(
-                      (acc: string[], curr) => [...acc, ...Object.keys(curr)],
-                      [],
-                    )}
-                  />
-                  <Nutraceuticals />
-                </>
+      <VisibilitySensor
+        active={!!isReady}
+        onChange={isVisible => {
+          if (isVisible) {
+            TagManager.dataLayer({
+              dataLayer: {
+                event: 'step2Viewed',
+              },
+            });
+          }
+        }}
+      >
+        <>
+          <StepIntro
+            id="step_2"
+            title={labels?.step_2_title}
+            subtitle={labels?.step_2_description}
+            description={labels?.step_2_tooltip}
+            icon={IoOptionsOutline}
+            color="#DB71AF"
+            isActive={previousStep.isCompleted}
+          />
+          {previousStep.isCompleted && (
+            <SankeyProvider>
+              {isReady ? (
+                <StepContent>
+                  {outcomes.length ? (
+                    <>
+                      <Outcomes
+                        {...showTooltips}
+                        selectedOutcomes={Object.keys(connections || {})}
+                      />
+                      <Suboutcomes
+                        {...{ showTooltips, showFineTune }}
+                        selectedSuboutcomes={Object.values(
+                          connections || {},
+                        ).reduce(
+                          (acc: string[], curr) => [
+                            ...acc,
+                            ...Object.keys(curr),
+                          ],
+                          [],
+                        )}
+                      />
+                      <Nutraceuticals />
+                    </>
+                  ) : (
+                    <Loading color="#db71af" />
+                  )}
+                </StepContent>
               ) : (
                 <Loading color="#db71af" />
               )}
-            </StepContent>
-          ) : (
-            <Loading color="#db71af" />
+            </SankeyProvider>
           )}
-        </SankeyProvider>
-      )}
+        </>
+      </VisibilitySensor>
     </Container>
   );
 };
