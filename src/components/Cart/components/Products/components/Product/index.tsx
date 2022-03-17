@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import { FaMinus, FaPlus } from 'react-icons/fa';
+import TagManager from 'react-gtm-module';
 
 import { useApp } from 'contexts/app';
 
@@ -193,7 +194,17 @@ const Product: React.FC<ProductData> = ({
               >{`${interaction.capsuleDosage} ${interaction.capsuleDosageUnit} (${capsules} capsules)`}</ContentDosage>
             ))}
           {!!rating && starRating && (
-            <Rating>
+            <Rating
+              onClick={() => {
+                TagManager.dataLayer({
+                  dataLayer: {
+                    event: 'starRatingClicked',
+                    supplement: productDietarySupplement?.title,
+                    asin,
+                  },
+                });
+              }}
+            >
               <span>{rating}</span>
               {ReactHtmlParser(starRating)}
             </Rating>
