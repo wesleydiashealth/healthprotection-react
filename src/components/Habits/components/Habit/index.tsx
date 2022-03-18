@@ -4,6 +4,7 @@ import ReactToolTip from 'react-tooltip';
 import { HiQuestionMarkCircle } from 'react-icons/hi';
 import Dropdown from 'react-dropdown';
 import TagManager from 'react-gtm-module';
+import { hotjar } from 'react-hotjar';
 
 import { useApp } from 'contexts/app';
 
@@ -292,6 +293,8 @@ const Habit: React.FC<FoodData> = food => {
             value: frequencyValue,
             label: frequencyLabel,
           });
+
+          hotjar.event('fine-tune-step-3');
 
           TagManager.dataLayer({
             dataLayer: {

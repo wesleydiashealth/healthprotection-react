@@ -3,6 +3,7 @@ import 'reactjs-popup/dist/index.css';
 import { IoOptionsOutline } from 'react-icons/io5';
 import TagManager from 'react-gtm-module';
 import VisibilitySensor from 'react-visibility-sensor';
+import { hotjar } from 'react-hotjar';
 
 import { useApp } from 'contexts/app';
 import { SankeyProvider } from 'contexts/sankey';
@@ -42,6 +43,8 @@ const Sankey: React.FC<SankeyProps> = ({
         active={!!isReady}
         onChange={isVisible => {
           if (isVisible) {
+            hotjar.event('go-to-step-2');
+
             TagManager.dataLayer({
               dataLayer: {
                 event: 'step2Viewed',

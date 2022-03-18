@@ -4,6 +4,7 @@ import { HiOutlineCheckCircle } from 'react-icons/hi';
 import { CarouselContext } from 'pure-react-carousel';
 import Select from 'react-select';
 import TagManager from 'react-gtm-module';
+import { hotjar } from 'react-hotjar';
 
 import { useApp } from 'contexts/app';
 import { useWizard } from 'contexts/wizard';
@@ -183,6 +184,9 @@ const Step1: React.FC = () => {
         placeholder={labels.step_1_birth_month}
         onChange={event => {
           handleMonthInput(event?.value);
+
+          hotjar.event('begin');
+
           TagManager.dataLayer({
             dataLayer: {
               event: 'selectedBirthMonth',

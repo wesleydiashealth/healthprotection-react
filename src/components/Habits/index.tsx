@@ -4,6 +4,7 @@ import 'react-dropdown/style.css';
 import ReactHtmlParser from 'react-html-parser';
 import TagManager from 'react-gtm-module';
 import VisibilitySensor from 'react-visibility-sensor';
+import { hotjar } from 'react-hotjar';
 
 import { useApp } from 'contexts/app';
 
@@ -127,6 +128,8 @@ const Habits: React.FC = () => {
         active={!!isReady && !!isActive}
         onChange={isVisible => {
           if (isVisible) {
+            hotjar.event('scroll-step-3');
+
             TagManager.dataLayer({
               dataLayer: {
                 event: 'step3Viewed',

@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import Xarrow from 'react-xarrows';
 import { transparentize } from 'polished';
 import TagManager from 'react-gtm-module';
+import { hotjar } from 'react-hotjar';
 
 import { useApp } from 'contexts/app';
 import { useSankey } from 'contexts/sankey';
@@ -182,6 +183,8 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
             handleFineTuneClick([], id);
             setFineTune({ ...fineTune, [id]: 'off' });
 
+            hotjar.event('sankey-fine-tune');
+
             TagManager.dataLayer({
               dataLayer: {
                 event: 'fineTuneClick',
@@ -204,6 +207,8 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
               if (value.length) {
                 handleFineTuneClick(value, id);
                 setFineTune({ ...fineTune, [id]: key });
+
+                hotjar.event('sankey-fine-tune');
 
                 TagManager.dataLayer({
                   dataLayer: {

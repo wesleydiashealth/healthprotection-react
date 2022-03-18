@@ -5,6 +5,7 @@ import { HiQuestionMarkCircle, HiLockClosed } from 'react-icons/hi';
 import { IoOptionsOutline } from 'react-icons/io5';
 import TagManager from 'react-gtm-module';
 import VisibilitySensor from 'react-visibility-sensor';
+import { hotjar } from 'react-hotjar';
 
 import Loading from 'components/Loading';
 import Outcomes from './components/Outcomes';
@@ -33,6 +34,8 @@ const Sankey: React.FC = () => {
         active={!!isReady}
         onChange={isVisible => {
           if (isVisible) {
+            hotjar.event('go-to-step-2');
+
             TagManager.dataLayer({
               dataLayer: {
                 event: 'step2Viewed',

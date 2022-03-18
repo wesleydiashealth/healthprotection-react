@@ -4,6 +4,7 @@ import Xarrow from 'react-xarrows';
 import { HiQuestionMarkCircle } from 'react-icons/hi';
 import { transparentize } from 'polished';
 import TagManager from 'react-gtm-module';
+import { hotjar } from 'react-hotjar';
 
 import Loading from 'components/Loading';
 
@@ -279,6 +280,8 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
             handleFineTuneClick([], id);
             updateFineTune({ ...fineTune, [id]: 'off' });
 
+            hotjar.event('sankey-fine-tune');
+
             TagManager.dataLayer({
               dataLayer: {
                 event: 'fineTuneClick',
@@ -305,6 +308,8 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
                     if (value.length) {
                       handleFineTuneClick(value, id);
                       updateFineTune({ ...fineTune, [id]: key });
+
+                      hotjar.event('sankey-fine-tune');
 
                       TagManager.dataLayer({
                         dataLayer: {

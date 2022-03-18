@@ -6,6 +6,7 @@ import { CarouselContext } from 'pure-react-carousel';
 import { FormHandles } from '@unform/core';
 import ReactHtmlParser from 'react-html-parser';
 import TagManager from 'react-gtm-module';
+import { hotjar } from 'react-hotjar';
 
 import Loading from 'components/Loading';
 
@@ -162,6 +163,8 @@ const Step10: React.FC = () => {
             className="step-1-completed"
             onClick={() => {
               formRef.current?.submitForm();
+
+              hotjar.event('go-to-step-2');
 
               TagManager.dataLayer({
                 dataLayer: {
