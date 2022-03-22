@@ -35,15 +35,20 @@ const Sankey: React.FC<SankeyProps> = ({
   const { labels, steps, outcomes } = context;
   const { step1: previousStep, step2: currentStep } = steps;
 
-  const isReady = currentStep.isLoaded && !previousStep.isLoading;
+  const isActive = previousStep.isCompleted || !!connections;
+
+  const isReady =
+    (currentStep.isLoaded && !previousStep.isLoading) || !!connections;
 
   return (
-    <Container id="step_2" isActive={previousStep.isCompleted}>
+    <Container id="step_2" isActive={isActive}>
       <VisibilitySensor
         active={!!isReady}
         onChange={isVisible => {
           if (isVisible) {
-            hotjar.event('go-to-step-2');
+            if (!connections) {
+              hotjar.event('go-to-step-2');
+            }
 
             TagManager.dataLayer({
               dataLayer: {
@@ -61,9 +66,9 @@ const Sankey: React.FC<SankeyProps> = ({
             description={labels?.step_2_tooltip}
             icon={IoOptionsOutline}
             color="#DB71AF"
-            isActive={previousStep.isCompleted}
+            isActive={isActive}
           />
-          {previousStep.isCompleted && (
+          {isActive && (
             <SankeyProvider>
               {isReady ? (
                 <StepContent>

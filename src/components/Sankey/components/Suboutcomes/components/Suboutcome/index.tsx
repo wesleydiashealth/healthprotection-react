@@ -196,9 +196,9 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
     [
       nextStep,
       nutraceuticals,
-      connections,
       userQuery,
       currentStep,
+      connections,
       updateSelectedNutraceuticals,
       updateFoods,
       updateError,

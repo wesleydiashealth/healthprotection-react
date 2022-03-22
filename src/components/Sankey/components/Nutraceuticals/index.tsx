@@ -3,6 +3,9 @@ import regexifyString from 'regexify-string';
 
 import { useApp } from 'contexts/app';
 
+import connections from 'connections-v2.json';
+import nutraceuticals from 'nutraceuticals-v2.json';
+
 import { ReactComponent as NutritionInfoIcon } from 'assets/nutrition_info.svg';
 import Nutraceutical from './components/Nutraceutical';
 
@@ -10,8 +13,7 @@ import Container, { ContainerLabel } from './styles';
 
 const Nutraceuticals: React.FC = () => {
   const appContext = useApp();
-  const { labels, connections, nutraceuticals, selectedNutraceuticals } =
-    appContext;
+  const { labels, selectedNutraceuticals } = appContext;
 
   const nutraceuticalsLabel = regexifyString({
     pattern: /%s/,

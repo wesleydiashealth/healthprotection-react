@@ -4,7 +4,9 @@ import Xarrow from 'react-xarrows';
 import { HiQuestionMarkCircle } from 'react-icons/hi';
 import { transparentize } from 'polished';
 
-import { useApp } from 'contexts/app';
+import connections from 'connections-v2.json';
+
+// import { useApp } from 'contexts/app';
 
 import OutcomeData from 'dtos/OutcomeData';
 
@@ -23,8 +25,8 @@ const Outcome: React.FC<OutcomeData> = ({
   description,
   icon,
 }) => {
-  const context = useApp();
-  const { connections } = context;
+  // const context = useApp();
+  // const { connections } = context;
 
   const [subConnections, setSubConnections] = useState<string[]>([]);
 
@@ -51,7 +53,7 @@ const Outcome: React.FC<OutcomeData> = ({
       }, []);
 
     setSubConnections(updatedSubConnections);
-  }, [id, connections]);
+  }, [id]);
 
   const subConnectionsActive = Object.entries(connections)
     .filter(({ 0: connection }) => connection === id)

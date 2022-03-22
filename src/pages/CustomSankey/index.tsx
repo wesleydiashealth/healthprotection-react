@@ -1,23 +1,16 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 
-import Wizard from 'components/Wizard';
 import Sankey from 'components/Sankey';
 import SankeyMobile from 'components/SankeyMobile';
-import Habits from 'components/Habits';
-import Cart from 'components/Cart';
 
-import { AppProvider } from 'contexts/app';
+import { AppProvider, useApp } from 'contexts/app';
 
 import Container from './styles';
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 const CustomSankey: React.FC = () => {
-  const query = useQuery();
+  const appContext = useApp();
+  const { connections } = appContext;
 
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 1224px)',
@@ -26,13 +19,10 @@ const CustomSankey: React.FC = () => {
   return (
     <Container>
       <AppProvider>
-        {query.get('outcome') && <Wizard />}
-        {isDesktopOrLaptop ? <Sankey /> : <SankeyMobile />}
-        {query.get('outcome') && (
-          <>
-            <Habits />
-            <Cart />
-          </>
+        {isDesktopOrLaptop ? (
+          <Sankey connections={connections} />
+        ) : (
+          <SankeyMobile />
         )}
       </AppProvider>
     </Container>

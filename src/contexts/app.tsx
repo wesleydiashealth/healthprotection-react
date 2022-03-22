@@ -8,6 +8,10 @@ import React, {
 
 import wordpressApi from 'services/wordpress';
 
+import defaultConnections from 'connections-v2.json';
+import defaultOutcomes from 'outcomes-v2.json';
+import defaultSuboutcomes from 'suboutcomes-v2.json';
+
 import defaultLabels from 'labels.json';
 
 import ConnectionsData from 'dtos/ConnectionsData';
@@ -111,8 +115,9 @@ export const AppProvider: React.FC = ({ children }) => {
 
   const [userQuery, setUserQuery] = useState<string>('');
 
-  const [outcomes, setOutcomes] = useState<OutcomeData[]>([]);
-  const [suboutcomes, setSuboutcomes] = useState<SuboutcomeData[]>([]);
+  const [outcomes, setOutcomes] = useState<OutcomeData[]>(defaultOutcomes);
+  const [suboutcomes, setSuboutcomes] =
+    useState<SuboutcomeData[]>(defaultSuboutcomes);
 
   const [nutraceuticals, setNutraceuticals] = useState<NutraceuticalData[]>([]);
 
@@ -124,7 +129,8 @@ export const AppProvider: React.FC = ({ children }) => {
     string[]
   >([]);
 
-  const [connections, setConnections] = useState<ConnectionsData>({});
+  const [connections, setConnections] =
+    useState<ConnectionsData>(defaultConnections);
 
   const [selectedConnections, setSelectedConnections] =
     useState<ConnectionsData>({});

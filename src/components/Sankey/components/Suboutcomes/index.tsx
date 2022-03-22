@@ -12,9 +12,19 @@ interface SuboutcomesData {
   selectedSuboutcomes?: string[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Suboutcomes: React.FC<SuboutcomesData> = ({ selectedSuboutcomes }) => {
   const appContext = useApp();
-  const { labels, outcomes, suboutcomes, connections } = appContext;
+  const { labels, connections, outcomes, suboutcomes } = appContext;
+
+  const subConnections = Array.from(
+    new Set(
+      Object.values(connections).reduce(
+        (acc: string[], curr) => [...acc, ...Object.keys(curr)],
+        [],
+      ),
+    ),
+  );
 
   return (
     <Container>
@@ -31,33 +41,25 @@ const Suboutcomes: React.FC<SuboutcomesData> = ({ selectedSuboutcomes }) => {
             : 'The range on the min-med-max selector reflects the efficiency of the dietary supplement on the condition.'}
         </span>
       </ContainerLabel>
-      {Object.values(connections).map(subConnections =>
-        Object.keys(subConnections)
-          .filter(subConnection =>
-            selectedSuboutcomes?.length
-              ? selectedSuboutcomes.includes(subConnection)
-              : true,
+      {subConnections.map(subConnection => {
+        const currentSuboutcome = suboutcomes.find(
+          suboutcome => suboutcome.id === subConnection,
+        );
+
+        const outcomeColor = Object.values(outcomes).find(outcome =>
+          outcome.suboutcomes.includes(subConnection),
+        )?.color;
+
+        return (
+          currentSuboutcome && (
+            <Suboutcome
+              key={currentSuboutcome.id}
+              {...currentSuboutcome}
+              color={outcomeColor || '#565656'}
+            />
           )
-          .map(subConnection => {
-            const currentSuboutcome = suboutcomes.find(
-              suboutcome => suboutcome.id === subConnection,
-            );
-
-            const outcomeColor = Object.values(outcomes).find(outcome =>
-              outcome.suboutcomes.includes(subConnection),
-            )?.color;
-
-            return (
-              currentSuboutcome && (
-                <Suboutcome
-                  key={currentSuboutcome.id}
-                  {...currentSuboutcome}
-                  color={outcomeColor || '#565656'}
-                />
-              )
-            );
-          }),
-      )}
+        );
+      })}
     </Container>
   );
 };

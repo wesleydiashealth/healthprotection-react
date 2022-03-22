@@ -1,0 +1,120 @@
+[
+  {
+    "id": "headache",
+    "title": "Headache",
+    "description": "The intestinal flora or intestinal microbiota is a group of bacteria that live in the intestine. Even though they are bacteria, these microorganisms are beneficial to the body in a mutual relationship, as the bacteria consume the nutrients in the area to reproduce while helping in the digestion of food. Although this is a natural community in the body, it is not always that this relationship is in balance, so some interventions may be necessary for the intestinal flora to function properly. This rebalancing can come through food supplementation, as a way to optimize the intake of ingredients that can help the development of this system. ",
+    "nutraceuticals": {
+      "min": [
+        "coq10"
+      ],
+      "med": [
+        "magnesium"
+      ],
+      "max": [
+        "coq10",
+        "magnesium"
+      ]
+    }
+  },
+  {
+    "id": "insomnia",
+    "title": "Insomnia",
+    "description": "The intestinal flora or intestinal microbiota is a group of bacteria that live in the intestine. Even though they are bacteria, these microorganisms are beneficial to the body in a mutual relationship, as the bacteria consume the nutrients in the area to reproduce while helping in the digestion of food. Although this is a natural community in the body, it is not always that this relationship is in balance, so some interventions may be necessary for the intestinal flora to function properly. This rebalancing can come through food supplementation, as a way to optimize the intake of ingredients that can help the development of this system. ",
+    "nutraceuticals": {
+      "min": [
+        "melatonin"
+      ],
+      "med": [
+        "valerian"
+      ],
+      "max": [
+        "melatonin",
+        "valerian"
+      ]
+    }
+  },
+  {
+    "id": "uncontrolled-appetite",
+    "title": "Uncontrolled Appetite",
+    "description": "The intestinal flora or intestinal microbiota is a group of bacteria that live in the intestine. Even though they are bacteria, these microorganisms are beneficial to the body in a mutual relationship, as the bacteria consume the nutrients in the area to reproduce while helping in the digestion of food. Although this is a natural community in the body, it is not always that this relationship is in balance, so some interventions may be necessary for the intestinal flora to function properly. This rebalancing can come through food supplementation, as a way to optimize the intake of ingredients that can help the development of this system. ",
+    "nutraceuticals": {
+      "min": [
+        "5-htp"
+      ],
+      "med": [
+        "5-htp"
+      ],
+      "max": [
+        "5-htp"
+      ]
+    }
+  },
+  {
+    "id": "low-immunity",
+    "title": "Low Immunity",
+    "description": "The intestinal flora or intestinal microbiota is a group of bacteria that live in the intestine. Even though they are bacteria, these microorganisms are beneficial to the body in a mutual relationship, as the bacteria consume the nutrients in the area to reproduce while helping in the digestion of food. Although this is a natural community in the body, it is not always that this relationship is in balance, so some interventions may be necessary for the intestinal flora to function properly. This rebalancing can come through food supplementation, as a way to optimize the intake of ingredients that can help the development of this system. ",
+    "nutraceuticals": {
+      "min": [
+        "vitamin-c"
+      ],
+      "med": [
+        "bifidobacterium"
+      ],
+      "max": [
+        "vitamin-c",
+        "bifidobacterium"
+      ]
+    }
+  },
+  {
+    "id": "lack-of-energy",
+    "title": "Lack of energy",
+    "description": "The intestinal flora or intestinal microbiota is a group of bacteria that live in the intestine. Even though they are bacteria, these microorganisms are beneficial to the body in a mutual relationship, as the bacteria consume the nutrients in the area to reproduce while helping in the digestion of food. Although this is a natural community in the body, it is not always that this relationship is in balance, so some interventions may be necessary for the intestinal flora to function properly. This rebalancing can come through food supplementation, as a way to optimize the intake of ingredients that can help the development of this system. ",
+    "nutraceuticals": {
+      "min": [
+        "arginine"
+      ],
+      "med": [
+        "coq10"
+      ],
+      "max": [
+        "arginine",
+        "coq10"
+      ]
+    }
+  },
+  {
+    "id": "low-libido",
+    "title": "Low libido",
+    "description": "The intestinal flora or intestinal microbiota is a group of bacteria that live in the intestine. Even though they are bacteria, these microorganisms are beneficial to the body in a mutual relationship, as the bacteria consume the nutrients in the area to reproduce while helping in the digestion of food. Although this is a natural community in the body, it is not always that this relationship is in balance, so some interventions may be necessary for the intestinal flora to function properly. This rebalancing can come through food supplementation, as a way to optimize the intake of ingredients that can help the development of this system. ",
+    "nutraceuticals": {
+      "min": [
+        "fenugreek"
+      ],
+      "med": [
+        "coq10"
+      ],
+      "max": [
+        "fenugreek",
+        "coq10"
+      ]
+    }
+  },
+  {
+    "id": "mood-swings",
+    "title": "Mood Swings",
+    "description": "The intestinal flora or intestinal microbiota is a group of bacteria that live in the intestine. Even though they are bacteria, these microorganisms are beneficial to the body in a mutual relationship, as the bacteria consume the nutrients in the area to reproduce while helping in the digestion of food. Although this is a natural community in the body, it is not always that this relationship is in balance, so some interventions may be necessary for the intestinal flora to function properly. This rebalancing can come through food supplementation, as a way to optimize the intake of ingredients that can help the development of this system. ",
+    "nutraceuticals": {
+      "min": [
+        "st-johns-wort"
+      ],
+      "med": [
+        "ashwagandha"
+      ],
+      "max": [
+        "st-johns-wort",
+        "ashwagandha"
+      ]
+    }
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "anxiety": {
+    "headache": [
+      "coq10",
+      "magnesium"
+    ],
+    "insomnia": [
+      "melatonin",
+      "valerian"
+    ],
+    "uncontrolled-appetite": [
+      "5-htp"
+    ],
+    "low-immunity": [
+      "vitamin-c",
+      "bifidobacterium"
+    ]
+  },
+  "stress": {
+    "headache": [
+      "coq10",
+      "magnesium"
+    ],
+    "insomnia": [
+      "melatonin",
+      "valerian"
+    ],
+    "lack-of-energy": [
+      "arginine",
+      "coq10"
+    ],
+    "low-libido": [
+      "fenugreek",
+      "coq10"
+    ]
+  },
+  "depression": {
+    "headache": [
+      "coq10",
+      "magnesium"
+    ],
+    "lack-of-energy": [
+      "arginine",
+      "coq10"
+    ],
+    "low-immunity": [
+      "vitamin-c",
+      "bifidobacterium"
+    ],
+    "mood-swings": [
+      "st-johns-wort",
+      "ashwagandha"
+    ]
+  }
+}

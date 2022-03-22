@@ -2,6 +2,9 @@ import React from 'react';
 
 import { useApp } from 'contexts/app';
 
+import connections from 'connections-v2.json';
+import outcomesV2 from 'outcomes-v2.json';
+
 import Outcome from './components/Outcome';
 
 import Container, { ContainerLabel } from './styles';
@@ -12,7 +15,7 @@ interface OutcomesData {
 
 const Outcomes: React.FC<OutcomesData> = ({ selectedOutcomes }) => {
   const appContext = useApp();
-  const { labels, outcomes, connections } = appContext;
+  const { labels } = appContext;
 
   return (
     <Container>
@@ -26,7 +29,7 @@ const Outcomes: React.FC<OutcomesData> = ({ selectedOutcomes }) => {
             : true,
         )
         .map(({ 0: connection }) => {
-          const currentOutcome = outcomes.find(
+          const currentOutcome = outcomesV2.find(
             outcome => outcome.id === connection,
           );
 
