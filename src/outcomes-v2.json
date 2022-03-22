@@ -15,8 +15,8 @@
   {
     "id": "stress",
     "title": "Stress",
-    "icon": "https://www.healthprotection.com/wp-content/uploads/2021/10/digestive-health.svg",
-    "color": "#B09AC9",
+    "icon": "https://www.healthprotection.com/wp-content/uploads/2021/10/energy-and-mood.svg",
+    "color": "#3bb9a0",
     "description": "Gut health is directly linked to our habits, such as unregulated sleep, poor diet, and little physical activity. Keeping our digestive system in order is taking care of our entire organism, because scientists have discovered that there is a connection between the peripheral nervous system (categorized by nerves and neurons outside the central nervous system) and the enteric nervous system (which controls digestion). Our gut has 100 million neurons, and 70-80% of the body's immune cells live there. In addition, gut health is linked to our mood through its conversion of tryptophan into serotonin. ",
     "suboutcomes": [
       "headache",
@@ -28,8 +28,8 @@
   {
     "id": "depression",
     "title": "Depression",
-    "icon": "https://www.healthprotection.com/wp-content/uploads/2021/10/digestive-health.svg",
-    "color": "#B09AC9",
+    "icon": "https://www.healthprotection.com/wp-content/uploads/2021/10/cognitive-function-and-brain-health.svg",
+    "color": "#cd61a4",
     "description": "Gut health is directly linked to our habits, such as unregulated sleep, poor diet, and little physical activity. Keeping our digestive system in order is taking care of our entire organism, because scientists have discovered that there is a connection between the peripheral nervous system (categorized by nerves and neurons outside the central nervous system) and the enteric nervous system (which controls digestion). Our gut has 100 million neurons, and 70-80% of the body's immune cells live there. In addition, gut health is linked to our mood through its conversion of tryptophan into serotonin. ",
     "suboutcomes": [
       "headache",

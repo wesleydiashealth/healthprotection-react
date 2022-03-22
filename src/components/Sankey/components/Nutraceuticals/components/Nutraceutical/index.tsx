@@ -32,23 +32,28 @@ const Nutraceutical: React.FC<NutraceuticalData> = ({
 
   const isActive = activeNutraceutical === slug;
 
-  const supConnections = Object.values(connections)
-    .filter(
-      subconnections =>
-        !!Object.values(subconnections).reduce(
-          (accumulator, subconnection) => accumulator + subconnection.length,
-          0,
+  const supConnections = Array.from(
+    new Set(
+      Object.values(connections)
+        .filter(
+          subconnections =>
+            !!Object.values(subconnections).reduce(
+              (accumulator, subconnection) =>
+                accumulator + subconnection.length,
+              0,
+            ),
+        )
+        .reduce(
+          (accumulator: string[], subconnections) => [
+            ...accumulator,
+            ...Object.entries(subconnections)
+              .filter(({ 1: subconnection }) => subconnection.includes(slug))
+              .reduce((acc: string[], curr) => [...acc, curr[0]], []),
+          ],
+          [],
         ),
-    )
-    .reduce(
-      (accumulator: string[], subconnections) => [
-        ...accumulator,
-        ...Object.entries(subconnections)
-          .filter(({ 1: subconnection }) => subconnection.includes(slug))
-          .reduce((acc: string[], curr) => [...acc, curr[0]], []),
-      ],
-      [],
-    );
+    ),
+  );
 
   return (
     <Container connections={supConnections.length}>
