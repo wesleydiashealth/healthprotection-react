@@ -82,33 +82,6 @@ const Nutraceutical: React.FC<NutraceuticalData> = ({
             }}
           />
         )}
-        {/* <ContainerPopup
-          open={open}
-          closeOnDocumentClick
-          onClose={closeModal}
-          trigger={
-            <Content
-              onClick={() => {
-                setOpen(o => !o);
-              }}
-            >
-              <NutritionInfoIcon />
-              <ContentTitle>{title}</ContentTitle>
-              <ContentDescription>{`${dosage}`}</ContentDescription>
-            </Content>
-          }
-          modal
-          nested
-        >
-          <Scrollbar style={{ height: '600px' }}>
-            <ContainerCloseButton size={24} onClick={() => setOpen(o => !o)} />
-            <Tooltip
-              {...{
-                ...{ slug, title, description, supConnections },
-              }}
-            />
-          </Scrollbar>
-        </ContainerPopup> */}
       </ContentContainer>
     </Container>
   );

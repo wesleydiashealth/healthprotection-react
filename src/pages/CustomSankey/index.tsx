@@ -4,14 +4,16 @@ import { useMediaQuery } from 'react-responsive';
 import Sankey from 'components/Sankey';
 import SankeyMobile from 'components/SankeyMobile';
 
-import { AppProvider, useApp } from 'contexts/app';
+import connections from 'connections-v2.json';
+import outcomes from 'outcomes-v2.json';
+import suboutcomes from 'suboutcomes-v2.json';
+import nutraceuticals from 'nutraceuticals-v2.json';
+
+import { AppProvider } from 'contexts/app';
 
 import Container from './styles';
 
 const CustomSankey: React.FC = () => {
-  const appContext = useApp();
-  const { connections } = appContext;
-
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 1224px)',
   });
@@ -20,9 +22,19 @@ const CustomSankey: React.FC = () => {
     <Container>
       <AppProvider>
         {isDesktopOrLaptop ? (
-          <Sankey connections={connections} />
+          <Sankey
+            defaultConnections={connections}
+            defaultOutcomes={outcomes}
+            defaultSuboutcomes={suboutcomes}
+            defaultNutraceuticals={nutraceuticals}
+          />
         ) : (
-          <SankeyMobile />
+          <SankeyMobile
+            defaultConnections={connections}
+            defaultOutcomes={outcomes}
+            defaultSuboutcomes={suboutcomes}
+            defaultNutraceuticals={nutraceuticals}
+          />
         )}
       </AppProvider>
     </Container>

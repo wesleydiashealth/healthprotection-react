@@ -1,6 +1,4 @@
 import React from 'react';
-import { Scrollbar } from 'react-scrollbars-custom';
-import Popup from 'reactjs-popup';
 
 import NutraceuticalData from 'dtos/NutraceuticalData';
 
@@ -30,8 +28,11 @@ const Nutraceutical: React.FC<NutraceuticalData> = ({
   const appContext = useApp();
   const { connections } = appContext;
 
-  const context = useSankey();
-  const { activeAccordions } = context;
+  const sankeyContext = useSankey();
+  const { activeAccordions, activeNutraceutical, updateActiveNutraceutical } =
+    sankeyContext;
+
+  const isActive = activeNutraceutical === slug;
 
   const supConnections = Object.entries(connections)
     .filter(
@@ -63,27 +64,24 @@ const Nutraceutical: React.FC<NutraceuticalData> = ({
         ))}
       </Anchors>
       <ContentContainer>
-        <Popup
-          trigger={
-            <Content>
-              <NutritionInfoIcon />
-              <ContentGroup>
-                <ContentTitle>{title}</ContentTitle>
-                <ContentDescription>{`${dosage}`}</ContentDescription>
-              </ContentGroup>
-            </Content>
-          }
-          modal
-          nested
+        <Content
+          onClick={() => {
+            updateActiveNutraceutical(!isActive ? slug : '');
+          }}
         >
-          <Scrollbar style={{ height: 'calc(100vh - 80px)' }}>
-            <Tooltip
-              {...{
-                ...{ slug, title, description, supConnections },
-              }}
-            />
-          </Scrollbar>
-        </Popup>
+          <NutritionInfoIcon />
+          <ContentGroup>
+            <ContentTitle>{title}</ContentTitle>
+            <ContentDescription>{`${dosage}`}</ContentDescription>
+          </ContentGroup>
+        </Content>
+        {isActive && (
+          <Tooltip
+            {...{
+              ...{ slug, title, description, supConnections },
+            }}
+          />
+        )}
       </ContentContainer>
     </Container>
   );

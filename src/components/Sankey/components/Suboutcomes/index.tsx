@@ -12,12 +12,11 @@ interface SuboutcomesData {
   selectedSuboutcomes?: string[];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const Suboutcomes: React.FC<SuboutcomesData> = ({ selectedSuboutcomes }) => {
+const Suboutcomes: React.FC<SuboutcomesData> = () => {
   const appContext = useApp();
   const { labels, connections, outcomes, suboutcomes } = appContext;
 
-  const subConnections = Array.from(
+  const filteredSuboutcomes = Array.from(
     new Set(
       Object.values(connections).reduce(
         (acc: string[], curr) => [...acc, ...Object.keys(curr)],
@@ -29,25 +28,21 @@ const Suboutcomes: React.FC<SuboutcomesData> = ({ selectedSuboutcomes }) => {
   return (
     <Container>
       <ContainerLabel>
-        <strong>
-          {labels.step_2_suboutcomes_title ||
-            'Fine-tune your chosen sub-health goals'}
-        </strong>
+        <strong>{labels.step_2_suboutcomes_title}</strong>
 
         <span>
           <FaToggleOn />{' '}
-          {labels.step_2_suboutcomes_description
-            ? ReactHtmlParser(labels.step_2_suboutcomes_description)
-            : 'The range on the min-med-max selector reflects the efficiency of the dietary supplement on the condition.'}
+          {labels.step_2_suboutcomes_description &&
+            ReactHtmlParser(labels.step_2_suboutcomes_description)}
         </span>
       </ContainerLabel>
-      {subConnections.map(subConnection => {
+      {filteredSuboutcomes.map(filteredSuboutcome => {
         const currentSuboutcome = suboutcomes.find(
-          suboutcome => suboutcome.id === subConnection,
+          suboutcome => suboutcome.id === filteredSuboutcome,
         );
 
         const outcomeColor = Object.values(outcomes).find(outcome =>
-          outcome.suboutcomes.includes(subConnection),
+          outcome.suboutcomes.includes(filteredSuboutcome),
         )?.color;
 
         return (
@@ -62,10 +57,6 @@ const Suboutcomes: React.FC<SuboutcomesData> = ({ selectedSuboutcomes }) => {
       })}
     </Container>
   );
-};
-
-Suboutcomes.defaultProps = {
-  selectedSuboutcomes: [],
 };
 
 export default Suboutcomes;

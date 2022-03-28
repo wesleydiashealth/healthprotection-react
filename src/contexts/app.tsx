@@ -8,10 +8,6 @@ import React, {
 
 import wordpressApi from 'services/wordpress';
 
-import defaultConnections from 'connections-v2.json';
-import defaultOutcomes from 'outcomes-v2.json';
-import defaultSuboutcomes from 'suboutcomes-v2.json';
-
 import defaultLabels from 'labels.json';
 
 import ConnectionsData from 'dtos/ConnectionsData';
@@ -74,6 +70,9 @@ interface AppContextData {
   ): Promise<void>;
   updateOutcomes(updatedOutcomes: OutcomeData[]): Promise<void>;
   updateSuboutcomes(updatedSuboutcomes: SuboutcomeData[]): Promise<void>;
+  updateNutraceuticals(
+    updatedNutraceuticals: NutraceuticalData[],
+  ): Promise<void>;
   updateCount(updatedCount: CountData): Promise<void>;
   updateFineTune(updatedFineTune: FineTuneData): Promise<void>;
   updateConnection(suboutcome: string, nutraceuticals: string[]): Promise<void>;
@@ -81,6 +80,7 @@ interface AppContextData {
     updatedOutcomes: OutcomeData[],
     updatedSuboutcomes: SuboutcomeData[],
   ): Promise<void>;
+  updateAllConnections(updatedConnections: ConnectionsData): Promise<void>;
   updateSelectedConnections(allConnections: ConnectionsData): Promise<void>;
   updateFoods(updatedFoods: FoodData[]): Promise<void>;
   updateHabits(updatedHabits: HabitData[]): Promise<void>;
@@ -115,9 +115,9 @@ export const AppProvider: React.FC = ({ children }) => {
 
   const [userQuery, setUserQuery] = useState<string>('');
 
-  const [outcomes, setOutcomes] = useState<OutcomeData[]>(defaultOutcomes);
-  const [suboutcomes, setSuboutcomes] =
-    useState<SuboutcomeData[]>(defaultSuboutcomes);
+  const [outcomes, setOutcomes] = useState<OutcomeData[]>([]);
+
+  const [suboutcomes, setSuboutcomes] = useState<SuboutcomeData[]>([]);
 
   const [nutraceuticals, setNutraceuticals] = useState<NutraceuticalData[]>([]);
 
@@ -129,8 +129,7 @@ export const AppProvider: React.FC = ({ children }) => {
     string[]
   >([]);
 
-  const [connections, setConnections] =
-    useState<ConnectionsData>(defaultConnections);
+  const [connections, setConnections] = useState<ConnectionsData>({});
 
   const [selectedConnections, setSelectedConnections] =
     useState<ConnectionsData>({});
@@ -273,6 +272,12 @@ export const AppProvider: React.FC = ({ children }) => {
     setSuboutcomes(updatedSuboutcomes);
   }
 
+  async function updateNutraceuticals(
+    updatedNutraceuticals: NutraceuticalData[],
+  ) {
+    setNutraceuticals(updatedNutraceuticals);
+  }
+
   async function updateCount(updatedCount: CountData) {
     setCount(updatedCount);
   }
@@ -354,6 +359,10 @@ export const AppProvider: React.FC = ({ children }) => {
       {},
     );
 
+    setConnections(updatedConnections);
+  }
+
+  async function updateAllConnections(updatedConnections: ConnectionsData) {
     setConnections(updatedConnections);
   }
 
@@ -472,9 +481,11 @@ export const AppProvider: React.FC = ({ children }) => {
         updateSelectedNutraceuticals,
         updateOutcomes,
         updateSuboutcomes,
+        updateNutraceuticals,
         updateFineTune,
         updateConnection,
         updateConnections,
+        updateAllConnections,
         updateSelectedConnections,
         updateFoods,
         updateHabits,

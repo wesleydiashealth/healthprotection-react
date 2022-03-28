@@ -3,9 +3,6 @@ import regexifyString from 'regexify-string';
 
 import { useApp } from 'contexts/app';
 
-import connections from 'connections-v2.json';
-import nutraceuticals from 'nutraceuticals-v2.json';
-
 import { ReactComponent as NutritionInfoIcon } from 'assets/nutrition_info.svg';
 import Nutraceutical from './components/Nutraceutical';
 
@@ -13,7 +10,7 @@ import Container, { ContainerLabel } from './styles';
 
 const Nutraceuticals: React.FC = () => {
   const appContext = useApp();
-  const { labels, selectedNutraceuticals } = appContext;
+  const { labels, nutraceuticals, selectedNutraceuticals } = appContext;
 
   const nutraceuticalsLabel = regexifyString({
     pattern: /%s/,
@@ -27,20 +24,7 @@ const Nutraceuticals: React.FC = () => {
         <ContainerLabel>{nutraceuticalsLabel}</ContainerLabel>
       )}
 
-      {Array.from(
-        new Set(
-          Object.values(connections).reduce(
-            (acc: string[], connection) => [
-              ...acc,
-              ...Object.values(connection).reduce(
-                (subAcc, subCurr) => [...subAcc, ...subCurr],
-                [],
-              ),
-            ],
-            [],
-          ),
-        ),
-      ).map(connection => {
+      {selectedNutraceuticals.map(connection => {
         const nutraceutical = nutraceuticals.find(
           item => item.slug === connection,
         );

@@ -1,40 +1,94 @@
-import React from 'react';
-import ReactToolTip from 'react-tooltip';
+import React, { useEffect } from 'react';
 import 'reactjs-popup/dist/index.css';
-import { HiQuestionMarkCircle, HiLockClosed } from 'react-icons/hi';
 import { IoOptionsOutline } from 'react-icons/io5';
 import TagManager from 'react-gtm-module';
 import VisibilitySensor from 'react-visibility-sensor';
 import { hotjar } from 'react-hotjar';
 
 import Loading from 'components/Loading';
+
+import StepIntro from 'components/StepIntro';
+
+import ConnectionsData from 'dtos/ConnectionsData';
+import OutcomeData from 'dtos/OutcomeData';
+import SuboutcomeData from 'dtos/SuboutcomeData';
+import NutraceuticalData from 'dtos/NutraceuticalData';
+
+import { useApp } from 'contexts/app';
+import { SankeyProvider } from 'contexts/sankey';
+
 import Outcomes from './components/Outcomes';
 import Nutraceuticals from './components/Nutraceuticals';
 
-import Container, {
-  StepIntro,
-  StepTitle,
-  StepDescription,
-  StepContent,
-} from './styles';
+import Container, { StepContent } from './styles';
 
-import { useApp } from '../../contexts/app';
-import { SankeyProvider } from '../../contexts/sankey';
+interface SankeyProps {
+  defaultConnections?: ConnectionsData;
+  defaultOutcomes?: OutcomeData[];
+  defaultSuboutcomes?: SuboutcomeData[];
+  defaultNutraceuticals?: NutraceuticalData[];
+}
 
-const Sankey: React.FC = () => {
+const Sankey: React.FC<SankeyProps> = ({
+  defaultConnections,
+  defaultOutcomes,
+  defaultSuboutcomes,
+  defaultNutraceuticals,
+}) => {
   const context = useApp();
-  const { steps, outcomes } = context;
+  const {
+    labels,
+    steps,
+    connections,
+    outcomes,
+    updateAllConnections,
+    updateOutcomes,
+    updateSuboutcomes,
+    updateNutraceuticals,
+  } = context;
   const { step1: previousStep, step2: currentStep } = steps;
 
-  const isReady = currentStep.isLoaded && !previousStep.isLoading;
+  const isActive = previousStep.isCompleted || !!defaultConnections;
+
+  const isReady =
+    (currentStep.isLoaded && !previousStep.isLoading) || !!defaultConnections;
+
+  useEffect(() => {
+    if (defaultConnections) {
+      updateAllConnections(defaultConnections);
+    }
+
+    if (defaultOutcomes?.length) {
+      updateOutcomes(defaultOutcomes);
+    }
+
+    if (defaultSuboutcomes?.length) {
+      updateSuboutcomes(defaultSuboutcomes);
+    }
+
+    if (defaultNutraceuticals?.length) {
+      updateNutraceuticals(defaultNutraceuticals);
+    }
+  }, [
+    defaultConnections,
+    defaultOutcomes,
+    defaultSuboutcomes,
+    defaultNutraceuticals,
+    updateAllConnections,
+    updateOutcomes,
+    updateSuboutcomes,
+    updateNutraceuticals,
+  ]);
 
   return (
-    <Container id="step_2" isActive={previousStep.isCompleted}>
+    <Container id="step_2" isActive={isActive}>
       <VisibilitySensor
         active={!!isReady}
         onChange={isVisible => {
           if (isVisible) {
-            hotjar.event('go-to-step-2');
+            if (!connections) {
+              hotjar.event('go-to-step-2');
+            }
 
             TagManager.dataLayer({
               dataLayer: {
@@ -45,45 +99,17 @@ const Sankey: React.FC = () => {
         }}
       >
         <>
-          <StepIntro>
-            <IoOptionsOutline
-              size={52}
-              color={previousStep.isCompleted ? '#DB71AF' : '#565656'}
-            />
-            <StepTitle>
-              {!previousStep.isCompleted && (
-                <HiLockClosed size={20} className="locked-icon" />
-              )}
-              Step 2
-              <HiQuestionMarkCircle
-                className="tooltip-icon"
-                size={20}
-                color={previousStep.isCompleted ? '#DB71AF' : '#565656'}
-                data-tip="<strong>Step 2</strong><span>We have already preselected the results that are available for you to choose from. Adjust the areas of health in which you want to improve by setting the desired intensity.</span>"
-                data-for="sankey-title-tooltip"
-              />
-              <ReactToolTip
-                id="sankey-title-tooltip"
-                className="sankey-title-tooltip"
-                place="bottom"
-                type="light"
-                effect="solid"
-                offset={{ top: 10, left: 10 }}
-                html
-                backgroundColor="#fff"
-              />
-            </StepTitle>
-            {!previousStep.isCompleted && (
-              <div className="step-disabled">
-                <strong>Step Blocked.</strong>{' '}
-                <span>Finish Step 1 to proceed.</span>
-              </div>
-            )}
-            <StepDescription>
-              <strong>Fine-tune</strong> your desired outcomes
-            </StepDescription>
-          </StepIntro>
-          {previousStep.isCompleted && (
+          <StepIntro
+            id="step_2"
+            title={labels?.step_2_title}
+            subtitle={labels?.step_2_description}
+            description={labels?.step_2_tooltip}
+            icon={IoOptionsOutline}
+            color="#DB71AF"
+            isActive={isActive}
+          />
+
+          {isActive && (
             <SankeyProvider>
               <StepContent>
                 {isReady && outcomes.length ? (
@@ -101,6 +127,13 @@ const Sankey: React.FC = () => {
       </VisibilitySensor>
     </Container>
   );
+};
+
+Sankey.defaultProps = {
+  defaultConnections: undefined,
+  defaultOutcomes: [],
+  defaultSuboutcomes: [],
+  defaultNutraceuticals: [],
 };
 
 export default Sankey;

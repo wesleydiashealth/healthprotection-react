@@ -97,7 +97,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
           : [...acc, `${id}_${outcome}`];
       }, []);
 
-    setSupConnections(updatedSupConnections);
+    setSupConnections(Array.from(new Set(updatedSupConnections)));
 
     const updatedSubConnections = Object.values(connections)
       .filter(subconnections => Object.keys(subconnections).includes(id))
@@ -117,7 +117,7 @@ const Suboutcome: React.FC<SuboutcomeProps> = ({
         [],
       );
 
-    setSubConnections(updatedSubConnections);
+    setSubConnections(Array.from(new Set(updatedSubConnections)));
   }, [id, connections]);
 
   const handleFineTuneClick = useCallback(

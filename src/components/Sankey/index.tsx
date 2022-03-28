@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'reactjs-popup/dist/index.css';
 import { IoOptionsOutline } from 'react-icons/io5';
 import TagManager from 'react-gtm-module';
@@ -9,6 +9,9 @@ import { useApp } from 'contexts/app';
 import { SankeyProvider } from 'contexts/sankey';
 
 import ConnectionsData from 'dtos/ConnectionsData';
+import OutcomeData from 'dtos/OutcomeData';
+import SuboutcomeData from 'dtos/SuboutcomeData';
+import NutraceuticalData from 'dtos/NutraceuticalData';
 
 import Loading from 'components/Loading';
 
@@ -21,24 +24,62 @@ import Nutraceuticals from './components/Nutraceuticals';
 import Container, { StepContent } from './styles';
 
 interface SankeyProps {
-  connections?: ConnectionsData;
-  showTooltips?: boolean;
-  showFineTune?: boolean;
+  defaultConnections?: ConnectionsData;
+  defaultOutcomes?: OutcomeData[];
+  defaultSuboutcomes?: SuboutcomeData[];
+  defaultNutraceuticals?: NutraceuticalData[];
 }
 
 const Sankey: React.FC<SankeyProps> = ({
-  connections,
-  showTooltips,
-  showFineTune,
+  defaultConnections,
+  defaultOutcomes,
+  defaultSuboutcomes,
+  defaultNutraceuticals,
 }) => {
   const context = useApp();
-  const { labels, steps, outcomes } = context;
+  const {
+    labels,
+    steps,
+    connections,
+    outcomes,
+    updateAllConnections,
+    updateOutcomes,
+    updateSuboutcomes,
+    updateNutraceuticals,
+  } = context;
   const { step1: previousStep, step2: currentStep } = steps;
 
-  const isActive = previousStep.isCompleted || !!connections;
+  const isActive = previousStep.isCompleted || !!defaultConnections;
 
   const isReady =
-    (currentStep.isLoaded && !previousStep.isLoading) || !!connections;
+    (currentStep.isLoaded && !previousStep.isLoading) || !!defaultConnections;
+
+  useEffect(() => {
+    if (defaultConnections) {
+      updateAllConnections(defaultConnections);
+    }
+
+    if (defaultOutcomes?.length) {
+      updateOutcomes(defaultOutcomes);
+    }
+
+    if (defaultSuboutcomes?.length) {
+      updateSuboutcomes(defaultSuboutcomes);
+    }
+
+    if (defaultNutraceuticals?.length) {
+      updateNutraceuticals(defaultNutraceuticals);
+    }
+  }, [
+    defaultConnections,
+    defaultOutcomes,
+    defaultSuboutcomes,
+    defaultNutraceuticals,
+    updateAllConnections,
+    updateOutcomes,
+    updateSuboutcomes,
+    updateNutraceuticals,
+  ]);
 
   return (
     <Container id="step_2" isActive={isActive}>
@@ -72,28 +113,12 @@ const Sankey: React.FC<SankeyProps> = ({
             <SankeyProvider>
               {isReady ? (
                 <StepContent>
-                  {outcomes.length ? (
+                  {!!outcomes.length && (
                     <>
-                      <Outcomes
-                        {...showTooltips}
-                        selectedOutcomes={Object.keys(connections || {})}
-                      />
-                      <Suboutcomes
-                        {...{ showTooltips, showFineTune }}
-                        selectedSuboutcomes={Object.values(
-                          connections || {},
-                        ).reduce(
-                          (acc: string[], curr) => [
-                            ...acc,
-                            ...Object.keys(curr),
-                          ],
-                          [],
-                        )}
-                      />
+                      <Outcomes />
+                      <Suboutcomes />
                       <Nutraceuticals />
                     </>
-                  ) : (
-                    <Loading color="#db71af" />
                   )}
                 </StepContent>
               ) : (
@@ -108,9 +133,10 @@ const Sankey: React.FC<SankeyProps> = ({
 };
 
 Sankey.defaultProps = {
-  connections: {},
-  showTooltips: true,
-  showFineTune: true,
+  defaultConnections: undefined,
+  defaultOutcomes: [],
+  defaultSuboutcomes: [],
+  defaultNutraceuticals: [],
 };
 
 export default Sankey;

@@ -1,17 +1,80 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { Scrollbar } from 'react-scrollbars-custom';
+import { IoMdCloseCircle } from 'react-icons/io';
 
-const Container = styled.div``;
+import { ReactComponent as Strength1Icon } from 'assets/strength_1.svg';
+import { ReactComponent as Strength2Icon } from 'assets/strength_2.svg';
+import { ReactComponent as Strength3Icon } from 'assets/strength_3.svg';
+
+interface EffectsMeterProps {
+  width: number;
+}
+
+interface StrengthIconProps {
+  isActive: boolean;
+}
+
+const Container = styled.div`
+  border-radius: 10px;
+  padding: 20px;
+
+  position: absolute;
+  top: 0;
+  right: 20px;
+  z-index: 9999;
+
+  background: #fff;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+
+  width: 1000px;
+  max-width: calc(100vw - 40px);
+
+  @media screen and (min-width: 768px) {
+    right: 240px;
+
+    max-width: calc(100vw - 320px);
+  }
+`;
+
+export const ContainerCloseButton = styled(IoMdCloseCircle)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+
+  color: #62a8ea;
+
+  cursor: pointer;
+`;
 
 export const ContainerTitle = styled.h3`
   margin-bottom: 20px;
+
+  font-size: 14px;
+  line-height: 22px;
+
+  a {
+    color: #62a8ea;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
-export const ContainerDescription = styled.p`
+export const ContainerDescription = styled.div`
   margin-bottom: 10px;
 
   text-align: justify;
-  font-size: 14px;
-  line-height: 22px;
+
+  &,
+  p {
+    font-size: 12px;
+    line-height: 20px;
+  }
 `;
 
 export const ContainerLink = styled.a`
@@ -20,8 +83,8 @@ export const ContainerLink = styled.a`
   color: #62a8ea;
   text-align: right;
   text-decoration: none;
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 12px;
+  line-height: 20px;
 
   &:not(:last-child) {
     margin-bottom: 20px;
@@ -32,31 +95,41 @@ export const ContainerLink = styled.a`
   }
 `;
 
-export const ContainerList = styled.div``;
+export const ContainerList = styled(Scrollbar)``;
 
 export const ContainerListItem = styled.div`
+  padding-right: 20px;
+
   & ~ div {
     margin-top: 40px;
   }
 `;
 
 export const ContainerListItemTitle = styled.h4`
-  font-size: 18px;
+  font-size: 14px;
   line-height: 22px;
 
-  strong {
+  a {
     color: #62a8ea;
     font-weight: 600;
+
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 
 export const ContainerListItemDetails = styled.h5`
-  margin: 10px 0;
+  margin: 10px 0 30px;
   border-radius: 10px;
   padding: 6px 18px;
 
   color: #62a8ea;
   font-weight: 600;
+  font-size: 10px;
+  line-height: 18px;
 
   background: #f3f3f3;
 `;
@@ -75,8 +148,8 @@ export const ContainerListItemLink = styled.a`
 
   color: #62a8ea;
   text-decoration: none;
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 12px;
+  line-height: 20px;
 
   &:hover {
     text-decoration: underline;
@@ -87,32 +160,106 @@ export const ContainerListIcons = styled.div`
   margin-bottom: 20px;
 
   display: flex;
+  align-items: flex-start;
+`;
 
-  .icon-wrapper {
-    strong {
-      margin-bottom: 10px;
+export const ContainerListIcon = styled.div`
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
 
-      display: block;
+  & ~ div {
+    margin-left: 10px;
+  }
+`;
 
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 18px;
-    }
+export const ContainerListIconTitle = styled.strong`
+  margin-bottom: 10px;
 
-    & ~ .icon-wrapper {
-      margin-left: 40px;
-    }
+  display: block;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 14px;
+`;
+
+export const ContainerListIconContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1;
+`;
+
+export const EffectsMeter = styled.div<EffectsMeterProps>`
+  border-radius: 16px;
+
+  max-width: 140px;
+  width: 100%;
+  height: 8px;
+
+  background: #c4c4c4;
+
+  overflow: hidden;
+
+  div {
+    background: #f89c1c;
+    height: 8px;
+
+    ${props =>
+      props.width &&
+      css`
+        width: ${`${25 * props.width}%`};
+      `}
+  }
+`;
+
+export const NeutralIcon = styled(Strength1Icon)<StrengthIconProps>`
+  width: 24px;
+
+  fill: #c4c4c4;
+
+  & ~ svg {
+    margin-left: 5px;
   }
 
-  .icon-content {
-    display: flex;
-    align-items: center;
+  ${props =>
+    props.isActive &&
+    css`
+      fill: #1bc9bd;
+    `}
+`;
 
-    img {
-      margin-right: 10px;
-      flex-shrink: 0;
-    }
+export const HappyIcon = styled(Strength2Icon)<StrengthIconProps>`
+  width: 24px;
+
+  fill: #c4c4c4;
+
+  & ~ svg {
+    margin-left: 5px;
   }
+
+  ${props =>
+    props.isActive &&
+    css`
+      fill: #1bc9bd;
+    `}
+`;
+
+export const HappierIcon = styled(Strength3Icon)<StrengthIconProps>`
+  width: 24px;
+
+  fill: #c4c4c4;
+
+  & ~ svg {
+    margin-left: 5px;
+  }
+
+  ${props =>
+    props.isActive &&
+    css`
+      fill: #1bc9bd;
+    `}
 `;
 
 export default Container;

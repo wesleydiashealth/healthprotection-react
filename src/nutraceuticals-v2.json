@@ -116,6 +116,64 @@
     "studies": 13
   },
   {
+    "slug": "melatonin",
+    "title": "Melatonin",
+    "link": "https://www.healthprotection.com/dietary-supplements/5-htp/",
+    "description": "<p>5-HTP is a substance used to increase levels of Serotonin on the brain. It is synthesized in the body through the amino acid tryptophan. The consumption of 5-HTP can relief depression, anxiety, stress leves, control appetite and satiety (which can result in weight loss) and ease sleep patterns.</p>\n",
+    "dosage": "800mg",
+    "dosages": [
+      0,
+      250,
+      500,
+      800
+    ],
+    "maxDosage": 800,
+    "dosageUnit": "mg",
+    "relations": [
+      {
+        "slug": "5-htp-depression-energy-and-mood",
+        "title": "5-HTP - Depression (Energy and Mood)",
+        "link": "https://www.healthprotection.com/relations/5-htp-depression-energy-and-mood/",
+        "outcome": {
+            "slug": "energy-and-mood",
+            "title": "Energy and Mood",
+            "link": "https://www.healthprotection.com/health-goals/energy-and-mood/"
+        },
+        "suboutcome": {
+            "slug": "depression",
+            "title": "Depression",
+            "link": "https://www.healthprotection.com/health-goals/energy-and-mood/depression/"
+        },
+        "studies": 9,
+        "evidenceLevel": 1,
+        "magnitudeLevel": -2,
+        "dosages": "-2",
+        "dosagesUnit": "mg"
+      },
+      {
+        "slug": "5-htp-appetite-control-weight-management",
+        "title": "5-HTP - Appetite Control (Weight Management)",
+        "link": "https://www.healthprotection.com/relations/5-htp-appetite-control-weight-management/",
+        "outcome": {
+            "slug": "weight-management",
+            "title": "Weight Management",
+            "link": "https://www.healthprotection.com/health-goals/weight-management/"
+        },
+        "suboutcome": {
+            "slug": "appetite-control",
+            "title": "Appetite Control",
+            "link": "https://www.healthprotection.com/health-goals/weight-management/appetite-control/"
+        },
+        "studies": 4,
+        "evidenceLevel": 3,
+        "magnitudeLevel": 1,
+        "dosages": "1",
+        "dosagesUnit": "mg"
+      }
+    ],
+    "studies": 13
+  },
+  {
     "slug": "valerian",
     "title": "Valerian",
     "link": "https://www.healthprotection.com/dietary-supplements/5-htp/",

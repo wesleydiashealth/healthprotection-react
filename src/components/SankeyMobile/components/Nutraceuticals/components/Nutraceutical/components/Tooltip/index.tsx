@@ -2,8 +2,10 @@ import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 
 import { useApp } from 'contexts/app';
+import { useSankey } from 'contexts/sankey';
 
 import Container, {
+  ContainerCloseButton,
   ContainerTitle,
   ContainerDescription,
   ContainerLink,
@@ -11,94 +13,116 @@ import Container, {
   ContainerListItem,
   ContainerListItemTitle,
   ContainerListItemDetails,
-  ContainerListItemDescription,
   ContainerListItemLink,
   ContainerListIcons,
+  ContainerListIcon,
+  ContainerListIconTitle,
+  ContainerListIconContent,
+  EffectsMeter,
+  NeutralIcon,
+  HappyIcon,
+  HappierIcon,
 } from './styles';
 
 interface TooltipProps {
   slug: string;
-  title: string;
-  description: string;
   supConnections: string[];
 }
 
-const Tooltip: React.FC<TooltipProps> = ({
-  slug,
-  title,
-  description,
-  supConnections,
-}) => {
+const Tooltip: React.FC<TooltipProps> = ({ slug, supConnections }) => {
   const context = useApp();
-  const { outcomes, suboutcomes } = context;
+  const { nutraceuticals } = context;
+
+  const sankeyContext = useSankey();
+  const { updateActiveNutraceutical } = sankeyContext;
+
+  const nutraceutical = nutraceuticals.find(item => item.slug === slug);
 
   return (
     <Container>
-      <ContainerTitle>{title}</ContainerTitle>
+      <ContainerCloseButton
+        size={24}
+        onClick={() => {
+          updateActiveNutraceutical('');
+        }}
+      />
+      <ContainerTitle>
+        Scientific summary for{' '}
+        <a href={nutraceutical?.link} target="_blank" rel="noreferrer">
+          {nutraceutical?.title}
+        </a>
+      </ContainerTitle>
       <ContainerDescription>
-        {ReactHtmlParser(description)}
+        {nutraceutical?.description &&
+          ReactHtmlParser(nutraceutical?.description)}
       </ContainerDescription>
       <ContainerLink
-        href={`https://www.healthprotection.com/nutraceuticals/${slug}`}
+        href={nutraceutical?.link}
         target="_blank"
         rel="noreferrer"
       >
-        Access 227 scientific studies
+        {`Access ${nutraceutical?.studies} scientific studies`}
       </ContainerLink>
-      <ContainerList>
-        {supConnections.map(supConnection => {
-          const selectedSuboutcome = Object.values(suboutcomes).find(
-            suboutcome => suboutcome.id === supConnection,
-          );
-
-          const selectedOutcome =
-            selectedSuboutcome &&
-            outcomes.find(outcome =>
-              outcome.suboutcomes.includes(selectedSuboutcome.id),
-            );
-
-          return (
-            <ContainerListItem key={`popup-${supConnection}`}>
+      <ContainerList style={{ height: '400px' }}>
+        {nutraceutical?.relations
+          .sort(relation =>
+            supConnections.find(
+              supConnection => supConnection === relation.suboutcome.slug,
+            )
+              ? -1
+              : 1,
+          )
+          .map(relation => (
+            <ContainerListItem key={relation.slug}>
               <ContainerListItemTitle>
-                <strong>{selectedSuboutcome?.title}</strong> for{' '}
-                {selectedOutcome?.title}
+                <a href={nutraceutical.link} target="_blank" rel="noreferrer">
+                  {nutraceutical.title}
+                </a>{' '}
+                for{' '}
+                <a
+                  href={relation.suboutcome.link}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {relation.suboutcome.title}
+                </a>
               </ContainerListItemTitle>
               <ContainerListItemDetails>
-                These data summarize XX scientific studies
+                {`These data summarize ${relation.studies} scientific studies`}
               </ContainerListItemDetails>
               <ContainerListIcons>
-                <div className="icon-wrapper">
-                  <strong>Level of Evidence</strong>
-                  <div className="icon-content">
-                    <img
-                      src={`${process.env.PUBLIC_URL}/icons/evidence+3.svg`}
-                      alt=""
-                      height="24"
+                <ContainerListIcon>
+                  <ContainerListIconTitle>
+                    Level of Evidence
+                  </ContainerListIconTitle>
+                  <ContainerListIconContent>
+                    <EffectsMeter width={relation.evidenceLevel}>
+                      <div />
+                    </EffectsMeter>
+                  </ContainerListIconContent>
+                </ContainerListIcon>
+                <ContainerListIcon>
+                  <ContainerListIconTitle>
+                    Magnitude of Effect
+                  </ContainerListIconTitle>
+                  <ContainerListIconContent>
+                    <NeutralIcon
+                      isActive={Math.abs(relation.magnitudeLevel) === 1}
                     />
-                    <span>High</span>
-                  </div>
-                </div>
-                <div className="icon-wrapper">
-                  <strong>Magnitude of Effect</strong>
-                  <div className="icon-content">
-                    <img
-                      src={`${process.env.PUBLIC_URL}/icons/magnitude+2.svg`}
-                      alt=""
-                      height="24"
+                    <HappyIcon
+                      isActive={Math.abs(relation.magnitudeLevel) === 2}
                     />
-                    <span>Notable</span>
-                  </div>
-                </div>
+                    <HappierIcon
+                      isActive={Math.abs(relation.magnitudeLevel) === 3}
+                    />
+                  </ContainerListIconContent>
+                </ContainerListIcon>
               </ContainerListIcons>
-              <ContainerListItemDescription>
-                {selectedSuboutcome?.description}
-              </ContainerListItemDescription>
-              <ContainerListItemLink href="#2">
+              <ContainerListItemLink href={relation.link} target="_blank">
                 Read each of the scientific studies
               </ContainerListItemLink>
             </ContainerListItem>
-          );
-        })}
+          ))}
       </ContainerList>
     </Container>
   );
