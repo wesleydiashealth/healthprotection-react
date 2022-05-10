@@ -1,4 +1,4 @@
-import asteroideApi from 'services/asteroide';
+import hpbApi from 'services/hpb';
 
 interface ResponseData extends Response {
   slug: string;
@@ -9,7 +9,7 @@ export default function getMedications(
   medication: string,
 ): Promise<ResponseData[]> {
   return new Promise((resolve, reject) => {
-    asteroideApi
+    hpbApi
       .get(`/api/interaction?q=${medication}`)
       .then(async response => {
         resolve(response.data);
