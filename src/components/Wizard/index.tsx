@@ -19,7 +19,11 @@ import getProducts from 'services/getProducts';
 import StepIntro from 'components/StepIntro';
 
 import { WizardProvider } from 'contexts/wizard';
-import Container from './styles';
+import Container, {
+  StepContainer,
+  QuestionTitle,
+  QuestionSuffix,
+} from './styles';
 import 'react-multi-carousel/lib/styles.css';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
@@ -270,7 +274,7 @@ const Wizard: React.FC = () => {
         <CarouselProvider
           naturalSlideWidth={400}
           naturalSlideHeight={600}
-          totalSlides={7}
+          totalSlides={8}
           visibleSlides={1}
           step={1}
           dragEnabled={false}
@@ -308,6 +312,12 @@ const Wizard: React.FC = () => {
                   </Slide> */}
                 <Slide index={8}>
                   <Step10 />
+                </Slide>
+                <Slide index={9}>
+                  <StepContainer>
+                    <QuestionTitle>DNA Data & Blood Test</QuestionTitle>
+                    <QuestionSuffix>Coming soon!</QuestionSuffix>
+                  </StepContainer>
                 </Slide>
               </Slider>
             </Carousel>
